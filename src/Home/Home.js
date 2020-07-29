@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import { Trans } from "react-i18next";
 import "twin.macro";
 
 export default function Home() {
@@ -24,31 +25,31 @@ export default function Home() {
                         href="/"
                         tw="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
                       >
-                        Dashboard
+                        <Trans i18nKey="Home.dashboard">Dashboard</Trans>
                       </a>
                       <a
                         href="/team"
                         tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       >
-                        Team
+                        <Trans i18nKey="Home.team">Team</Trans>
                       </a>
                       <a
                         href="/projects"
                         tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       >
-                        Projects
+                        <Trans i18nKey="Home.projects">Projects</Trans>
                       </a>
                       <a
                         href="/calendar"
                         tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       >
-                        Calendar
+                        <Trans i18nKey="Home.calendar">Calendar</Trans>
                       </a>
                       <a
                         href="/reports"
                         tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                       >
-                        Reports
+                        <Trans i18nKey="Home.reports">Reports</Trans>
                       </a>
                     </div>
                   </div>
@@ -106,19 +107,21 @@ export default function Home() {
                             href="/profile"
                             tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
-                            Your Profile
+                            <Trans i18nKey="Home.yourProfile">
+                              Your profile
+                            </Trans>
                           </a>
                           <a
                             href="/settings"
                             tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
-                            Settings
+                            <Trans i18nKey="Home.settings">Settings</Trans>
                           </a>
                           <a
                             href="/sign-out"
                             tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
-                            Sign out
+                            <Trans i18nKey="Home.signOut">Sign out</Trans>
                           </a>
                         </div>
                       </div>
@@ -172,31 +175,31 @@ export default function Home() {
                 href="/"
                 tw="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
               >
-                Dashboard
+                <Trans i18nKey="Home.dashboard">Dashboard</Trans>
               </a>
               <a
                 href="/team"
                 tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
               >
-                Team
+                <Trans i18nKey="Home.team">Team</Trans>
               </a>
               <a
                 href="/projects"
                 tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
               >
-                Projects
+                <Trans i18nKey="Home.projects">Projects</Trans>
               </a>
               <a
                 href="/calendar"
                 tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
               >
-                Calendar
+                <Trans i18nKey="Home.calendar">Calendar</Trans>
               </a>
               <a
                 href="/reports"
                 tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
               >
-                Reports
+                <Trans i18nKey="Home.reports">Reports</Trans>
               </a>
             </div>
             <div tw="pt-4 pb-3 border-t border-gray-700">
@@ -228,21 +231,21 @@ export default function Home() {
                   tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                   role="menuitem"
                 >
-                  Your Profile
+                  <Trans i18nKey="Home.yourProfile">Your profile</Trans>
                 </a>
                 <a
                   href="/settings"
                   tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                   role="menuitem"
                 >
-                  Settings
+                  <Trans i18nKey="Home.settings">Settings</Trans>
                 </a>
                 <a
                   href="/sign-out"
                   tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
                   role="menuitem"
                 >
-                  Sign out
+                  <Trans i18nKey="Home.signOut">Sign out</Trans>
                 </a>
               </div>
             </div>
@@ -250,7 +253,9 @@ export default function Home() {
         </nav>
         <header tw="py-10">
           <div tw="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 tw="text-3xl leading-9 font-bold text-white">Dashboard</h1>
+            <h1 tw="text-3xl leading-9 font-bold text-white">
+              <Trans i18nKey="Home.dashboard">Dashboard</Trans>
+            </h1>
           </div>
         </header>
       </div>
