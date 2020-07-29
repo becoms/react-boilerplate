@@ -6,5 +6,8 @@
   "Home.reports": "Rapports",
   "Home.yourProfile": "Votre profil",
   "Home.settings": "Paramètres",
-  "Home.signOut": "Se déconnecter"
+  "Home.signOut": "Se déconnecter",
+  "Home.notifications": "Notifications",
+  "Home.userMenu": "Menu utilisateur",
+  "Home.openMenu": "Ouvrir le menu"
 }

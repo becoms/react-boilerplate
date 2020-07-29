@@ -8,7 +8,7 @@ i18n
   .use(detector)
   .use(initReactI18next)
   .init({
-    debug: process.env.NODE_ENV !== "production",
+    debug: process.env.NODE_ENV !== "production" && process.env.NODE_ENV !== "test",
     resources: {
       en: {
         translation: en,
@@ -23,3 +23,5 @@ i18n
       escapeValue: false,
     },
   });
+
+export default i18n;
