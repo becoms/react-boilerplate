@@ -1,11 +1,14 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Trans } from "react-i18next";
+import { Helmet } from "react-helmet-async";
+import { Trans, useTranslation } from "react-i18next";
 import "twin.macro";
 
 export default function Home() {
+  const { t } = useTranslation();
   return (
     <div>
+      <Helmet title={t("Home.dashboard")} />
       <div tw="bg-gray-800 pb-32">
         <nav tw="bg-gray-800">
           <div tw="max-w-7xl mx-auto sm:px-6 lg:px-8">
