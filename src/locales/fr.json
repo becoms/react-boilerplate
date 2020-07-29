@@ -2,6 +2,8 @@
   "skipToContent": "Passer au contenu",
   "openMenu": "Ouvrir le menu",
   "closeMenu": "Fermer le menu",
+  "openProfileMenu": "Ouvrir le menu de profil",
+  "closeProfileMenu": "Fermer le menu de profil",
   "Home.dashboard": "Tableau de bord",
   "Home.team": "Équipe",
   "Home.projects": "Projets",

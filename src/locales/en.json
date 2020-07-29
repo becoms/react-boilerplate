@@ -2,6 +2,8 @@
   "skipToContent": "Skip to content",
   "openMenu": "Open menu",
   "closeMenu": "Close menu",
+  "openProfileMenu": "Open profile menu",
+  "closeProfileMenu": "Close profile menu",
   "Home.dashboard": "Dashboard",
   "Home.team": "Team",
   "Home.projects": "Projects",
@@ -10,6 +12,5 @@
   "Home.yourProfile": "Your profile",
   "Home.settings": "Settings",
   "Home.signOut": "Sign out",
-  "Home.notifications": "Notifications",
-  "Home.userMenu": "User menu"
+  "Home.notifications": "Notifications"
 }

@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@reach/disclosure": "^0.10.5",
+    "@reach/menu-button": "^0.10.5",
     "@reach/skip-nav": "^0.10.5",
     "@tailwindcss/ui": "^0.4.0",
     "@testing-library/jest-dom": "^5.11.2",

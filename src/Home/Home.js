@@ -1,9 +1,11 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@reach/disclosure";
+import { Menu, MenuButton, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 import { SkipNavContent, SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
-import { Fragment, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
@@ -28,37 +30,9 @@ const useDisclosure = (initialState = false) => {
   };
 };
 
-const useOnClickOutside = (ref, handler) => {
-  useEffect(() => {
-    const listener = (event) => {
-      if (!ref.current || ref.current.contains(event.target)) {
-        return;
-      }
-
-      handler(event);
-    };
-
-    document.addEventListener("mousedown", listener);
-    document.addEventListener("touchstart", listener);
-
-    return () => {
-      document.removeEventListener("mousedown", listener);
-      document.removeEventListener("touchstart", listener);
-    };
-  }, [ref, handler]);
-};
-
 export default function Home() {
   const { t } = useTranslation();
   const { isOpen: isMenuOpen, onToggle: onMenuToggle } = useDisclosure();
-
-  const {
-    isOpen: isProfileMenuOpen,
-    onToggle: onProfileMenuToggle,
-    onClose: onProfileMenuClose,
-  } = useDisclosure();
-  const profileMenuRef = useRef();
-  useOnClickOutside(profileMenuRef, onProfileMenuClose);
 
   return (
     <Fragment>
@@ -143,23 +117,23 @@ export default function Home() {
                   </button>
 
                   {/* Profile dropdown  */}
-                  <div tw="ml-3 relative" ref={profileMenuRef}>
-                    {/* Profile button */}
-                    <button
-                      tw="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
-                      id="user-menu"
-                      aria-label={t("Home.userMenu")}
-                      aria-haspopup="true"
-                      onClick={onProfileMenuToggle}
-                    >
-                      <img
-                        tw="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      />
-                    </button>
+                  <div tw="ml-3 relative">
+                    <Menu>
+                      {({ isExpanded }) => (
+                        <Fragment>
+                          {/* Profile button */}
+                          <MenuButton
+                            tw="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
+                            aria-label={isExpanded ? t("closeProfileMenu") : t("openProfileMenu")}
+                          >
+                            <img
+                              tw="h-8 w-8 rounded-full"
+                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                              alt=""
+                            />
+                          </MenuButton>
 
-                    {/*
+                          {/*
                     Profile dropdown panel, show/hide based on dropdown state.
 
                     Entering: "transition ease-out duration-100"
@@ -169,40 +143,53 @@ export default function Home() {
                       From: "transform opacity-100 scale-100"
                       To: "transform opacity-0 scale-95"
                   */}
-                    <div
-                      tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white transition ease-in-out duration-100"
-                      css={
-                        isProfileMenuOpen
-                          ? tw`transform opacity-100 scale-100 pointer-events-auto`
-                          : tw`transform opacity-0 scale-95 pointer-events-none`
-                      }
-                    >
-                      <NavLink
-                        to="/profile"
-                        tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Trans i18nKey="Home.yourProfile">Your profile</Trans>
-                      </NavLink>
-                      <NavLink
-                        to="/settings"
-                        tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Trans i18nKey="Home.settings">Settings</Trans>
-                      </NavLink>
-                      <NavLink
-                        to="/sign-out"
-                        tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        <Trans i18nKey="Home.signOut">Sign out</Trans>
-                      </NavLink>
-                    </div>
+                          <MenuPopover
+                            portal={false}
+                            tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white transition ease-in-out duration-100"
+                            css={{
+                              ...(isExpanded
+                                ? tw`transform opacity-100 scale-100 pointer-events-auto`
+                                : tw`transform opacity-0 scale-95 pointer-events-none`),
+                              "&[hidden]": tw`block`,
+                            }}
+                          >
+                            <MenuItems tw="border-none p-0">
+                              <MenuLink
+                                as={NavLink}
+                                to="/profile"
+                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
+                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                              >
+                                <Trans i18nKey="Home.yourProfile">Your profile</Trans>
+                              </MenuLink>
+                              <MenuLink
+                                as={NavLink}
+                                to="/settings"
+                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
+                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                              >
+                                <Trans i18nKey="Home.settings">Settings</Trans>
+                              </MenuLink>
+                              <MenuLink
+                                as={NavLink}
+                                to="/sign-out"
+                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
+                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                              >
+                                <Trans i18nKey="Home.signOut">Sign out</Trans>
+                              </MenuLink>
+                            </MenuItems>
+                          </MenuPopover>
+                        </Fragment>
+                      )}
+                    </Menu>
                   </div>
                 </div>
 
                 {/* Mobile menu button */}
                 <DisclosureButton
                   tw="inline-flex md:hidden inline-flex items-center justify-center -mr-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                  aria-label={isMenuOpen ? t("openMenu") : t("closeMenu")}
+                  aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
                 >
                   <svg
                     tw="h-6 w-6"
