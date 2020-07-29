@@ -6,6 +6,7 @@ import "@reach/skip-nav/styles.css";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 import tw from "twin.macro";
 
 const useDisclosure = (initialState = false) => {
@@ -77,48 +78,50 @@ export default function Home() {
                 {/* Logo & Menu */}
                 <div tw="flex items-center">
                   {/* Logo */}
-                  <div tw="flex-shrink-0">
-                    <img
-                      tw="h-8 w-8"
-                      src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
-                      alt="Workflow logo"
-                    />
-                  </div>
+                  <img
+                    tw="h-8 w-8 flex-shrink-0"
+                    src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
+                    alt="Workflow logo"
+                  />
 
                   {/* Menu */}
-                  <div tw="hidden md:block">
-                    <div tw="ml-10 flex items-baseline">
-                      <a
-                        href="/"
-                        tw="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
-                      >
-                        <Trans i18nKey="Home.dashboard">Dashboard</Trans>
-                      </a>
-                      <a
-                        href="/team"
-                        tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                      >
-                        <Trans i18nKey="Home.team">Team</Trans>
-                      </a>
-                      <a
-                        href="/projects"
-                        tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                      >
-                        <Trans i18nKey="Home.projects">Projects</Trans>
-                      </a>
-                      <a
-                        href="/calendar"
-                        tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                      >
-                        <Trans i18nKey="Home.calendar">Calendar</Trans>
-                      </a>
-                      <a
-                        href="/reports"
-                        tw="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                      >
-                        <Trans i18nKey="Home.reports">Reports</Trans>
-                      </a>
-                    </div>
+                  <div tw="hidden md:flex ml-10 items-baseline space-x-4">
+                    <NavLink
+                      to="/"
+                      exact
+                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
+                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
+                    >
+                      <Trans i18nKey="Home.dashboard">Dashboard</Trans>
+                    </NavLink>
+                    <NavLink
+                      to="/team"
+                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
+                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
+                    >
+                      <Trans i18nKey="Home.team">Team</Trans>
+                    </NavLink>
+                    <NavLink
+                      to="/projects"
+                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
+                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
+                    >
+                      <Trans i18nKey="Home.projects">Projects</Trans>
+                    </NavLink>
+                    <NavLink
+                      to="/calendar"
+                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
+                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
+                    >
+                      <Trans i18nKey="Home.calendar">Calendar</Trans>
+                    </NavLink>
+                    <NavLink
+                      to="/reports"
+                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
+                    >
+                      <Trans i18nKey="Home.reports">Reports</Trans>
+                    </NavLink>
                   </div>
                 </div>
 
@@ -174,24 +177,24 @@ export default function Home() {
                           : tw`transform opacity-0 scale-95 pointer-events-none`
                       }
                     >
-                      <a
-                        href="/profile"
+                      <NavLink
+                        to="/profile"
                         tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <Trans i18nKey="Home.yourProfile">Your profile</Trans>
-                      </a>
-                      <a
-                        href="/settings"
+                      </NavLink>
+                      <NavLink
+                        to="/settings"
                         tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <Trans i18nKey="Home.settings">Settings</Trans>
-                      </a>
-                      <a
-                        href="/sign-out"
+                      </NavLink>
+                      <NavLink
+                        to="/sign-out"
                         tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
                         <Trans i18nKey="Home.signOut">Sign out</Trans>
-                      </a>
+                      </NavLink>
                     </div>
                   </div>
                 </div>
@@ -235,81 +238,106 @@ export default function Home() {
 
             {/* Mobile menu */}
             <DisclosurePanel tw="border-b border-gray-700 md:hidden">
-              <div tw="px-2 py-3 sm:px-3">
-                <a
-                  href="/"
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700"
+              {/* Primary mobile menu */}
+              <div tw="px-2 py-3 sm:px-3 space-y-1">
+                <NavLink
+                  to="/"
+                  exact
+                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                  css={{
+                    "&.active": tw`text-white bg-gray-900`,
+                    "&.active:hover": tw`bg-gray-900`,
+                  }}
                 >
                   <Trans i18nKey="Home.dashboard">Dashboard</Trans>
-                </a>
-                <a
-                  href="/team"
-                  tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                </NavLink>
+                <NavLink
+                  to="/team"
+                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                  css={{
+                    "&.active": tw`text-white bg-gray-900`,
+                    "&.active:hover": tw`bg-gray-900`,
+                  }}
                 >
                   <Trans i18nKey="Home.team">Team</Trans>
-                </a>
-                <a
-                  href="/projects"
-                  tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                </NavLink>
+                <NavLink
+                  to="/projects"
+                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                  css={{
+                    "&.active": tw`text-white bg-gray-900`,
+                    "&.active:hover": tw`bg-gray-900`,
+                  }}
                 >
                   <Trans i18nKey="Home.projects">Projects</Trans>
-                </a>
-                <a
-                  href="/calendar"
-                  tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                </NavLink>
+                <NavLink
+                  to="/calendar"
+                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                  css={{
+                    "&.active": tw`text-white bg-gray-900`,
+                    "&.active:hover": tw`bg-gray-900`,
+                  }}
                 >
                   <Trans i18nKey="Home.calendar">Calendar</Trans>
-                </a>
-                <a
-                  href="/reports"
-                  tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
+                </NavLink>
+                <NavLink
+                  to="/reports"
+                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                  css={{
+                    "&.active": tw`text-white bg-gray-900`,
+                    "&.active:hover": tw`bg-gray-900`,
+                  }}
                 >
                   <Trans i18nKey="Home.reports">Reports</Trans>
-                </a>
+                </NavLink>
               </div>
+
+              {/* User profile menu */}
               <div tw="pt-4 pb-3 border-t border-gray-700">
                 <div tw="flex items-center px-5">
-                  <div tw="flex-shrink-0">
-                    <img
-                      tw="h-10 w-10 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                  </div>
-                  <div tw="ml-3">
+                  <img
+                    tw="h-10 w-10 rounded-full flex-shrink-0"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                  <div tw="ml-3 space-y-1">
                     <div tw="text-base font-medium leading-none text-white">Tom Cook</div>
-                    <div tw="mt-1 text-sm font-medium leading-none text-gray-400">
-                      tom@example.com
-                    </div>
+                    <div tw="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
                   </div>
                 </div>
-                <div
-                  tw="mt-3 px-2"
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby="user-menu"
-                >
-                  <a
-                    href="/profile"
-                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                    role="menuitem"
+
+                <div tw="mt-3 px-2 space-y-1">
+                  <NavLink
+                    to="/profile"
+                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                    css={{
+                      "&.active": tw`text-white bg-gray-900`,
+                      "&.active:hover": tw`bg-gray-900`,
+                    }}
                   >
                     <Trans i18nKey="Home.yourProfile">Your profile</Trans>
-                  </a>
-                  <a
-                    href="/settings"
-                    tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                    role="menuitem"
+                  </NavLink>
+                  <NavLink
+                    to="/settings"
+                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                    css={{
+                      "&.active": tw`text-white bg-gray-900`,
+                      "&.active:hover": tw`bg-gray-900`,
+                    }}
                   >
                     <Trans i18nKey="Home.settings">Settings</Trans>
-                  </a>
-                  <a
-                    href="/sign-out"
-                    tw="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700"
-                    role="menuitem"
+                  </NavLink>
+                  <NavLink
+                    to="/sign-out"
+                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
+                    css={{
+                      "&.active": tw`text-white bg-gray-900`,
+                      "&.active:hover": tw`bg-gray-900`,
+                    }}
                   >
                     <Trans i18nKey="Home.signOut">Sign out</Trans>
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </DisclosurePanel>
