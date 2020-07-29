@@ -1,5 +1,7 @@
 {
   "skipToContent": "Passer au contenu",
+  "openMenu": "Ouvrir le menu",
+  "closeMenu": "Fermer le menu",
   "Home.dashboard": "Tableau de bord",
   "Home.team": "Équipe",
   "Home.projects": "Projets",
@@ -9,6 +11,5 @@
   "Home.settings": "Paramètres",
   "Home.signOut": "Se déconnecter",
   "Home.notifications": "Notifications",
-  "Home.userMenu": "Menu utilisateur",
-  "Home.openMenu": "Ouvrir le menu"
+  "Home.userMenu": "Menu utilisateur"
 }
