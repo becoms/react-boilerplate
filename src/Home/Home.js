@@ -1,5 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
+import { SkipNavContent, SkipNavLink } from "@reach/skip-nav";
+import "@reach/skip-nav/styles.css";
 import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
@@ -59,6 +61,9 @@ export default function Home() {
   return (
     <Fragment>
       <Helmet title={t("Home.dashboard")} />
+      <SkipNavLink>
+        <Trans i18nKey="skipToContent">Skip to content</Trans>
+      </SkipNavLink>
 
       {/* Page header */}
       <div tw="bg-gray-800 pb-32">
@@ -305,6 +310,8 @@ export default function Home() {
             </div>
           </div>
         </nav>
+
+        <SkipNavContent />
 
         <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
           <h1 tw="text-3xl leading-9 font-bold text-white">
