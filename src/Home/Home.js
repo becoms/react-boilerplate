@@ -63,12 +63,7 @@ export default function Home() {
                       tw="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
                       aria-label="Notifications"
                     >
-                      <svg
-                        tw="h-6 w-6"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
+                      <svg tw="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
@@ -110,9 +105,7 @@ export default function Home() {
                             href="/profile"
                             tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           >
-                            <Trans i18nKey="Home.yourProfile">
-                              Your profile
-                            </Trans>
+                            <Trans i18nKey="Home.yourProfile">Your profile</Trans>
                           </a>
                           <a
                             href="/settings"
@@ -135,12 +128,7 @@ export default function Home() {
                   {/* Mobile menu button  */}
                   <button tw="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white">
                     {/* Menu open: "hidden", Menu closed: "block" */}
-                    <svg
-                      tw="block h-6 w-6"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg tw="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -149,12 +137,7 @@ export default function Home() {
                       />
                     </svg>
                     {/* Menu open: "block", Menu closed: "hidden" */}
-                    <svg
-                      tw="hidden h-6 w-6"
-                      stroke="currentColor"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg tw="hidden h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -215,9 +198,7 @@ export default function Home() {
                   />
                 </div>
                 <div tw="ml-3">
-                  <div tw="text-base font-medium leading-none text-white">
-                    Tom Cook
-                  </div>
+                  <div tw="text-base font-medium leading-none text-white">Tom Cook</div>
                   <div tw="mt-1 text-sm font-medium leading-none text-gray-400">
                     tom@example.com
                   </div>
