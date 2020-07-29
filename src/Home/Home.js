@@ -11,28 +11,10 @@ import { Trans, useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import tw from "twin.macro";
 
-const useDisclosure = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
-  const onToggle = useCallback(() => {
-    setIsOpen((isOpen) => !isOpen);
-  }, []);
-  const onClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-  const onOpen = useCallback(() => {
-    setIsOpen(true);
-  }, []);
-  return {
-    isOpen,
-    onToggle,
-    onClose,
-    onOpen,
-  };
-};
-
 export default function Home() {
   const { t } = useTranslation();
-  const { isOpen: isMenuOpen, onToggle: onMenuToggle } = useDisclosure();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const onMenuToggle = useCallback(() => setIsMenuOpen((isMenuOpen) => !isMenuOpen), []);
 
   return (
     <Fragment>
