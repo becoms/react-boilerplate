@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Fragment, useCallback, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
 import tw from "twin.macro";
@@ -24,10 +24,38 @@ const useDisclosure = (initialState = false) => {
   };
 };
 
+const useOnClickOutside = (ref, handler) => {
+  useEffect(() => {
+    const listener = (event) => {
+      if (!ref.current || ref.current.contains(event.target)) {
+        return;
+      }
+
+      handler(event);
+    };
+
+    document.addEventListener("mousedown", listener);
+    document.addEventListener("touchstart", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
+    };
+  }, [ref, handler]);
+};
+
 export default function Home() {
   const { t } = useTranslation();
   const { isOpen: isMenuOpen, onToggle: onMenuToggle } = useDisclosure();
-  const { isOpen: isProfileMenuOpen, onToggle: onProfileMenuToggle } = useDisclosure();
+
+  const {
+    isOpen: isProfileMenuOpen,
+    onToggle: onProfileMenuToggle,
+    onClose: onProfileMenuClose,
+  } = useDisclosure();
+  const profileMenuRef = useRef();
+  useOnClickOutside(profileMenuRef, onProfileMenuClose);
+
   return (
     <Fragment>
       <Helmet title={t("Home.dashboard")} />
@@ -105,7 +133,7 @@ export default function Home() {
                 </button>
 
                 {/* Profile dropdown  */}
-                <div tw="ml-3 relative">
+                <div tw="ml-3 relative" ref={profileMenuRef}>
                   {/* Profile button */}
                   <button
                     tw="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
