@@ -6,21 +6,19 @@ import "@reach/menu-button/styles.css";
 import { SkipNavContent, SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { Fragment, useCallback, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import tw from "twin.macro";
 
-export default function Home() {
+export const Layout = ({ header, children }) => {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuToggle = useCallback(() => setIsMenuOpen((isMenuOpen) => !isMenuOpen), []);
 
   return (
     <Fragment>
-      <Helmet title={t("Home.dashboard")} />
       <SkipNavLink>
-        <Trans i18nKey="skipToContent">Skip to content</Trans>
+        <Trans i18nKey="Layout.skipToContent">Skip to content</Trans>
       </SkipNavLink>
 
       {/* Page header */}
@@ -48,35 +46,35 @@ export default function Home() {
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Home.dashboard">Dashboard</Trans>
+                      <Trans i18nKey="Layout.dashboard">Dashboard</Trans>
                     </NavLink>
                     <NavLink
                       to="/team"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Home.team">Team</Trans>
+                      <Trans i18nKey="Layout.team">Team</Trans>
                     </NavLink>
                     <NavLink
                       to="/projects"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Home.projects">Projects</Trans>
+                      <Trans i18nKey="Layout.projects">Projects</Trans>
                     </NavLink>
                     <NavLink
                       to="/calendar"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Home.calendar">Calendar</Trans>
+                      <Trans i18nKey="Layout.calendar">Calendar</Trans>
                     </NavLink>
                     <NavLink
                       to="/reports"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Home.reports">Reports</Trans>
+                      <Trans i18nKey="Layout.reports">Reports</Trans>
                     </NavLink>
                   </div>
                 </div>
@@ -86,7 +84,7 @@ export default function Home() {
                   {/* Notifications button */}
                   <button
                     tw="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
-                    aria-label={t("Home.notifications")}
+                    aria-label={t("Layout.notifications")}
                   >
                     <svg tw="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                       <path
@@ -106,7 +104,11 @@ export default function Home() {
                           {/* Profile button */}
                           <MenuButton
                             tw="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
-                            aria-label={isExpanded ? t("closeProfileMenu") : t("openProfileMenu")}
+                            aria-label={
+                              isExpanded
+                                ? t("Layout.closeProfileMenu")
+                                : t("Layout.openProfileMenu")
+                            }
                           >
                             <img
                               tw="h-8 w-8 rounded-full"
@@ -142,7 +144,7 @@ export default function Home() {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Home.yourProfile">Your profile</Trans>
+                                <Trans i18nKey="Layout.yourProfile">Your profile</Trans>
                               </MenuLink>
                               <MenuLink
                                 as={NavLink}
@@ -150,7 +152,7 @@ export default function Home() {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Home.settings">Settings</Trans>
+                                <Trans i18nKey="Layout.settings">Settings</Trans>
                               </MenuLink>
                               <MenuLink
                                 as={NavLink}
@@ -158,7 +160,7 @@ export default function Home() {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Home.signOut">Sign out</Trans>
+                                <Trans i18nKey="Layout.signOut">Sign out</Trans>
                               </MenuLink>
                             </MenuItems>
                           </MenuPopover>
@@ -171,7 +173,7 @@ export default function Home() {
                 {/* Mobile menu button */}
                 <DisclosureButton
                   tw="inline-flex md:hidden inline-flex items-center justify-center -mr-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                  aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
+                  aria-label={isMenuOpen ? t("Layout.closeMenu") : t("Layout.openMenu")}
                 >
                   <svg
                     tw="h-6 w-6"
@@ -218,7 +220,7 @@ export default function Home() {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Home.dashboard">Dashboard</Trans>
+                  <Trans i18nKey="Layout.dashboard">Dashboard</Trans>
                 </NavLink>
                 <NavLink
                   to="/team"
@@ -228,7 +230,7 @@ export default function Home() {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Home.team">Team</Trans>
+                  <Trans i18nKey="Layout.team">Team</Trans>
                 </NavLink>
                 <NavLink
                   to="/projects"
@@ -238,7 +240,7 @@ export default function Home() {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Home.projects">Projects</Trans>
+                  <Trans i18nKey="Layout.projects">Projects</Trans>
                 </NavLink>
                 <NavLink
                   to="/calendar"
@@ -248,7 +250,7 @@ export default function Home() {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Home.calendar">Calendar</Trans>
+                  <Trans i18nKey="Layout.calendar">Calendar</Trans>
                 </NavLink>
                 <NavLink
                   to="/reports"
@@ -258,7 +260,7 @@ export default function Home() {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Home.reports">Reports</Trans>
+                  <Trans i18nKey="Layout.reports">Reports</Trans>
                 </NavLink>
               </div>
 
@@ -285,7 +287,7 @@ export default function Home() {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Home.yourProfile">Your profile</Trans>
+                    <Trans i18nKey="Layout.yourProfile">Your profile</Trans>
                   </NavLink>
                   <NavLink
                     to="/settings"
@@ -295,7 +297,7 @@ export default function Home() {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Home.settings">Settings</Trans>
+                    <Trans i18nKey="Layout.settings">Settings</Trans>
                   </NavLink>
                   <NavLink
                     to="/sign-out"
@@ -305,7 +307,7 @@ export default function Home() {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Home.signOut">Sign out</Trans>
+                    <Trans i18nKey="Layout.signOut">Sign out</Trans>
                   </NavLink>
                 </div>
               </div>
@@ -315,19 +317,12 @@ export default function Home() {
 
         <SkipNavContent />
 
-        <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
-          <h1 tw="text-3xl leading-9 font-bold text-white">
-            <Trans i18nKey="Home.dashboard">Dashboard</Trans>
-          </h1>
-        </header>
+        <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">{header}</header>
       </div>
 
       <main tw="max-w-7xl mx-auto -mt-32 px-4 sm:px-6 lg:px-8 pb-12">
-        <section tw="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-          {/* Replace with your content */}
-          <div tw="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-        </section>
+        <section tw="bg-white rounded-lg shadow px-5 py-6 sm:px-6">{children}</section>
       </main>
     </Fragment>
   );
-}
+};

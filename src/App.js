@@ -5,7 +5,7 @@ import { Helmet, HelmetProvider } from "react-helmet-async";
 import { I18nextProvider } from "react-i18next";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import tw from "twin.macro";
-import Home from "./Home/Home";
+import Dashboard from "./Dashboard/Dashboard";
 import i18n from "./i18n";
 import NotFound from "./NotFound/NotFound";
 
@@ -19,7 +19,7 @@ const App = () => {
           <Router>
             <Switch>
               <Route path="/" exact>
-                <Home />
+                <Dashboard />
               </Route>
               <Route path="*" exact>
                 <NotFound />
@@ -30,6 +30,6 @@ const App = () => {
       </I18nextProvider>
     </StrictMode>
   );
-}
+};
 
 export default App;

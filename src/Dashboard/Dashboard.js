@@ -6,15 +6,15 @@ import { Trans, useTranslation } from "react-i18next";
 import "twin.macro";
 import { Layout } from "../common/Layout";
 
-const NotFound = () => {
+const Dashboard = () => {
   const { t } = useTranslation();
   return (
     <Fragment>
-      <Helmet title={t("NotFound.notFound")} />
+      <Helmet title={t("Dashboard.dashboard")} />
       <Layout
         header={
           <h1 tw="text-3xl leading-9 font-bold text-white">
-            <Trans i18nKey="NotFound.notFound">404: Page not found</Trans>
+            <Trans i18nKey="Dashboard.dashboard">Dashboard</Trans>
           </h1>
         }
       >
@@ -25,4 +25,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default Dashboard;
