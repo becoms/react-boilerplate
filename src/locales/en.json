@@ -13,6 +13,7 @@
   "Layout.settings": "Settings",
   "Layout.signOut": "Sign out",
   "Layout.notifications": "Notifications",
-  "Dashboard.dashboard": "Dashboard",
-  "NotFound.notFound": "404: Page not found"
+  "Dashboard.title": "Dashboard",
+  "NotFound.title": "404: Page not found",
+  "Breadcrumbs.back": "Back"
 }

@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import { Disclosure, DisclosureButton, DisclosurePanel } from "@reach/disclosure";
 import { Menu, MenuButton, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
-import { SkipNavContent, SkipNavLink } from "@reach/skip-nav";
+import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { Fragment, useCallback, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
@@ -18,7 +18,7 @@ export const Layout = ({ header, children }) => {
   return (
     <Fragment>
       <SkipNavLink>
-        <Trans i18nKey="Layout.skipToContent">Skip to content</Trans>
+        <Trans i18nKey="Layout.skipToContent" />
       </SkipNavLink>
 
       {/* Page header */}
@@ -46,35 +46,35 @@ export const Layout = ({ header, children }) => {
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Layout.dashboard">Dashboard</Trans>
+                      <Trans i18nKey="Layout.dashboard" />
                     </NavLink>
                     <NavLink
                       to="/team"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Layout.team">Team</Trans>
+                      <Trans i18nKey="Layout.team" />
                     </NavLink>
                     <NavLink
                       to="/projects"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Layout.projects">Projects</Trans>
+                      <Trans i18nKey="Layout.projects" />
                     </NavLink>
                     <NavLink
                       to="/calendar"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Layout.calendar">Calendar</Trans>
+                      <Trans i18nKey="Layout.calendar" />
                     </NavLink>
                     <NavLink
                       to="/reports"
                       tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
                       css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
                     >
-                      <Trans i18nKey="Layout.reports">Reports</Trans>
+                      <Trans i18nKey="Layout.reports" />
                     </NavLink>
                   </div>
                 </div>
@@ -117,16 +117,6 @@ export const Layout = ({ header, children }) => {
                             />
                           </MenuButton>
 
-                          {/*
-                    Profile dropdown panel, show/hide based on dropdown state.
-
-                    Entering: "transition ease-out duration-100"
-                      From: "transform opacity-0 scale-95"
-                      To: "transform opacity-100 scale-100"
-                    Leaving: "transition ease-in duration-75"
-                      From: "transform opacity-100 scale-100"
-                      To: "transform opacity-0 scale-95"
-                  */}
                           <MenuPopover
                             portal={false}
                             tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white transition ease-in-out duration-100"
@@ -144,7 +134,7 @@ export const Layout = ({ header, children }) => {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Layout.yourProfile">Your profile</Trans>
+                                <Trans i18nKey="Layout.yourProfile" />
                               </MenuLink>
                               <MenuLink
                                 as={NavLink}
@@ -152,7 +142,7 @@ export const Layout = ({ header, children }) => {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Layout.settings">Settings</Trans>
+                                <Trans i18nKey="Layout.settings" />
                               </MenuLink>
                               <MenuLink
                                 as={NavLink}
@@ -160,7 +150,7 @@ export const Layout = ({ header, children }) => {
                                 tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
                                 css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
                               >
-                                <Trans i18nKey="Layout.signOut">Sign out</Trans>
+                                <Trans i18nKey="Layout.signOut" />
                               </MenuLink>
                             </MenuItems>
                           </MenuPopover>
@@ -220,7 +210,7 @@ export const Layout = ({ header, children }) => {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Layout.dashboard">Dashboard</Trans>
+                  <Trans i18nKey="Layout.dashboard" />
                 </NavLink>
                 <NavLink
                   to="/team"
@@ -230,7 +220,7 @@ export const Layout = ({ header, children }) => {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Layout.team">Team</Trans>
+                  <Trans i18nKey="Layout.team" />
                 </NavLink>
                 <NavLink
                   to="/projects"
@@ -240,7 +230,7 @@ export const Layout = ({ header, children }) => {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Layout.projects">Projects</Trans>
+                  <Trans i18nKey="Layout.projects" />
                 </NavLink>
                 <NavLink
                   to="/calendar"
@@ -250,7 +240,7 @@ export const Layout = ({ header, children }) => {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Layout.calendar">Calendar</Trans>
+                  <Trans i18nKey="Layout.calendar" />
                 </NavLink>
                 <NavLink
                   to="/reports"
@@ -260,7 +250,7 @@ export const Layout = ({ header, children }) => {
                     "&.active:hover": tw`bg-gray-900`,
                   }}
                 >
-                  <Trans i18nKey="Layout.reports">Reports</Trans>
+                  <Trans i18nKey="Layout.reports" />
                 </NavLink>
               </div>
 
@@ -287,7 +277,7 @@ export const Layout = ({ header, children }) => {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Layout.yourProfile">Your profile</Trans>
+                    <Trans i18nKey="Layout.yourProfile" />
                   </NavLink>
                   <NavLink
                     to="/settings"
@@ -297,7 +287,7 @@ export const Layout = ({ header, children }) => {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Layout.settings">Settings</Trans>
+                    <Trans i18nKey="Layout.settings" />
                   </NavLink>
                   <NavLink
                     to="/sign-out"
@@ -307,7 +297,7 @@ export const Layout = ({ header, children }) => {
                       "&.active:hover": tw`bg-gray-900`,
                     }}
                   >
-                    <Trans i18nKey="Layout.signOut">Sign out</Trans>
+                    <Trans i18nKey="Layout.signOut" />
                   </NavLink>
                 </div>
               </div>
@@ -315,14 +305,10 @@ export const Layout = ({ header, children }) => {
           </Disclosure>
         </nav>
 
-        <SkipNavContent />
-
         <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">{header}</header>
       </div>
 
-      <main tw="max-w-7xl mx-auto -mt-32 px-4 sm:px-6 lg:px-8 pb-12">
-        <section tw="bg-white rounded-lg shadow px-5 py-6 sm:px-6">{children}</section>
-      </main>
+      <main tw="max-w-7xl mx-auto -mt-32 pb-12">{children}</main>
     </Fragment>
   );
 };
