@@ -5,6 +5,8 @@
   "dependencies": {
     "@craco/craco": "^5.7.0",
     "@emotion/core": "^10.0.35",
+    "@reach/auto-id": "^0.11.2",
+    "@reach/dialog": "^0.11.2",
     "@reach/disclosure": "^0.11.2",
     "@reach/menu-button": "^0.11.2",
     "@reach/skip-nav": "^0.11.2",
@@ -23,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "react-snap": "^1.23.0",
+    "react-spring": "^8.0.27",
     "tailwindcss": "^1.8.12",
     "twin.macro": "^1.10.0"
   },

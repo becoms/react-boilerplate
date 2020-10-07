@@ -1,314 +1,312 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Disclosure, DisclosureButton, DisclosurePanel } from "@reach/disclosure";
+import { useId } from "@reach/auto-id";
+import { DialogContent, DialogOverlay } from "@reach/dialog";
+import "@reach/dialog/styles.css";
 import { Menu, MenuButton, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { Fragment, useCallback, useState } from "react";
-import { Trans, useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { Link, NavLink } from "react-router-dom";
+import { animated, useTransition } from "react-spring";
 import tw from "twin.macro";
+import {
+  BellOutlineIcon,
+  CalendarOutlineIcon,
+  ChartBarOutlineIcon,
+  FolderOutlineIcon,
+  HomeOutlineIcon,
+  InboxOutlineIcon,
+  MenuAlt2OutlineIcon,
+  SearchSolidIcon,
+  UsersOutlineIcon,
+  XOutlineIcon,
+} from "./Icons";
 
-export const Layout = ({ header, children }) => {
+const SearchBar = () => {
   const { t } = useTranslation();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const onMenuToggle = useCallback(() => setIsMenuOpen((isMenuOpen) => !isMenuOpen), []);
+  const id = useId();
+  return (
+    <form tw="w-full flex md:ml-0" action="#" method="GET">
+      <label htmlFor={id} tw="sr-only">
+        {t("Layout.search")}
+      </label>
+      <div tw="relative w-full text-gray-400 focus-within:text-gray-600">
+        <div tw="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+          <SearchSolidIcon tw="h-5 w-5" />
+        </div>
+        <input
+          id={id}
+          tw="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 placeholder-gray-500 focus:(outline-none placeholder-gray-400) sm:text-sm"
+          placeholder={t("Layout.search")}
+          type="search"
+        />
+      </div>
+    </form>
+  );
+};
+
+const ProfileDropdown = () => {
+  const { t } = useTranslation();
+  return (
+    <div tw="relative">
+      <Menu>
+        {({ isExpanded }) => (
+          <Fragment>
+            {/* Profile button */}
+            <MenuButton
+              tw="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline"
+              aria-label={isExpanded ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
+            >
+              <img
+                tw="h-8 w-8 rounded-full"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </MenuButton>
+            {/* Profile dropdown panel, show/hide based on dropdown state. */}
+            <MenuPopover
+              portal={false}
+              tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transition ease-in-out duration-100"
+              css={[
+                isExpanded
+                  ? tw`transform opacity-100 scale-100 pointer-events-auto`
+                  : tw`transform opacity-0 scale-95 pointer-events-none`,
+                { "&[hidden]": tw`block` },
+              ]}
+            >
+              <MenuItems tw="border-none py-1 rounded-md bg-white shadow-xs">
+                <MenuLink
+                  as={Link}
+                  to="/profile"
+                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                >
+                  {t("Layout.yourProfile")}
+                </MenuLink>
+
+                <MenuLink
+                  as={Link}
+                  to="/settings"
+                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                >
+                  {t("Layout.settings")}
+                </MenuLink>
+
+                <MenuLink
+                  as={Link}
+                  to="/logout"
+                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+                >
+                  {t("Layout.signOut")}
+                </MenuLink>
+              </MenuItems>
+            </MenuPopover>
+          </Fragment>
+        )}
+      </Menu>
+    </div>
+  );
+};
+
+const NotificationButton = () => {
+  const { t } = useTranslation();
+  return (
+    <button
+      tw="p-1 text-gray-400 rounded-full hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:shadow-outline focus:text-gray-500"
+      aria-label={t("Layout.notifications")}
+    >
+      <BellOutlineIcon tw="h-6 w-6" />
+    </button>
+  );
+};
+
+const OpenSidebarButton = (props) => {
+  const { t } = useTranslation();
+  return (
+    <button
+      tw="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600"
+      aria-label={t("Layout.openSidebar")}
+      {...props}
+    >
+      <MenuAlt2OutlineIcon tw="h-6 w-6" />
+    </button>
+  );
+};
+
+const CloseSidebarButton = (props) => {
+  const { t } = useTranslation();
+  return (
+    <button
+      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+      aria-label={t("Layout.closeSidebar")}
+      {...props}
+    >
+      <XOutlineIcon tw="h-6 w-6 text-white" />
+    </button>
+  );
+};
+
+const NavBar = ({ start, center, end }) => {
+  return (
+    <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+      {start}
+      <nav tw="flex-1 px-4 flex justify-between">
+        <div tw="flex-1 flex">{center}</div>
+        <div tw="ml-4 flex items-center md:ml-6 space-x-3">{end}</div>
+      </nav>
+    </header>
+  );
+};
+
+const SidebarNavLink = ({ Icon, children, ...props }) => {
+  return (
+    <NavLink
+      exact
+      className="group"
+      tw="flex items-center px-2 py-2 text-base md:text-sm leading-6 md:leading-5 font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:bg-gray-200 transition ease-in-out duration-150"
+      css={{ "&.active": tw`text-gray-900 bg-gray-100`, "&.active > svg": tw`text-gray-500` }}
+      {...props}
+    >
+      <Icon tw="mr-4 md:mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150" />
+      {children}
+    </NavLink>
+  );
+};
+
+const SidebarHeader = () => {
+  return (
+    <div tw="flex-shrink-0 flex items-center px-4">
+      <img
+        tw="h-8 w-auto"
+        src="https://tailwindui.com/img/logos/workflow-logo-on-white.svg"
+        alt="Workflow"
+      />
+    </div>
+  );
+};
+
+const SidebarContent = () => {
+  const { t } = useTranslation();
+  return (
+    <Fragment>
+      <SidebarNavLink to="/" Icon={HomeOutlineIcon}>
+        {t("Layout.dashboard")}
+      </SidebarNavLink>
+
+      <SidebarNavLink to="/team" Icon={UsersOutlineIcon}>
+        {t("Layout.team")}
+      </SidebarNavLink>
+
+      <SidebarNavLink to="/projects" Icon={FolderOutlineIcon}>
+        {t("Layout.projects")}
+      </SidebarNavLink>
+
+      <SidebarNavLink to="/calendar" Icon={CalendarOutlineIcon}>
+        {t("Layout.calendar")}
+      </SidebarNavLink>
+
+      <SidebarNavLink to="/documents" Icon={InboxOutlineIcon}>
+        {t("Layout.documents")}
+      </SidebarNavLink>
+
+      <SidebarNavLink to="/reports" Icon={ChartBarOutlineIcon}>
+        {t("Layout.reports")}
+      </SidebarNavLink>
+    </Fragment>
+  );
+};
+
+const AnimatedDialogContent = animated(DialogContent);
+
+export const Layout = ({ children }) => {
+  const { t } = useTranslation();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
+  const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
+
+  const transitions = useTransition(isSidebarOpen, null, {
+    from: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
+    enter: { opacity: 1, transform: "translate3d(0%, 0, 0)" },
+    leave: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
+  });
 
   return (
     <Fragment>
-      <SkipNavLink>
-        <Trans i18nKey="Layout.skipToContent" />
-      </SkipNavLink>
-
-      {/* Page header */}
-      <div tw="bg-gray-800 pb-32">
-        {/* Primary and mobile navigation */}
-        <nav tw="bg-gray-800">
-          {/* Primary navigation */}
-          <Disclosure open={isMenuOpen} onChange={onMenuToggle}>
-            <div tw="max-w-7xl mx-auto sm:px-6 lg:px-8">
-              <div tw="border-b border-gray-700 flex items-center justify-between h-16 px-4 sm:px-0">
-                {/* Logo & Menu */}
-                <div tw="flex items-center">
-                  {/* Logo */}
-                  <img
-                    tw="h-8 w-8 flex-shrink-0"
-                    src="https://tailwindui.com/img/logos/workflow-mark-on-dark.svg"
-                    alt="Workflow logo"
-                  />
-
-                  {/* Menu */}
-                  <div tw="hidden md:flex ml-10 items-baseline space-x-4">
-                    <NavLink
-                      to="/"
-                      exact
-                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
-                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
-                    >
-                      <Trans i18nKey="Layout.dashboard" />
-                    </NavLink>
-                    <NavLink
-                      to="/team"
-                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
-                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
-                    >
-                      <Trans i18nKey="Layout.team" />
-                    </NavLink>
-                    <NavLink
-                      to="/projects"
-                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
-                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
-                    >
-                      <Trans i18nKey="Layout.projects" />
-                    </NavLink>
-                    <NavLink
-                      to="/calendar"
-                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(bg-gray-700) focus:(outline-none bg-gray-700)"
-                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
-                    >
-                      <Trans i18nKey="Layout.calendar" />
-                    </NavLink>
-                    <NavLink
-                      to="/reports"
-                      tw="px-3 py-2 rounded-md text-sm font-medium text-white hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                      css={{ "&.active": tw`bg-gray-900`, "&.active:hover": tw`bg-gray-900` }}
-                    >
-                      <Trans i18nKey="Layout.reports" />
-                    </NavLink>
-                  </div>
-                </div>
-
-                {/* Right actions */}
-                <div tw="hidden md:flex ml-4 items-center md:ml-6">
-                  {/* Notifications button */}
-                  <button
-                    tw="p-1 border-2 border-transparent text-gray-400 rounded-full hover:text-white focus:outline-none focus:text-white focus:bg-gray-700"
-                    aria-label={t("Layout.notifications")}
-                  >
-                    <svg tw="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                      />
-                    </svg>
-                  </button>
-
-                  {/* Profile dropdown  */}
-                  <div tw="ml-3 relative">
-                    <Menu>
-                      {({ isExpanded }) => (
-                        <Fragment>
-                          {/* Profile button */}
-                          <MenuButton
-                            tw="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
-                            aria-label={
-                              isExpanded
-                                ? t("Layout.closeProfileMenu")
-                                : t("Layout.openProfileMenu")
-                            }
-                          >
-                            <img
-                              tw="h-8 w-8 rounded-full"
-                              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                              alt=""
-                            />
-                          </MenuButton>
-
-                          <MenuPopover
-                            portal={false}
-                            tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white transition ease-in-out duration-100"
-                            css={{
-                              ...(isExpanded
-                                ? tw`transform opacity-100 scale-100 pointer-events-auto`
-                                : tw`transform opacity-0 scale-95 pointer-events-none`),
-                              "&[hidden]": tw`block`,
-                            }}
-                          >
-                            <MenuItems tw="border-none p-0">
-                              <MenuLink
-                                as={NavLink}
-                                to="/profile"
-                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
-                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                              >
-                                <Trans i18nKey="Layout.yourProfile" />
-                              </MenuLink>
-                              <MenuLink
-                                as={NavLink}
-                                to="/settings"
-                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
-                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                              >
-                                <Trans i18nKey="Layout.settings" />
-                              </MenuLink>
-                              <MenuLink
-                                as={NavLink}
-                                to="/sign-out"
-                                tw="block px-4 py-2 text-sm text-gray-700 hover:(bg-gray-100 text-gray-700)"
-                                css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                              >
-                                <Trans i18nKey="Layout.signOut" />
-                              </MenuLink>
-                            </MenuItems>
-                          </MenuPopover>
-                        </Fragment>
-                      )}
-                    </Menu>
-                  </div>
-                </div>
-
-                {/* Mobile menu button */}
-                <DisclosureButton
-                  tw="inline-flex md:hidden inline-flex items-center justify-center -mr-2 p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-white"
-                  aria-label={isMenuOpen ? t("Layout.closeMenu") : t("Layout.openMenu")}
+      <SkipNavLink>{t("Layout.skipToContent")}</SkipNavLink>
+      <div tw="h-screen flex overflow-hidden bg-gray-100">
+        {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
+        <div tw="md:hidden">
+          {transitions.map(
+            ({ item, key, props: styles }) =>
+              item && (
+                <DialogOverlay
+                  key={key}
+                  tw="fixed inset-0 flex z-40 bg-transparent"
+                  onDismiss={closeSidebar}
                 >
-                  <svg
-                    tw="h-6 w-6"
-                    css={isMenuOpen ? tw`hidden` : tw`block`}
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                  {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
+                  <animated.div tw="fixed inset-0" style={{ opacity: styles.opacity }}>
+                    <div tw="absolute inset-0 bg-gray-600 opacity-75" />
+                  </animated.div>
+
+                  {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
+                  <AnimatedDialogContent
+                    tw="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white m-0 px-0"
+                    style={{ transform: styles.transform }}
+                    aria-label={t("Layout.sidebar")}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                  <svg
-                    tw="h-6 w-6"
-                    css={isMenuOpen ? tw`block` : tw`hidden`}
-                    stroke="currentColor"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </DisclosureButton>
+                    <div tw="absolute top-0 right-0 -mr-14 p-1">
+                      <CloseSidebarButton onClick={closeSidebar} />
+                    </div>
+                    <SidebarHeader />
+                    <div tw="mt-5 flex-1 h-0 overflow-y-auto">
+                      <nav tw="px-2 space-y-1">
+                        <SidebarContent />
+                      </nav>
+                    </div>
+                  </AnimatedDialogContent>
+                  <div tw="flex-shrink-0 w-14">
+                    {/* Dummy element to force sidebar to shrink to fit close icon */}
+                  </div>
+                </DialogOverlay>
+              )
+          )}
+        </div>
+
+        {/* Static sidebar for desktop */}
+        <div tw="hidden md:flex md:flex-shrink-0">
+          <div tw="flex flex-col w-64">
+            {/* Sidebar component, swap this element with another sidebar if you like */}
+            <div tw="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
+              <SidebarHeader />
+              <div tw="mt-5 flex-grow flex flex-col">
+                <nav tw="flex-1 px-2 bg-white space-y-1">
+                  <SidebarContent />
+                </nav>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Mobile menu */}
-            <DisclosurePanel tw="border-b border-gray-700 md:hidden">
-              {/* Primary mobile menu */}
-              <div tw="px-2 py-3 sm:px-3 space-y-1">
-                <NavLink
-                  to="/"
-                  exact
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                  css={{
-                    "&.active": tw`text-white bg-gray-900`,
-                    "&.active:hover": tw`bg-gray-900`,
-                  }}
-                >
-                  <Trans i18nKey="Layout.dashboard" />
-                </NavLink>
-                <NavLink
-                  to="/team"
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                  css={{
-                    "&.active": tw`text-white bg-gray-900`,
-                    "&.active:hover": tw`bg-gray-900`,
-                  }}
-                >
-                  <Trans i18nKey="Layout.team" />
-                </NavLink>
-                <NavLink
-                  to="/projects"
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                  css={{
-                    "&.active": tw`text-white bg-gray-900`,
-                    "&.active:hover": tw`bg-gray-900`,
-                  }}
-                >
-                  <Trans i18nKey="Layout.projects" />
-                </NavLink>
-                <NavLink
-                  to="/calendar"
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                  css={{
-                    "&.active": tw`text-white bg-gray-900`,
-                    "&.active:hover": tw`bg-gray-900`,
-                  }}
-                >
-                  <Trans i18nKey="Layout.calendar" />
-                </NavLink>
-                <NavLink
-                  to="/reports"
-                  tw="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                  css={{
-                    "&.active": tw`text-white bg-gray-900`,
-                    "&.active:hover": tw`bg-gray-900`,
-                  }}
-                >
-                  <Trans i18nKey="Layout.reports" />
-                </NavLink>
-              </div>
-
-              {/* User profile menu */}
-              <div tw="pt-4 pb-3 border-t border-gray-700">
-                <div tw="flex items-center px-5">
-                  <img
-                    tw="h-10 w-10 rounded-full flex-shrink-0"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                  <div tw="ml-3 space-y-1">
-                    <div tw="text-base font-medium leading-none text-white">Tom Cook</div>
-                    <div tw="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
-                  </div>
-                </div>
-
-                <div tw="mt-3 px-2 space-y-1">
-                  <NavLink
-                    to="/profile"
-                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                    css={{
-                      "&.active": tw`text-white bg-gray-900`,
-                      "&.active:hover": tw`bg-gray-900`,
-                    }}
-                  >
-                    <Trans i18nKey="Layout.yourProfile" />
-                  </NavLink>
-                  <NavLink
-                    to="/settings"
-                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                    css={{
-                      "&.active": tw`text-white bg-gray-900`,
-                      "&.active:hover": tw`bg-gray-900`,
-                    }}
-                  >
-                    <Trans i18nKey="Layout.settings" />
-                  </NavLink>
-                  <NavLink
-                    to="/sign-out"
-                    tw="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:(text-white bg-gray-700) focus:(outline-none text-white bg-gray-700)"
-                    css={{
-                      "&.active": tw`text-white bg-gray-900`,
-                      "&.active:hover": tw`bg-gray-900`,
-                    }}
-                  >
-                    <Trans i18nKey="Layout.signOut" />
-                  </NavLink>
-                </div>
-              </div>
-            </DisclosurePanel>
-          </Disclosure>
-        </nav>
-
-        <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">{header}</header>
+        <div tw="flex flex-col w-0 flex-1 overflow-hidden">
+          <NavBar
+            start={<OpenSidebarButton tw="md:hidden" onClick={openSidebar} />}
+            center={<SearchBar />}
+            end={
+              <Fragment>
+                <NotificationButton />
+                <ProfileDropdown />
+              </Fragment>
+            }
+          />
+          {children}
+        </div>
       </div>
-
-      <main tw="max-w-7xl mx-auto -mt-32 pb-12 px-4 sm:px-6 lg:px-8">{children}</main>
     </Fragment>
   );
 };
