@@ -308,7 +308,7 @@ export const Layout = ({ header, children }) => {
         <header tw="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">{header}</header>
       </div>
 
-      <main tw="max-w-7xl mx-auto -mt-32 pb-12">{children}</main>
+      <main tw="max-w-7xl mx-auto -mt-32 pb-12 px-4 sm:px-6 lg:px-8">{children}</main>
     </Fragment>
   );
 };

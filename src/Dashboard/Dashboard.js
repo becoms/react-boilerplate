@@ -33,12 +33,9 @@ const Dashboard = () => {
           </Fragment>
         }
       >
-        {/* Replace with your content */}
-        <div tw="px-4 sm:px-6 lg:px-8">
-          <section tw="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-            <div tw="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-          </section>
-        </div>
+        <section tw="bg-white rounded-lg shadow py-6 px-5 sm:px-6">
+          <div tw="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+        </section>
       </Layout>
     </Fragment>
   );
