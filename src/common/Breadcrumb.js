@@ -1,16 +1,19 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import styled from "@emotion/styled/macro";
 import { Fragment } from "react";
 import { Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 import "twin.macro";
-import tw from "twin.macro";
 import { ChevronLeftIcon, ChevronRightIcon } from "./Icons";
 
-const BreadcrumbLink = styled(Link)(
-  tw`text-sm leading-5 font-medium text-gray-400 hover:text-gray-200 transition duration-150 ease-in-out`
-);
+const BreadcrumbLink = (props) => {
+  return (
+    <Link
+      tw="text-sm leading-5 font-medium text-gray-400 hover:text-gray-200 transition duration-150 ease-in-out"
+      {...props}
+    />
+  );
+};
 
 export const Breadcrumb = ({ items }) => {
   // TODO: add breadcrumb metadata
