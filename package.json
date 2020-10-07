@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^5.7.0",
     "@emotion/core": "^10.0.35",
-    "@emotion/styled": "^10.0.27",
     "@reach/disclosure": "^0.11.2",
     "@reach/menu-button": "^0.11.2",
     "@reach/skip-nav": "^0.11.2",
@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
     "@testing-library/user-event": "^12.1.7",
+    "babel-plugin-emotion": "^10.0.33",
     "i18next": "^19.8.2",
     "i18next-browser-languagedetector": "^6.0.1",
     "react": "^16.13.1",
@@ -26,10 +27,10 @@
     "twin.macro": "^1.10.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "postbuild": "react-snap",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
