@@ -14,10 +14,10 @@ const PageSkeleton = () => {
       header={
         <Fragment>
           <div tw="flex space-x-4">
-            <div tw="h-4 my-0.5 bg-gray-700 w-16 rounded-md" />
-            <div tw="h-4 my-0.5 bg-gray-700 w-16 rounded-md hidden sm:block" />
+            <div tw="h-4 my-0.5 bg-gray-700 w-16 rounded-md animate-pulse" />
+            <div tw="h-4 my-0.5 bg-gray-700 w-16 rounded-md hidden sm:block animate-pulse" />
           </div>
-          <div tw="h-6 sm:h-8 mb-0.5 mt-3 bg-gray-700 w-1/3 rounded-md" />
+          <div tw="h-6 sm:h-8 mb-0.5 mt-2.5 bg-gray-700 w-1/3 rounded-md animate-pulse" />
         </Fragment>
       }
     >

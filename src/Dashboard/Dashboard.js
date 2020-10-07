@@ -27,13 +27,9 @@ const Dashboard = () => {
 
             <SkipNavContent />
 
-            <div tw="mt-2 md:flex md:justify-between">
-              <div tw="flex-1 min-w-0">
-                <h1 tw="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate">
-                  <Trans i18nKey="Dashboard.title" />
-                </h1>
-              </div>
-            </div>
+            <h1 tw="text-2xl font-bold leading-7 text-white sm:text-3xl sm:leading-9 sm:truncate mt-2">
+              <Trans i18nKey="Dashboard.title" />
+            </h1>
           </Fragment>
         }
       >
