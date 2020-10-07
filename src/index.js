@@ -1,6 +1,5 @@
 import React from "react";
 import { hydrate, render } from "react-dom";
-import "tailwindcss/dist/base.min.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
