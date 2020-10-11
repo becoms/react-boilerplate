@@ -3,8 +3,8 @@ import { jsx } from "@emotion/core";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "twin.macro";
-import { Layout } from "./common/Layout";
-import { PageSkeleton } from "./common/Page";
+import { Layout } from "./shared/Layout";
+import { PageSkeleton } from "./shared/Page";
 
 const Dashboard = lazy(() => import("./Dashboard/Dashboard"));
 const NotFound = lazy(() => import("./NotFound/NotFound"));

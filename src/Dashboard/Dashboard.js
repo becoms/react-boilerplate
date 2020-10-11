@@ -4,8 +4,8 @@ import { Fragment } from "react";
 import { Helmet } from "react-helmet-async";
 import { Trans, useTranslation } from "react-i18next";
 import "twin.macro";
-import { Breadcrumb } from "../common/Breadcrumb";
-import { Page } from "../common/Page";
+import { Breadcrumb } from "../shared/Breadcrumb";
+import { Page } from "../shared/Page";
 
 const Dashboard = () => {
   const { t } = useTranslation();
