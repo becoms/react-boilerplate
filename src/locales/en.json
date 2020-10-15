@@ -19,6 +19,8 @@
   "Dashboard.title": "Dashboard",
   "Dashboard.description": "Organize your development projects with Workflow & boost your productivity.",
   "NotFound.title": "404: Page not found",
+  "NotFound.description": "The page you were trying to access cannot be found or you might not have permissions to see this page.",
+  "NotFound.goBackToDashboard": "Go back to dashboard",
   "Team.title": "Team",
   "Breadcrumb.back": "Back",
   "SEO.defaultDescription": "Web site created using create-react-app"
