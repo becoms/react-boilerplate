@@ -6,8 +6,9 @@ import "twin.macro";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 
-const Dashboard = lazy(() => import("./Dashboard/Dashboard"));
-const NotFound = lazy(() => import("./NotFound/NotFound"));
+const Dashboard = lazy(() => import("./dashboard/Dashboard"));
+const NotFound = lazy(() => import("./not-found/NotFound"));
+const Team = lazy(() => import("./team/Team"));
 
 export const Routes = () => {
   return (
@@ -15,12 +16,9 @@ export const Routes = () => {
       <Layout>
         <Suspense fallback={<PageSkeleton />}>
           <Switch>
-            <Route path="/" exact>
-              <Dashboard />
-            </Route>
-            <Route path="*" exact>
-              <NotFound />
-            </Route>
+            <Route path="/" component={Dashboard} exact />
+            <Route path="/team" component={Team} exact />
+            <Route path="*" component={NotFound} exact />
           </Switch>
         </Suspense>
       </Layout>
