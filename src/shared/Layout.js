@@ -3,7 +3,7 @@ import { jsx } from "@emotion/core";
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";
-import { Menu, MenuButton, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
+import { Menu, MenuButton, MenuItem, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
@@ -48,6 +48,52 @@ const SearchBar = () => {
   );
 };
 
+const DropdownListItem = (props) => {
+  return (
+    <MenuItem
+      tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+      css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+      {...props}
+    />
+  );
+};
+
+const DropdownListLink = (props) => {
+  return (
+    <MenuLink
+      as={Link}
+      tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
+      css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
+      {...props}
+    />
+  );
+};
+
+const AnimatedMenuPopover = animated(MenuPopover);
+
+const DropdownList = ({ isExpanded, children }) => {
+  const transitions = useTransition(isExpanded, null, {
+    from: { opacity: 0, transform: "scale(0.95)" },
+    enter: { opacity: 1, transform: "scale(1)" },
+    leave: { opacity: 0, transform: "scale(0.95)" },
+    config: { tension: 500 },
+  });
+  return transitions.map(
+    ({ item, key, props: styles }) =>
+      item && (
+        <AnimatedMenuPopover
+          key={key}
+          tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
+          portal={false}
+          style={styles}
+          css={{ "&[hidden]": tw`block pointer-events-none` }}
+        >
+          <MenuItems tw="border-none py-1 rounded-md bg-white shadow-xs">{children}</MenuItems>
+        </AnimatedMenuPopover>
+      )
+  );
+};
+
 const ProfileDropdown = () => {
   const { t } = useTranslation();
   return (
@@ -69,45 +115,13 @@ const ProfileDropdown = () => {
               />
             </MenuButton>
             {/* Profile dropdown panel, show/hide based on dropdown state. */}
-            <MenuPopover
-              portal={false}
-              tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg transition ease-in-out duration-100"
-              css={[
-                isExpanded
-                  ? tw`transform opacity-100 scale-100 pointer-events-auto`
-                  : tw`transform opacity-0 scale-95 pointer-events-none`,
-                { "&[hidden]": tw`block` },
-              ]}
-            >
-              <MenuItems tw="border-none py-1 rounded-md bg-white shadow-xs">
-                <MenuLink
-                  as={Link}
-                  to="/profile"
-                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                >
-                  {t("Layout.yourProfile")}
-                </MenuLink>
-
-                <MenuLink
-                  as={Link}
-                  to="/settings"
-                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                >
-                  {t("Layout.settings")}
-                </MenuLink>
-
-                <MenuLink
-                  as={Link}
-                  to="/logout"
-                  tw="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition ease-in-out duration-150"
-                  css={{ "&[data-selected]": tw`bg-gray-100 text-gray-700` }}
-                >
-                  {t("Layout.signOut")}
-                </MenuLink>
-              </MenuItems>
-            </MenuPopover>
+            <DropdownList isExpanded={isExpanded}>
+              <DropdownListLink to="/profile">{t("Layout.yourProfile")}</DropdownListLink>
+              <DropdownListLink to="/settings">{t("Layout.settings")}</DropdownListLink>
+              <DropdownListItem onSelect={() => console.log("Logout")}>
+                {t("Layout.signOut")}
+              </DropdownListItem>
+            </DropdownList>
           </Fragment>
         )}
       </Menu>
@@ -140,20 +154,7 @@ const OpenSidebarButton = (props) => {
   );
 };
 
-const CloseSidebarButton = (props) => {
-  const { t } = useTranslation();
-  return (
-    <button
-      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
-      aria-label={t("Layout.closeSidebar")}
-      {...props}
-    >
-      <XOutlineIcon tw="h-6 w-6 text-white" />
-    </button>
-  );
-};
-
-const NavBar = ({ start, center, end }) => {
+const Navbar = ({ start, center, end }) => {
   return (
     <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
       {start}
@@ -182,7 +183,7 @@ const SidebarNavLink = ({ Icon, children, ...props }) => {
 
 const SidebarHeader = () => {
   return (
-    <div tw="flex-shrink-0 flex items-center px-4">
+    <header tw="flex-shrink-0 flex items-center px-4">
       <svg tw="h-8 w-auto" fill="none" viewBox="0 0 143 32" xmlns="http://www.w3.org/2000/svg">
         <title>Workflow</title>
         <path
@@ -198,42 +199,92 @@ const SidebarHeader = () => {
           d="M58.664 11.136l-2.04 7.392-2.184-7.392h-2.928l-2.184 7.368-2.04-7.368H44l3.816 12h2.952l2.208-7.272 2.208 7.272h2.952l3.816-12h-3.288zM68.864 23.472c3.528 0 6.36-2.76 6.36-6.336 0-3.576-2.832-6.336-6.36-6.336-3.528 0-6.336 2.76-6.336 6.336 0 3.576 2.808 6.336 6.336 6.336zm0-3.024c-1.824 0-3.24-1.368-3.24-3.312 0-1.944 1.416-3.312 3.24-3.312 1.848 0 3.264 1.368 3.264 3.312 0 1.944-1.416 3.312-3.264 3.312zM80.498 13.2v-2.064h-3.096v12h3.096V17.4c0-2.52 2.04-3.24 3.648-3.048v-3.456c-1.512 0-3.024.672-3.648 2.304zM97.02 23.136l-4.967-6.072 4.824-5.928H93.18l-4.128 5.28V6.336h-3.096v16.8h3.096v-5.448l4.368 5.448h3.6zM105.022 6c-3.816 0-5.64 1.704-5.64 5.016v.12h-1.728v2.976h1.728v9.024h3.096v-9.024h1.992v-2.976h-1.992v-.12c0-1.632.936-2.304 2.544-2.304.312 0 .648 0 .984.024v14.4h3.096V6.504c-1.32-.264-2.568-.504-4.08-.504zM117.637 23.472c3.528 0 6.36-2.76 6.36-6.336 0-3.576-2.832-6.336-6.36-6.336-3.528 0-6.336 2.76-6.336 6.336 0 3.576 2.808 6.336 6.336 6.336zm0-3.024c-1.824 0-3.24-1.368-3.24-3.312 0-1.944 1.416-3.312 3.24-3.312 1.848 0 3.264 1.368 3.264 3.312 0 1.944-1.416 3.312-3.264 3.312zM139.219 11.136l-2.04 7.392-2.184-7.392h-2.928l-2.184 7.368-2.04-7.368h-3.288l3.816 12h2.952l2.208-7.272 2.208 7.272h2.952l3.816-12h-3.288z"
         />
       </svg>
-    </div>
+    </header>
   );
 };
 
-const SidebarContent = () => {
+const CloseSidebarButton = (props) => {
   const { t } = useTranslation();
   return (
-    <Fragment>
-      <SidebarNavLink to="/" Icon={HomeOutlineIcon}>
-        {t("Layout.dashboard")}
-      </SidebarNavLink>
-
-      <SidebarNavLink to="/team" Icon={UsersOutlineIcon}>
-        {t("Layout.team")}
-      </SidebarNavLink>
-
-      <SidebarNavLink to="/projects" Icon={FolderOutlineIcon}>
-        {t("Layout.projects")}
-      </SidebarNavLink>
-
-      <SidebarNavLink to="/calendar" Icon={CalendarOutlineIcon}>
-        {t("Layout.calendar")}
-      </SidebarNavLink>
-
-      <SidebarNavLink to="/documents" Icon={InboxOutlineIcon}>
-        {t("Layout.documents")}
-      </SidebarNavLink>
-
-      <SidebarNavLink to="/reports" Icon={ChartBarOutlineIcon}>
-        {t("Layout.reports")}
-      </SidebarNavLink>
-    </Fragment>
+    <button
+      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+      aria-label={t("Layout.closeSidebar")}
+      {...props}
+    >
+      <XOutlineIcon tw="h-6 w-6 text-white" />
+    </button>
   );
 };
 
 const AnimatedDialogContent = animated(DialogContent);
+
+const OffCanvasSidebar = ({ isOpen, onDismiss, header, children }) => {
+  const { t } = useTranslation();
+  const transitions = useTransition(isOpen, null, {
+    from: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
+    enter: { opacity: 1, transform: "translate3d(0%, 0, 0)" },
+    leave: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
+  });
+
+  return transitions.map(
+    ({ item, key, props: styles }) =>
+      item && (
+        <DialogOverlay key={key} tw="fixed inset-0 flex z-40 bg-transparent" onDismiss={onDismiss}>
+          {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
+          <animated.div tw="fixed inset-0" style={{ opacity: styles.opacity }}>
+            <div tw="absolute inset-0 bg-gray-600 opacity-75" />
+          </animated.div>
+
+          {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
+          <AnimatedDialogContent
+            tw="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white m-0 px-0"
+            style={{ transform: styles.transform }}
+            aria-label={t("Layout.sidebar")}
+          >
+            <div tw="absolute top-0 right-0 -mr-14 p-1 overflow-y-auto">
+              <CloseSidebarButton onClick={onDismiss} />
+            </div>
+            {header}
+            <div tw="mt-5 flex-1 h-0 overflow-y-auto">
+              {/* Hide sidenav when a menu item is clicked */}
+              <nav tw="px-2 space-y-1" onClick={onDismiss}>
+                {children}
+              </nav>
+            </div>
+          </AnimatedDialogContent>
+          <div tw="flex-shrink-0 w-14">
+            {/* Dummy element to force sidebar to shrink to fit close icon */}
+          </div>
+        </DialogOverlay>
+      )
+  );
+};
+
+const Sidebar = ({ isOpen, onDismiss, header, children }) => {
+  return (
+    <Fragment>
+      {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
+      <div tw="md:hidden">
+        <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header}>
+          {children}
+        </OffCanvasSidebar>
+      </div>
+
+      {/* Static sidebar for desktop */}
+      <div tw="hidden md:flex md:flex-shrink-0">
+        <div tw="flex flex-col w-64">
+          {/* Sidebar component, swap this element with another sidebar if you like */}
+          <div tw="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
+            {header}
+            <div tw="mt-5 flex-grow flex flex-col">
+              <nav tw="flex-1 px-2 bg-white space-y-1">{children}</nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Fragment>
+  );
+};
 
 export const Layout = ({ children }) => {
   const { t } = useTranslation();
@@ -241,72 +292,35 @@ export const Layout = ({ children }) => {
   const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
-  const transitions = useTransition(isSidebarOpen, null, {
-    from: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
-    enter: { opacity: 1, transform: "translate3d(0%, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
-  });
-
   return (
     <Fragment>
       <SkipNavLink>{t("Layout.skipToContent")}</SkipNavLink>
+      {/* Sidebar, navbar and content */}
       <div tw="h-screen flex overflow-hidden bg-gray-100">
-        {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
-        <div tw="md:hidden">
-          {transitions.map(
-            ({ item, key, props: styles }) =>
-              item && (
-                <DialogOverlay
-                  key={key}
-                  tw="fixed inset-0 flex z-40 bg-transparent"
-                  onDismiss={closeSidebar}
-                >
-                  {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
-                  <animated.div tw="fixed inset-0" style={{ opacity: styles.opacity }}>
-                    <div tw="absolute inset-0 bg-gray-600 opacity-75" />
-                  </animated.div>
+        <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
+          <SidebarNavLink to="/" Icon={HomeOutlineIcon}>
+            {t("Layout.dashboard")}
+          </SidebarNavLink>
+          <SidebarNavLink to="/team" Icon={UsersOutlineIcon}>
+            {t("Layout.team")}
+          </SidebarNavLink>
+          <SidebarNavLink to="/projects" Icon={FolderOutlineIcon}>
+            {t("Layout.projects")}
+          </SidebarNavLink>
+          <SidebarNavLink to="/calendar" Icon={CalendarOutlineIcon}>
+            {t("Layout.calendar")}
+          </SidebarNavLink>
+          <SidebarNavLink to="/documents" Icon={InboxOutlineIcon}>
+            {t("Layout.documents")}
+          </SidebarNavLink>
+          <SidebarNavLink to="/reports" Icon={ChartBarOutlineIcon}>
+            {t("Layout.reports")}
+          </SidebarNavLink>
+        </Sidebar>
 
-                  {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
-                  <AnimatedDialogContent
-                    tw="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white m-0 px-0"
-                    style={{ transform: styles.transform }}
-                    aria-label={t("Layout.sidebar")}
-                  >
-                    <div tw="absolute top-0 right-0 -mr-14 p-1">
-                      <CloseSidebarButton onClick={closeSidebar} />
-                    </div>
-                    <SidebarHeader />
-                    <div tw="mt-5 flex-1 h-0 overflow-y-auto">
-                      <nav tw="px-2 space-y-1">
-                        <SidebarContent />
-                      </nav>
-                    </div>
-                  </AnimatedDialogContent>
-                  <div tw="flex-shrink-0 w-14">
-                    {/* Dummy element to force sidebar to shrink to fit close icon */}
-                  </div>
-                </DialogOverlay>
-              )
-          )}
-        </div>
-
-        {/* Static sidebar for desktop */}
-        <div tw="hidden md:flex md:flex-shrink-0">
-          <div tw="flex flex-col w-64">
-            {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div tw="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
-              <SidebarHeader />
-              <div tw="mt-5 flex-grow flex flex-col">
-                <nav tw="flex-1 px-2 bg-white space-y-1">
-                  <SidebarContent />
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        {/* Navbar & content */}
         <div tw="flex flex-col w-0 flex-1 overflow-hidden">
-          <NavBar
+          <Navbar
             start={<OpenSidebarButton tw="md:hidden" onClick={openSidebar} />}
             center={<SearchBar />}
             end={
