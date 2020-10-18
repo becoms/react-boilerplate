@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Fragment } from "react";
+import { Children, Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Children } from "react/cjs/react.development";
 import "twin.macro";
 import { ChevronLeftSolidIcon, ChevronRightSolidIcon } from "./Icons";
 
