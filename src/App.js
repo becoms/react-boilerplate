@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { Global, jsx } from "@emotion/core";
+import { Global } from "@emotion/core";
 import { StrictMode } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { I18nextProvider } from "react-i18next";

@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { Children, Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
@@ -25,7 +23,7 @@ export const Breadcrumb = ({ back, children }) => {
   const shouldDisplayBackLink = !match.isExact;
   const shouldDisplayBreadcrumb = Children.count(children) !== 0;
   return (
-    <Fragment>
+    <>
       {/* Mobile back link */}
       {shouldDisplayBackLink && (
         <nav tw="flex sm:hidden items-center mb-2">
@@ -53,6 +51,6 @@ export const Breadcrumb = ({ back, children }) => {
           </ol>
         </nav>
       )}
-    </Fragment>
+    </>
   );
 };

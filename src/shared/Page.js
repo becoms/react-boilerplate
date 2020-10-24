@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { SkipNavContent } from "@reach/skip-nav";
 import "twin.macro";
 import { Panel } from "./Panel";

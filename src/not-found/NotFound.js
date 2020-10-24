@@ -1,6 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "twin.macro";
@@ -10,7 +7,7 @@ import { SEO } from "../shared/SEO";
 const NotFound = () => {
   const { t } = useTranslation();
   return (
-    <Fragment>
+    <>
       <SEO title={t("NotFound.title")} />
       <main tw="flex-1 relative overflow-y-auto py-6 max-w-7xl w-full mx-auto px-4 sm:px-6 md:px-8 py-6 flex flex-col items-center">
         <Link title={t("NotFound.goBackToDashboard")} to="/">
@@ -150,7 +147,7 @@ const NotFound = () => {
           </Link>
         </span>
       </main>
-    </Fragment>
+    </>
   );
 };
 

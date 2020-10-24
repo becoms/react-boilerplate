@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";
@@ -7,11 +5,12 @@ import { Menu, MenuButton, MenuItem, MenuItems, MenuLink, MenuPopover } from "@r
 import "@reach/menu-button/styles.css";
 import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
-import { Fragment, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
 import { animated, useTransition } from "react-spring";
-import tw, { theme } from "twin.macro";
+import "twin.macro";
+import tw from "twin.macro";
 import {
   BellOutlineIcon,
   CalendarOutlineIcon,
@@ -100,7 +99,7 @@ const ProfileDropdown = () => {
     <div tw="relative">
       <Menu>
         {({ isExpanded }) => (
-          <Fragment>
+          <>
             {/* Profile button */}
             <MenuButton
               tw="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:shadow-outline"
@@ -122,7 +121,7 @@ const ProfileDropdown = () => {
                 {t("Layout.signOut")}
               </DropdownListItem>
             </DropdownList>
-          </Fragment>
+          </>
         )}
       </Menu>
     </div>
@@ -262,7 +261,7 @@ const OffCanvasSidebar = ({ isOpen, onDismiss, header, children }) => {
 
 const Sidebar = ({ isOpen, onDismiss, header, children }) => {
   return (
-    <Fragment>
+    <>
       {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
       <div tw="md:hidden">
         <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header}>
@@ -293,7 +292,7 @@ export const Layout = ({ children }) => {
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
   return (
-    <Fragment>
+    <>
       <SkipNavLink>{t("Layout.skipToContent")}</SkipNavLink>
       {/* Sidebar, navbar and content */}
       <div tw="h-screen flex overflow-hidden bg-gray-100">
@@ -324,15 +323,15 @@ export const Layout = ({ children }) => {
             start={<OpenSidebarButton tw="md:hidden" onClick={openSidebar} />}
             center={<SearchBar />}
             end={
-              <Fragment>
+              <>
                 <NotificationButton />
                 <ProfileDropdown />
-              </Fragment>
+              </>
             }
           />
           {children}
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };

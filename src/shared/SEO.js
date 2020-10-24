@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 

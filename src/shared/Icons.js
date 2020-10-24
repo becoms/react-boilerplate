@@ -1,7 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
-import "twin.macro";
-
 export const ChevronLeftSolidIcon = (props) => {
   return (
     <svg fill="currentColor" viewBox="0 0 20 20" {...props}>

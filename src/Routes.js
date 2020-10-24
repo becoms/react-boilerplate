@@ -1,8 +1,5 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "twin.macro";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 

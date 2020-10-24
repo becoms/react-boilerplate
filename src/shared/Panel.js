@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
 import "twin.macro";
 
 export const Panel = (props) => {
