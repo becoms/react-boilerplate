@@ -16,6 +16,7 @@
   "Layout.settings": "Settings",
   "Layout.signOut": "Sign out",
   "Layout.notifications": "Notifications",
+  "Layout.toggleColorMode": "Toggle color mode",
   "Dashboard.title": "Dashboard",
   "Dashboard.description": "Organize your development projects with Workflow & boost your productivity.",
   "NotFound.title": "404: Page not found",

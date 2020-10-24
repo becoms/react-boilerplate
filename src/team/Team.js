@@ -20,7 +20,7 @@ const Team = () => {
         title={<PageTitle>{t("Team.title")}</PageTitle>}
       >
         <Panel>
-          <div tw="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+          <div tw="border-4 border-dashed border-gray-200 dark:border-gray-700 rounded-lg h-96" />
         </Panel>
       </Page>
     </>

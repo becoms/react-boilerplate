@@ -8,5 +8,6 @@ module.exports = {
       },
     },
   },
+  dark: "class",
   plugins: [require("@tailwindcss/ui")],
 };

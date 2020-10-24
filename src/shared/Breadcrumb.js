@@ -8,7 +8,7 @@ import { ChevronLeftSolidIcon, ChevronRightSolidIcon } from "./Icons";
 export const BreadcrumbLink = ({ children, ...props }) => {
   return (
     <Link
-      tw="text-sm leading-5 font-medium text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out"
+      tw="text-sm leading-5 font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition duration-150 ease-in-out"
       itemProp="item"
       {...props}
     >
@@ -27,7 +27,7 @@ export const Breadcrumb = ({ back, children }) => {
       {/* Mobile back link */}
       {shouldDisplayBackLink && (
         <nav tw="flex sm:hidden items-center mb-2">
-          <ChevronLeftSolidIcon tw="flex-shrink-0 -ml-1 mr-1 h-5 w-5 text-gray-400" />
+          <ChevronLeftSolidIcon tw="flex-shrink-0 -ml-1 mr-1 h-5 w-5 text-gray-400 dark:text-gray-500" />
           <BreadcrumbLink to={back} tw="flex items-center">
             {t("Breadcrumb.back")}
           </BreadcrumbLink>
@@ -40,7 +40,7 @@ export const Breadcrumb = ({ back, children }) => {
             {Children.map(children, (item, index) => (
               <Fragment key={index}>
                 {index !== 0 && (
-                  <ChevronRightSolidIcon tw="flex-shrink-0 mx-2 h-5 w-5 text-gray-400" />
+                  <ChevronRightSolidIcon tw="flex-shrink-0 mx-2 h-5 w-5 text-gray-400 dark:text-gray-500" />
                 )}
                 <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
                   {item}
