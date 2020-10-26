@@ -1,3 +1,4 @@
+/** @jsxImportSource ../emotion-runtime */
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";

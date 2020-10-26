@@ -1,1 +1,1 @@
-export { createElement } from "react";
+export { jsx as createElement } from "@emotion/core";

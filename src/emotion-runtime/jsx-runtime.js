@@ -1,9 +1,21 @@
-import { jsx as _jsx } from "@emotion/core";
+import * as ReactJSXRuntime from "react/jsx-runtime";
+import { createEmotionProps, Emotion } from "./emotion-element";
+import { hasOwnProperty } from "./utils";
 
-export { Fragment } from "react";
+export const Fragment = ReactJSXRuntime.Fragment;
 
-export const jsx = (Component, { children, ...otherProps }, maybeKey) =>
-  _jsx(Component, maybeKey ? { ...otherProps, key: maybeKey } : otherProps, children);
+export function jsx(type, props, key) {
+  if (!hasOwnProperty.call(props, "css")) {
+    return ReactJSXRuntime.jsx(type, props, key);
+  }
 
-export const jsxs = (Component, { children, ...otherProps }, maybeKey) =>
-  _jsx(Component, maybeKey ? { ...otherProps, key: maybeKey } : otherProps, ...children);
+  return ReactJSXRuntime.jsx(Emotion, createEmotionProps(type, props), key);
+}
+
+export function jsxs(type, props, key) {
+  if (!hasOwnProperty.call(props, "css")) {
+    return ReactJSXRuntime.jsxs(type, props, key);
+  }
+
+  return ReactJSXRuntime.jsxs(Emotion, createEmotionProps(type, props), key);
+}

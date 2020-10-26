@@ -1,3 +1,4 @@
+/** @jsxImportSource ../emotion-runtime */
 import "twin.macro";
 
 export const Panel = (props) => {
