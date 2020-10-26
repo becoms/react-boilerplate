@@ -1,5 +1,5 @@
 import * as ReactJSXRuntime from "react/jsx-runtime";
-import { createEmotionProps, Emotion } from "./emotion-element";
+import Emotion, { createEmotionProps } from "./emotion-element";
 import { hasOwnProperty } from "./utils";
 
 export const Fragment = ReactJSXRuntime.Fragment;
