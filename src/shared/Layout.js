@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/core */
+import { Menu } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";
-import { Menu, MenuButton, MenuItem, MenuItems, MenuLink, MenuPopover } from "@reach/menu-button";
-import "@reach/menu-button/styles.css";
 import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
@@ -12,6 +11,7 @@ import { Link, NavLink } from "react-router-dom";
 import { animated, useTransition } from "react-spring";
 import "twin.macro";
 import tw from "twin.macro";
+import { Transition } from "../shared/Transition";
 import { useColorMode } from "./ColorModeProvider";
 import {
   BellOutlineIcon,
@@ -49,69 +49,17 @@ const SearchBar = () => {
   );
 };
 
-const DropdownListItem = (props) => {
-  return (
-    <MenuItem
-      tw="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-600 transition ease-in-out duration-150"
-      css={{
-        "&[data-selected]": tw`bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100`,
-      }}
-      {...props}
-    />
-  );
-};
-
-const DropdownListLink = (props) => {
-  return (
-    <MenuLink
-      as={Link}
-      tw="block px-4 py-2 text-sm text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition ease-in-out duration-150"
-      css={{
-        "&[data-selected]": tw`bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-100`,
-      }}
-      {...props}
-    />
-  );
-};
-
-const AnimatedMenuPopover = animated(MenuPopover);
-
-const DropdownList = ({ isExpanded, children }) => {
-  const transitions = useTransition(isExpanded, null, {
-    from: { opacity: 0, transform: "scale(0.95)" },
-    enter: { opacity: 1, transform: "scale(1)" },
-    leave: { opacity: 0, transform: "scale(0.95)" },
-    config: { tension: 500 },
-  });
-  return transitions.map(
-    ({ item, key, props: styles }) =>
-      item && (
-        <AnimatedMenuPopover
-          key={key}
-          tw="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg"
-          portal={false}
-          style={styles}
-          css={{ "&[hidden]": tw`block pointer-events-none` }}
-        >
-          <MenuItems tw="border-none py-1 rounded-md bg-white dark:bg-gray-800 shadow-xs">
-            {children}
-          </MenuItems>
-        </AnimatedMenuPopover>
-      )
-  );
-};
-
 const ProfileDropdown = () => {
   const { t } = useTranslation();
   return (
     <div tw="relative">
       <Menu>
-        {({ isExpanded }) => (
+        {({ open }) => (
           <>
             {/* Profile button */}
-            <MenuButton
+            <Menu.Button
               tw="max-w-xs flex items-center text-sm rounded-full text-gray-300 dark:text-white focus:outline-none focus:shadow-solid transition duration-150 ease-in-out"
-              aria-label={isExpanded ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
+              aria-label={open ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
             >
               <img
                 tw="h-8 w-8 rounded-full"
@@ -120,15 +68,102 @@ const ProfileDropdown = () => {
                 width={256}
                 height={256}
               />
-            </MenuButton>
+            </Menu.Button>
             {/* Profile dropdown panel, show/hide based on dropdown state. */}
-            <DropdownList isExpanded={isExpanded}>
-              <DropdownListLink to="/profile">{t("Layout.yourProfile")}</DropdownListLink>
-              <DropdownListLink to="/settings">{t("Layout.settings")}</DropdownListLink>
-              <DropdownListItem onSelect={() => console.log("Logout")}>
-                {t("Layout.signOut")}
-              </DropdownListItem>
-            </DropdownList>
+            <Transition
+              show={open}
+              enter={tw`transition ease-out duration-100`}
+              enterFrom={tw`transform opacity-0 scale-95`}
+              enterTo={tw`transform opacity-100 scale-100`}
+              leave={tw`transition ease-in duration-75`}
+              leaveFrom={tw`transform opacity-100 scale-100`}
+              leaveTo={tw`transform opacity-0 scale-95`}
+            >
+              <Menu.Items
+                static
+                tw="absolute right-0 w-56 mt-2 origin-top-right bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-900 divide-y divide-gray-100 dark:divide-gray-900 rounded-md shadow-lg outline-none"
+              >
+                <div tw="px-4 py-3">
+                  <p tw="text-sm leading-5">Signed in as</p>
+                  <p tw="text-sm font-medium leading-5 text-gray-900 dark:text-white truncate">
+                    tom@example.com
+                  </p>
+                </div>
+
+                <div tw="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/account-settings"
+                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        css={
+                          active
+                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
+                            : tw`text-gray-700 dark:text-gray-100`
+                        }
+                      >
+                        Account settings
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/support"
+                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        css={
+                          active
+                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
+                            : tw`text-gray-700 dark:text-gray-100`
+                        }
+                      >
+                        Support
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item
+                    as="span"
+                    disabled
+                    tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-100 cursor-not-allowed opacity-50"
+                  >
+                    New feature (soon)
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/license"
+                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        css={
+                          active
+                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
+                            : tw`text-gray-700 dark:text-gray-100`
+                        }
+                      >
+                        License
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+
+                <div tw="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to="/sign-out"
+                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+                        css={
+                          active
+                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
+                            : tw`text-gray-700 dark:text-gray-100`
+                        }
+                      >
+                        Sign out
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
           </>
         )}
       </Menu>
