@@ -23,6 +23,5 @@
   "NotFound.description": "La page à laquelle vous voulez accéder n'a pas pu être trouvée ou vous n'avez pas les permissions pour la voir.",
   "NotFound.goBackToDashboard": "Retourner au tableau de bord",
   "Team.title": "Équipe",
-  "Breadcrumb.back": "Retour",
   "SEO.defaultDescription": "Site créé avec create-react-app"
 }
