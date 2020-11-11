@@ -8,7 +8,6 @@ import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
-import { animated, useTransition } from "react-spring";
 import "twin.macro";
 import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
@@ -254,7 +253,7 @@ const CloseSidebarButton = (props) => {
   const { t } = useTranslation();
   return (
     <button
-      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600 focus:dark:bg-gray-800"
       aria-label={t("Layout.closeSidebar")}
       {...props}
     >
@@ -263,34 +262,49 @@ const CloseSidebarButton = (props) => {
   );
 };
 
-const AnimatedDialogContent = animated(DialogContent);
-
-const OffCanvasSidebar = ({ isOpen, onDismiss, header, children }) => {
+const OffCanvasSidebar = ({ isOpen, onDismiss, header, children, ...props }) => {
   const { t } = useTranslation();
-  const transitions = useTransition(isOpen, null, {
-    from: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
-    enter: { opacity: 1, transform: "translate3d(0%, 0, 0)" },
-    leave: { opacity: 0, transform: "translate3d(-125%, 0, 0)" },
-  });
 
-  return transitions.map(
-    ({ item, key, props: styles }) =>
-      item && (
-        <DialogOverlay key={key} tw="fixed inset-0 flex z-40 bg-transparent" onDismiss={onDismiss}>
-          {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
-          <animated.div tw="fixed inset-0" style={{ opacity: styles.opacity }}>
-            <div tw="absolute inset-0 bg-gray-600 opacity-75" />
-          </animated.div>
+  return (
+    <Transition show={isOpen} {...props}>
+      <DialogOverlay tw="fixed inset-0 flex z-40 bg-transparent" onDismiss={onDismiss}>
+        {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
+        <div tw="fixed inset-0 flex z-40">
+          <Transition.Child
+            tw="fixed inset-0"
+            enter={tw`transition-opacity ease-linear duration-300`}
+            enterFrom={tw`opacity-0`}
+            enterTo={tw`opacity-100`}
+            leave={tw`transition-opacity ease-linear duration-300`}
+            leaveFrom={tw`opacity-100`}
+            leaveTo={tw`opacity-0`}
+          >
+            <div tw="absolute inset-0 bg-gray-600 dark:bg-gray-900 opacity-75" />
+          </Transition.Child>
 
           {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
-          <AnimatedDialogContent
+          <Transition.Child
+            as={DialogContent}
             tw="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white dark:bg-gray-800 m-0 px-0"
-            style={{ transform: styles.transform }}
+            enter={tw`transition ease-in-out duration-300 transform`}
+            enterFrom={tw`-translate-x-full`}
+            enterTo={tw`translate-x-0`}
+            leave={tw`transition ease-in-out duration-300 transform`}
+            leaveFrom={tw`translate-x-0`}
+            leaveTo={tw`-translate-x-full`}
             aria-label={t("Layout.sidebar")}
           >
-            <div tw="absolute top-0 right-0 -mr-14 p-1 overflow-y-auto">
+            <Transition.Child
+              tw="absolute top-0 right-0 -mr-14 p-1"
+              enter={tw`transition-opacity ease-in-out duration-300`}
+              enterFrom={tw`opacity-0`}
+              enterTo={tw`opacity-100`}
+              leave={tw`transition-opacity ease-in-out duration-300`}
+              leaveFrom={tw`opacity-100`}
+              leaveTo={tw`opacity-0`}
+            >
               <CloseSidebarButton onClick={onDismiss} />
-            </div>
+            </Transition.Child>
             {header}
             <div tw="mt-5 flex-1 h-0 overflow-y-auto">
               {/* Hide sidenav when a menu item is clicked */}
@@ -298,12 +312,13 @@ const OffCanvasSidebar = ({ isOpen, onDismiss, header, children }) => {
                 {children}
               </nav>
             </div>
-          </AnimatedDialogContent>
+          </Transition.Child>
           <div tw="flex-shrink-0 w-14">
             {/* Dummy element to force sidebar to shrink to fit close icon */}
           </div>
-        </DialogOverlay>
-      )
+        </div>
+      </DialogOverlay>
+    </Transition>
   );
 };
 
@@ -311,11 +326,9 @@ const Sidebar = ({ isOpen, onDismiss, header, children }) => {
   return (
     <>
       {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
-      <div tw="md:hidden">
-        <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header}>
-          {children}
-        </OffCanvasSidebar>
-      </div>
+      <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header} tw="md:hidden">
+        {children}
+      </OffCanvasSidebar>
 
       {/* Static sidebar for desktop */}
       <div tw="hidden md:flex md:flex-shrink-0">
