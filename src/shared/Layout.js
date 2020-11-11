@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/core */
-import { Menu } from "@headlessui/react";
+import { Menu, Switch } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";
@@ -337,27 +337,15 @@ const ColorModeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { t } = useTranslation();
   const isEnabled = colorMode === "light";
-  const handleSpaceKeyToggle = useCallback(
-    (e) => {
-      if (e.key === " ") {
-        toggleColorMode();
-      }
-    },
-    [toggleColorMode]
-  );
   return (
-    <span
-      role="checkbox"
-      tabIndex="0"
-      aria-checked={isEnabled}
-      onClick={toggleColorMode}
-      onKeyDown={handleSpaceKeyToggle}
-      aria-label={t("Layout.toggleColorMode")}
+    <Switch
+      checked={isEnabled}
+      onChange={toggleColorMode}
       tw="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-solid text-gray-300 dark:text-gray-500"
       css={isEnabled ? tw`bg-indigo-600 dark:bg-indigo-500` : tw`bg-gray-200 dark:bg-gray-900`}
     >
+      <span tw="sr-only">{t("Layout.toggleColorMode")}</span>
       <span
-        aria-hidden="true"
         tw="relative inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-700 shadow transition ease-in-out duration-200"
         css={isEnabled ? tw`transform translate-x-5` : tw`transform translate-x-0`}
       >
@@ -390,7 +378,7 @@ const ColorModeSwitch = () => {
           </svg>
         </span>
       </span>
-    </span>
+    </Switch>
   );
 };
 
