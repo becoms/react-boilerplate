@@ -1,4 +1,4 @@
-/** @jsxImportSource ../emotion-runtime */
+/** @jsxImportSource @emotion/core */
 import { useTranslation } from "react-i18next";
 import "twin.macro";
 import { Breadcrumb, BreadcrumbLink } from "../shared/Breadcrumb";

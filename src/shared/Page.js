@@ -1,4 +1,4 @@
-/** @jsxImportSource ../emotion-runtime */
+/** @jsxImportSource @emotion/core */
 import { SkipNavContent } from "@reach/skip-nav";
 import "twin.macro";
 import { Panel } from "./Panel";

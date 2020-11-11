@@ -1,4 +1,4 @@
-/** @jsxImportSource ../emotion-runtime */
+/** @jsxImportSource @emotion/core */
 import { Children, Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useRouteMatch } from "react-router-dom";
