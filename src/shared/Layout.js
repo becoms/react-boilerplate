@@ -1,17 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Menu, Switch } from "@headlessui/react";
+import { Menu } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
-import { DialogContent, DialogOverlay } from "@reach/dialog";
-import "@reach/dialog/styles.css";
 import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "twin.macro";
 import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
-import { useColorMode } from "./ColorModeProvider";
+import { ColorModeSwitch } from "./ColorModeSwitch";
 import {
   BellOutlineIcon,
   CalendarOutlineIcon,
@@ -19,11 +17,10 @@ import {
   FolderOutlineIcon,
   HomeOutlineIcon,
   InboxOutlineIcon,
-  MenuAlt2OutlineIcon,
   SearchSolidIcon,
   UsersOutlineIcon,
-  XOutlineIcon,
 } from "./Icons";
+import { OpenSidebarButton, Sidebar, SidebarHeader, SidebarNavLink } from "./Sidebar";
 
 const SearchBar = () => {
   const { t } = useTranslation();
@@ -48,6 +45,25 @@ const SearchBar = () => {
   );
 };
 
+const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }) => {
+  return (
+    <Menu.Item disabled={disabled}>
+      {({ active }) => (
+        <Component
+          tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+          css={[
+            active
+              ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
+              : tw`text-gray-700 dark:text-gray-100`,
+            disabled && tw`cursor-not-allowed opacity-50`,
+          ]}
+          {...props}
+        />
+      )}
+    </Menu.Item>
+  );
+};
+
 const ProfileDropdown = () => {
   const { t } = useTranslation();
   return (
@@ -68,6 +84,7 @@ const ProfileDropdown = () => {
                 height={256}
               />
             </Menu.Button>
+
             {/* Profile dropdown panel, show/hide based on dropdown state. */}
             <Transition
               show={open}
@@ -82,85 +99,25 @@ const ProfileDropdown = () => {
                 static
                 tw="absolute right-0 w-56 mt-2 origin-top-right bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-900 divide-y divide-gray-100 dark:divide-gray-900 rounded-md shadow-lg outline-none"
               >
-                <div tw="px-4 py-3">
+                <header tw="px-4 py-3">
                   <p tw="text-sm leading-5">Signed in as</p>
-                  <p tw="text-sm font-medium leading-5 text-gray-900 dark:text-white truncate">
+                  <p tw="text-sm leading-5 font-medium text-gray-900 dark:text-white truncate">
                     tom@example.com
                   </p>
-                </div>
+                </header>
 
-                <div tw="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/account-settings"
-                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-                        css={
-                          active
-                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
-                            : tw`text-gray-700 dark:text-gray-100`
-                        }
-                      >
-                        Account settings
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/support"
-                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-                        css={
-                          active
-                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
-                            : tw`text-gray-700 dark:text-gray-100`
-                        }
-                      >
-                        Support
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item
-                    as="span"
-                    disabled
-                    tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left text-gray-700 dark:text-gray-100 cursor-not-allowed opacity-50"
-                  >
+                <section tw="py-1">
+                  <ProfileDropdownItem to="/account-settings">Account settings</ProfileDropdownItem>
+                  <ProfileDropdownItem to="/support">Support</ProfileDropdownItem>
+                  <ProfileDropdownItem as="span" disabled>
                     New feature (soon)
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/license"
-                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-                        css={
-                          active
-                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
-                            : tw`text-gray-700 dark:text-gray-100`
-                        }
-                      >
-                        License
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </div>
+                  </ProfileDropdownItem>
+                  <ProfileDropdownItem to="/license">License</ProfileDropdownItem>
+                </section>
 
-                <div tw="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link
-                        to="/sign-out"
-                        tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
-                        css={
-                          active
-                            ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
-                            : tw`text-gray-700 dark:text-gray-100`
-                        }
-                      >
-                        Sign out
-                      </Link>
-                    )}
-                  </Menu.Item>
-                </div>
+                <section tw="py-1">
+                  <ProfileDropdownItem to="/sign-out">Sign out</ProfileDropdownItem>
+                </section>
               </Menu.Items>
             </Transition>
           </>
@@ -182,19 +139,6 @@ const NotificationButton = () => {
   );
 };
 
-const OpenSidebarButton = (props) => {
-  const { t } = useTranslation();
-  return (
-    <button
-      tw="md:hidden px-4 border-r border-gray-200 dark:border-gray-900 text-gray-500 dark:text-gray-400 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700 focus:text-gray-600 dark:focus:text-white"
-      aria-label={t("Layout.openSidebar")}
-      {...props}
-    >
-      <MenuAlt2OutlineIcon tw="h-6 w-6" />
-    </button>
-  );
-};
-
 const Navbar = ({ start, center, end }) => {
   return (
     <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white dark:bg-gray-800 shadow">
@@ -204,194 +148,6 @@ const Navbar = ({ start, center, end }) => {
         <div tw="ml-4 flex items-center md:ml-6 space-x-3">{end}</div>
       </nav>
     </header>
-  );
-};
-
-const SidebarNavLink = ({ Icon, children, ...props }) => {
-  return (
-    <NavLink
-      exact
-      className="group"
-      tw="flex items-center px-2 py-2 text-base md:text-sm leading-6 md:leading-5 font-medium rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none dark:focus:text-white focus:bg-gray-200 dark:focus:bg-gray-700 transition ease-in-out duration-150"
-      css={{
-        "&.active": {
-          "&": tw`text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-900`,
-          "& > svg": tw`text-gray-500 dark:text-gray-300`,
-        },
-      }}
-      {...props}
-    >
-      <Icon tw="mr-4 md:mr-3 h-6 w-6 text-gray-400 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300 group-focus:text-gray-600 dark:group-focus:text-gray-300 transition ease-in-out duration-150" />
-      {children}
-    </NavLink>
-  );
-};
-
-const SidebarHeader = () => {
-  return (
-    <header tw="flex-shrink-0 flex items-center px-4">
-      <svg tw="h-8 w-auto" fill="none" viewBox="0 0 143 32" xmlns="http://www.w3.org/2000/svg">
-        <title>Workflow</title>
-        <path
-          tw="fill-current text-indigo-600 dark:text-indigo-500"
-          d="M15.258 26.865a4.043 4.043 0 01-1.133 2.917A4.006 4.006 0 0111.253 31a3.992 3.992 0 01-2.872-1.218 4.028 4.028 0 01-1.133-2.917c.009-.698.2-1.382.557-1.981.356-.6.863-1.094 1.47-1.433-.024.109.09-.055 0 0l1.86-1.652a8.495 8.495 0 002.304-5.793c0-2.926-1.711-5.901-4.17-7.457.094.055-.036-.094 0 0A3.952 3.952 0 017.8 7.116a3.975 3.975 0 01-.557-1.98 4.042 4.042 0 011.133-2.918A4.006 4.006 0 0111.247 1a3.99 3.99 0 012.872 1.218 4.025 4.025 0 011.133 2.917 8.521 8.521 0 002.347 5.832l.817.8c.326.285.668.551 1.024.798.621.33 1.142.826 1.504 1.431a3.902 3.902 0 01-1.504 5.442c.033-.067-.063.036 0 0a8.968 8.968 0 00-3.024 3.183 9.016 9.016 0 00-1.158 4.244zM19.741 5.123c0 .796.235 1.575.676 2.237a4.01 4.01 0 001.798 1.482 3.99 3.99 0 004.366-.873 4.042 4.042 0 00.869-4.386 4.02 4.02 0 00-1.476-1.806 3.994 3.994 0 00-5.058.501 4.038 4.038 0 00-1.175 2.845zM23.748 22.84c-.792 0-1.567.236-2.226.678a4.021 4.021 0 00-1.476 1.806 4.042 4.042 0 00.869 4.387 3.99 3.99 0 004.366.873A4.01 4.01 0 0027.08 29.1a4.039 4.039 0 00-.5-5.082 4 4 0 00-2.832-1.18zM34 15.994c0-.796-.235-1.574-.675-2.236a4.01 4.01 0 00-1.798-1.483 3.99 3.99 0 00-4.367.873 4.042 4.042 0 00-.869 4.387 4.02 4.02 0 001.476 1.806 3.993 3.993 0 002.226.678 4.003 4.003 0 002.832-1.18A4.04 4.04 0 0034 15.993z"
-        />
-        <path
-          tw="fill-current text-indigo-600 dark:text-indigo-500"
-          d="M5.007 11.969c-.793 0-1.567.236-2.226.678a4.021 4.021 0 00-1.476 1.807 4.042 4.042 0 00.869 4.386 4.001 4.001 0 004.366.873 4.011 4.011 0 001.798-1.483 4.038 4.038 0 00-.5-5.08 4.004 4.004 0 00-2.831-1.181z"
-        />
-        <path
-          tw="fill-current text-gray-800 dark:text-white"
-          d="M58.664 11.136l-2.04 7.392-2.184-7.392h-2.928l-2.184 7.368-2.04-7.368H44l3.816 12h2.952l2.208-7.272 2.208 7.272h2.952l3.816-12h-3.288zM68.864 23.472c3.528 0 6.36-2.76 6.36-6.336 0-3.576-2.832-6.336-6.36-6.336-3.528 0-6.336 2.76-6.336 6.336 0 3.576 2.808 6.336 6.336 6.336zm0-3.024c-1.824 0-3.24-1.368-3.24-3.312 0-1.944 1.416-3.312 3.24-3.312 1.848 0 3.264 1.368 3.264 3.312 0 1.944-1.416 3.312-3.264 3.312zM80.498 13.2v-2.064h-3.096v12h3.096V17.4c0-2.52 2.04-3.24 3.648-3.048v-3.456c-1.512 0-3.024.672-3.648 2.304zM97.02 23.136l-4.967-6.072 4.824-5.928H93.18l-4.128 5.28V6.336h-3.096v16.8h3.096v-5.448l4.368 5.448h3.6zM105.022 6c-3.816 0-5.64 1.704-5.64 5.016v.12h-1.728v2.976h1.728v9.024h3.096v-9.024h1.992v-2.976h-1.992v-.12c0-1.632.936-2.304 2.544-2.304.312 0 .648 0 .984.024v14.4h3.096V6.504c-1.32-.264-2.568-.504-4.08-.504zM117.637 23.472c3.528 0 6.36-2.76 6.36-6.336 0-3.576-2.832-6.336-6.36-6.336-3.528 0-6.336 2.76-6.336 6.336 0 3.576 2.808 6.336 6.336 6.336zm0-3.024c-1.824 0-3.24-1.368-3.24-3.312 0-1.944 1.416-3.312 3.24-3.312 1.848 0 3.264 1.368 3.264 3.312 0 1.944-1.416 3.312-3.264 3.312zM139.219 11.136l-2.04 7.392-2.184-7.392h-2.928l-2.184 7.368-2.04-7.368h-3.288l3.816 12h2.952l2.208-7.272 2.208 7.272h2.952l3.816-12h-3.288z"
-        />
-      </svg>
-    </header>
-  );
-};
-
-const CloseSidebarButton = (props) => {
-  const { t } = useTranslation();
-  return (
-    <button
-      tw="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600 focus:dark:bg-gray-800"
-      aria-label={t("Layout.closeSidebar")}
-      {...props}
-    >
-      <XOutlineIcon tw="h-6 w-6 text-white" />
-    </button>
-  );
-};
-
-const OffCanvasSidebar = ({ isOpen, onDismiss, header, children, ...props }) => {
-  const { t } = useTranslation();
-
-  return (
-    <Transition show={isOpen} {...props}>
-      <DialogOverlay tw="fixed inset-0 flex z-40 bg-transparent" onDismiss={onDismiss}>
-        {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
-        <div tw="fixed inset-0 flex z-40">
-          <Transition.Child
-            tw="fixed inset-0"
-            enter={tw`transition-opacity ease-linear duration-300`}
-            enterFrom={tw`opacity-0`}
-            enterTo={tw`opacity-100`}
-            leave={tw`transition-opacity ease-linear duration-300`}
-            leaveFrom={tw`opacity-100`}
-            leaveTo={tw`opacity-0`}
-          >
-            <div tw="absolute inset-0 bg-gray-600 dark:bg-gray-900 opacity-75" />
-          </Transition.Child>
-
-          {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
-          <Transition.Child
-            as={DialogContent}
-            tw="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white dark:bg-gray-800 m-0 px-0"
-            enter={tw`transition ease-in-out duration-300 transform`}
-            enterFrom={tw`-translate-x-full`}
-            enterTo={tw`translate-x-0`}
-            leave={tw`transition ease-in-out duration-300 transform`}
-            leaveFrom={tw`translate-x-0`}
-            leaveTo={tw`-translate-x-full`}
-            aria-label={t("Layout.sidebar")}
-          >
-            <Transition.Child
-              tw="absolute top-0 right-0 -mr-14 p-1"
-              enter={tw`transition-opacity ease-in-out duration-300`}
-              enterFrom={tw`opacity-0`}
-              enterTo={tw`opacity-100`}
-              leave={tw`transition-opacity ease-in-out duration-300`}
-              leaveFrom={tw`opacity-100`}
-              leaveTo={tw`opacity-0`}
-            >
-              <CloseSidebarButton onClick={onDismiss} />
-            </Transition.Child>
-            {header}
-            <div tw="mt-5 flex-1 h-0 overflow-y-auto">
-              {/* Hide sidenav when a menu item is clicked */}
-              <nav tw="px-2 space-y-1" onClick={onDismiss}>
-                {children}
-              </nav>
-            </div>
-          </Transition.Child>
-          <div tw="flex-shrink-0 w-14">
-            {/* Dummy element to force sidebar to shrink to fit close icon */}
-          </div>
-        </div>
-      </DialogOverlay>
-    </Transition>
-  );
-};
-
-const Sidebar = ({ isOpen, onDismiss, header, children }) => {
-  return (
-    <>
-      {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
-      <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header} tw="md:hidden">
-        {children}
-      </OffCanvasSidebar>
-
-      {/* Static sidebar for desktop */}
-      <div tw="hidden md:flex md:flex-shrink-0">
-        <div tw="flex flex-col w-64">
-          {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div tw="flex flex-col flex-grow border-r border-gray-200 dark:border-gray-900 pt-5 pb-4 bg-white dark:bg-gray-800 overflow-y-auto">
-            {header}
-            <div tw="mt-5 flex-grow flex flex-col">
-              <nav tw="flex-1 px-2 space-y-1">{children}</nav>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-
-const ColorModeSwitch = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { t } = useTranslation();
-  const isEnabled = colorMode === "light";
-  return (
-    <Switch
-      checked={isEnabled}
-      onChange={toggleColorMode}
-      tw="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:shadow-solid text-gray-300 dark:text-gray-500"
-      css={isEnabled ? tw`bg-indigo-600 dark:bg-indigo-500` : tw`bg-gray-200 dark:bg-gray-900`}
-    >
-      <span tw="sr-only">{t("Layout.toggleColorMode")}</span>
-      <span
-        tw="relative inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-700 shadow transition ease-in-out duration-200"
-        css={isEnabled ? tw`transform translate-x-5` : tw`transform translate-x-0`}
-      >
-        <span
-          tw="absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-          css={
-            isEnabled ? tw`opacity-0 ease-in duration-200` : tw`opacity-100 ease-out duration-100`
-          }
-        >
-          <svg tw="h-4 w-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-          </svg>
-        </span>
-        <span
-          tw="absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-          css={
-            isEnabled ? tw`opacity-100 ease-out duration-100` : tw`opacity-0 ease-in duration-200`
-          }
-        >
-          <svg
-            tw="h-4 w-4 text-indigo-600 dark:text-indigo-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </span>
-      </span>
-    </Switch>
   );
 };
 
