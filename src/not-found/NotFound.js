@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "twin.macro";
 import { Page, PageContent } from "../shared/Page";
-import { SEO } from "../shared/SEO";
 
 const NotFound = () => {
   const { t } = useTranslation();
   return (
     <>
-      <SEO title={t("NotFound.title")} />
+      <Helmet title={t("NotFound.title")} />
       <Page>
         <PageContent tw="flex flex-col items-center">
           <Link title={t("NotFound.goBackToDashboard")} to="/">

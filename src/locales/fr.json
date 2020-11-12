@@ -18,10 +18,8 @@
   "Layout.notifications": "Notifications",
   "Layout.toggleColorMode": "Changer le mode de couleur",
   "Dashboard.title": "Tableau de bord",
-  "Dashboard.description": "Organisez vos projets de développement avec Workflow et boostez votre productivité.",
   "NotFound.title": "404 : Page non trouvée",
   "NotFound.description": "La page à laquelle vous voulez accéder n'a pas pu être trouvée ou vous n'avez pas les permissions pour la voir.",
   "NotFound.goBackToDashboard": "Retourner au tableau de bord",
-  "Team.title": "Équipe",
-  "SEO.defaultDescription": "Site créé avec create-react-app"
+  "Team.title": "Équipe"
 }

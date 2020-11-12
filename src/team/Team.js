@@ -1,15 +1,15 @@
 /** @jsxImportSource @emotion/react */
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import "twin.macro";
 import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
 import { Panel } from "../shared/Panel";
-import { SEO } from "../shared/SEO";
 
 const Team = () => {
   const { t } = useTranslation();
   return (
     <>
-      <SEO title={t("Team.title")} />
+      <Helmet title={t("Team.title")} />
       <Page>
         <PageHeader title={<PageTitle>{t("Team.title")}</PageTitle>} />
         <PageContent>
