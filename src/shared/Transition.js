@@ -1,5 +1,5 @@
-/** @jsxImportSource @emotion/core */
-import { ClassNames } from "@emotion/core";
+/** @jsxImportSource @emotion/react */
+import { ClassNames } from "@emotion/react";
 import { Transition as HeadlessTransition } from "@headlessui/react";
 
 export const Transition = ({ enter, enterFrom, enterTo, leave, leaveFrom, leaveTo, ...props }) => {

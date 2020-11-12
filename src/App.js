@@ -1,4 +1,4 @@
-import { Global } from "@emotion/core";
+import { Global } from "@emotion/react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { I18nextProvider } from "react-i18next";
 import tw, { GlobalStyles } from "twin.macro";

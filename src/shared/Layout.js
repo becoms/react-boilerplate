@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/core */
+/** @jsxImportSource @emotion/react */
 import { Menu, Switch } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
 import { DialogContent, DialogOverlay } from "@reach/dialog";

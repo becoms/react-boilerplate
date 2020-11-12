@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/core */
+/** @jsxImportSource @emotion/react */
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "twin.macro";

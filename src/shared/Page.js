@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/core */
+/** @jsxImportSource @emotion/react */
 import { SkipNavContent } from "@reach/skip-nav";
 import "twin.macro";
 import { Container } from "./Container";

@@ -1,4 +1,4 @@
-/** @jsxImportSource @emotion/core */
+/** @jsxImportSource @emotion/react */
 import { useTranslation } from "react-i18next";
 import "twin.macro";
 import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
