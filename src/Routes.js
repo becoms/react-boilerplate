@@ -3,9 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 
-const Dashboard = lazy(() => import("./dashboard/Dashboard"));
-const NotFound = lazy(() => import("./not-found/NotFound"));
-const Team = lazy(() => import("./team/Team"));
+const DashboardScreen = lazy(() => import("./dashboard/DashboardScreen"));
+const NotFoundScreen = lazy(() => import("./not-found/NotFoundScreen"));
 
 export const Routes = () => {
   return (
@@ -13,9 +12,8 @@ export const Routes = () => {
       <Layout>
         <Suspense fallback={<PageSkeleton />}>
           <Switch>
-            <Route path="/" component={Dashboard} exact />
-            <Route path="/team" component={Team} exact />
-            <Route path="*" component={NotFound} exact />
+            <Route path="/" component={DashboardScreen} exact />
+            <Route path="*" component={NotFoundScreen} exact />
           </Switch>
         </Suspense>
       </Layout>

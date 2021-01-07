@@ -3,26 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.0.0",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
     "@headlessui/react": "^0.2.0",
-    "@reach/auto-id": "^0.11.2",
-    "@reach/dialog": "^0.11.2",
-    "@reach/skip-nav": "^0.11.2",
-    "@tailwindcss/ui": "^0.7.2",
-    "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.2",
-    "@testing-library/user-event": "^12.2.2",
-    "i18next": "^19.8.3",
+    "@reach/auto-id": "^0.12.1",
+    "@reach/dialog": "^0.12.1",
+    "@reach/skip-nav": "^0.12.1",
+    "@tailwindcss/forms": "^0.2.1",
+    "@testing-library/jest-dom": "^5.11.8",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.0",
+    "i18next": "^19.8.4",
     "i18next-browser-languagedetector": "^6.0.1",
+    "ky": "^0.25.1",
+    "postcss": "^8.2.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-helmet-async": "^1.0.7",
-    "react-i18next": "^11.7.3",
-    "react-query": "^2.26.2",
+    "react-i18next": "^11.8.5",
+    "react-query": "^3.5.11",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.0",
-    "tailwindcss": "^1.9.6",
-    "twin.macro": "^1.12.0"
+    "react-scripts": "^4.0.1",
+    "tailwindcss": "^2.0.2",
+    "twin.macro": "^2.0.8"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,17 +36,10 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "babelMacros": {
-    "twin": {
-      "css": {
-        "import": "css",
-        "from": "@emotion/react"
-      },
-      "global": {
-        "import": "Global",
-        "from": "@emotion/react"
-      }
-    }
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/?!(ky)"
+    ]
   },
   "prettier": {
     "printWidth": 100

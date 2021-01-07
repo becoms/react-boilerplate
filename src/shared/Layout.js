@@ -6,20 +6,9 @@ import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import "twin.macro";
 import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
-import { ColorModeSwitch } from "./ColorModeSwitch";
-import {
-  BellOutlineIcon,
-  CalendarOutlineIcon,
-  ChartBarOutlineIcon,
-  FolderOutlineIcon,
-  HomeOutlineIcon,
-  InboxOutlineIcon,
-  SearchSolidIcon,
-  UsersOutlineIcon,
-} from "./Icons";
+import { BellOutlineIcon, HomeOutlineIcon, SearchSolidIcon } from "./Icons";
 import { OpenSidebarButton, Sidebar, SidebarHeader, SidebarNavLink } from "./Sidebar";
 
 const SearchBar = () => {
@@ -30,13 +19,13 @@ const SearchBar = () => {
       <label htmlFor={id} tw="sr-only">
         {t("Layout.search")}
       </label>
-      <div tw="relative w-full text-gray-400 focus-within:text-gray-600 dark:focus-within:text-white">
+      <div tw="relative w-full text-gray-400 focus-within:text-gray-600">
         <div tw="absolute inset-y-0 left-0 flex items-center pointer-events-none">
           <SearchSolidIcon tw="h-5 w-5" />
         </div>
         <input
           id={id}
-          tw="block w-full h-full pl-8 pr-3 py-2 rounded-md text-gray-900 dark:text-white bg-transparent placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 sm:text-sm"
+          tw="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:(outline-none placeholder-gray-400 ring-0 border-transparent) sm:(text-sm)"
           placeholder={t("Layout.search")}
           type="search"
         />
@@ -50,11 +39,9 @@ const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }) => {
     <Menu.Item disabled={disabled}>
       {({ active }) => (
         <Component
-          tw="flex justify-between w-full px-4 py-2 text-sm leading-5 text-left"
+          tw="flex justify-between w-full px-4 py-2 text-sm text-left"
           css={[
-            active
-              ? tw`bg-gray-100 text-gray-900 dark:bg-gray-600 dark:text-white`
-              : tw`text-gray-700 dark:text-gray-100`,
+            active ? tw`bg-gray-100 text-gray-900` : tw`text-gray-700`,
             disabled && tw`cursor-not-allowed opacity-50`,
           ]}
           {...props}
@@ -72,10 +59,10 @@ const ProfileDropdown = () => {
         {({ open }) => (
           <>
             {/* Profile button */}
-            <Menu.Button
-              tw="max-w-xs flex items-center text-sm rounded-full text-gray-300 dark:text-white focus:outline-none focus:shadow-solid transition duration-150 ease-in-out"
-              aria-label={open ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
-            >
+            <Menu.Button tw="max-w-xs bg-white flex items-center text-sm rounded-full focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
+              <span tw="sr-only">
+                {open ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
+              </span>
               <img
                 tw="h-8 w-8 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -97,26 +84,15 @@ const ProfileDropdown = () => {
             >
               <Menu.Items
                 static
-                tw="absolute right-0 w-56 mt-2 origin-top-right bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-100 border border-gray-200 dark:border-gray-900 divide-y divide-gray-100 dark:divide-gray-900 rounded-md shadow-lg outline-none"
+                tw="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:(outline-none)"
               >
                 <header tw="px-4 py-3">
-                  <p tw="text-sm leading-5">Signed in as</p>
-                  <p tw="text-sm leading-5 font-medium text-gray-900 dark:text-white truncate">
-                    tom@example.com
-                  </p>
+                  <p tw="text-sm">{t("Layout.signedInAs")}</p>
+                  <p tw="text-sm font-medium text-gray-900 truncate">tom@example.com</p>
                 </header>
 
                 <section tw="py-1">
-                  <ProfileDropdownItem to="/account-settings">Account settings</ProfileDropdownItem>
-                  <ProfileDropdownItem to="/support">Support</ProfileDropdownItem>
-                  <ProfileDropdownItem as="span" disabled>
-                    New feature (soon)
-                  </ProfileDropdownItem>
-                  <ProfileDropdownItem to="/license">License</ProfileDropdownItem>
-                </section>
-
-                <section tw="py-1">
-                  <ProfileDropdownItem to="/sign-out">Sign out</ProfileDropdownItem>
+                  <ProfileDropdownItem as="button">{t("Layout.signOut")}</ProfileDropdownItem>
                 </section>
               </Menu.Items>
             </Transition>
@@ -130,10 +106,8 @@ const ProfileDropdown = () => {
 const NotificationButton = () => {
   const { t } = useTranslation();
   return (
-    <button
-      tw="p-1 text-gray-400 rounded-full hover:text-gray-500 dark:hover:text-white focus:outline-none focus:text-gray-500 dark:focus:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
-      aria-label={t("Layout.notifications")}
-    >
+    <button tw="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
+      <span tw="sr-only">{t("Layout.notifications")}</span>
       <BellOutlineIcon tw="h-6 w-6" />
     </button>
   );
@@ -141,7 +115,7 @@ const NotificationButton = () => {
 
 const Navbar = ({ start, center, end }) => {
   return (
-    <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white dark:bg-gray-800 shadow">
+    <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
       {start}
       <nav tw="flex-1 px-4 flex justify-between">
         <div tw="flex-1 flex">{center}</div>
@@ -161,25 +135,11 @@ export const Layout = ({ children }) => {
     <>
       <SkipNavLink>{t("Layout.skipToContent")}</SkipNavLink>
       {/* Sidebar, navbar and content */}
-      <div tw="h-screen flex overflow-hidden bg-gray-100 dark:bg-gray-900">
+      <div tw="h-screen flex overflow-hidden bg-gray-100">
         <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
-          <SidebarNavLink to="/" Icon={HomeOutlineIcon}>
+          <SidebarNavLink to="/" exact>
+            <HomeOutlineIcon />
             {t("Layout.dashboard")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/team" Icon={UsersOutlineIcon}>
-            {t("Layout.team")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/projects" Icon={FolderOutlineIcon}>
-            {t("Layout.projects")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/calendar" Icon={CalendarOutlineIcon}>
-            {t("Layout.calendar")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/documents" Icon={InboxOutlineIcon}>
-            {t("Layout.documents")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/reports" Icon={ChartBarOutlineIcon}>
-            {t("Layout.reports")}
           </SidebarNavLink>
         </Sidebar>
 
@@ -190,7 +150,6 @@ export const Layout = ({ children }) => {
             center={<SearchBar />}
             end={
               <>
-                <ColorModeSwitch />
                 <NotificationButton />
                 <ProfileDropdown />
               </>

@@ -3,9 +3,9 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import "twin.macro";
 import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
-import { Panel } from "../shared/Panel";
+import { Card } from "../shared/Card";
 
-const Dashboard = () => {
+const DashboardScreen = () => {
   const { t } = useTranslation();
   return (
     <>
@@ -13,13 +13,13 @@ const Dashboard = () => {
       <Page>
         <PageHeader title={<PageTitle>{t("Dashboard.title")}</PageTitle>} />
         <PageContent>
-          <Panel>
-            <div tw="border-4 border-dashed border-gray-200 dark:border-gray-700 rounded-lg h-96" />
-          </Panel>
+          <Card>
+            <div tw="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+          </Card>
         </PageContent>
       </Page>
     </>
   );
 };
 
-export default Dashboard;
+export default DashboardScreen;

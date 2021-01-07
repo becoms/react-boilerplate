@@ -7,19 +7,11 @@
   "Layout.openProfileMenu": "Ouvrir le menu de profil",
   "Layout.closeProfileMenu": "Fermer le menu de profil",
   "Layout.dashboard": "Tableau de bord",
-  "Layout.team": "Équipe",
-  "Layout.projects": "Projets",
-  "Layout.calendar": "Calendrier",
-  "Layout.documents": "Documents",
-  "Layout.reports": "Rapports",
-  "Layout.yourProfile": "Votre profil",
-  "Layout.settings": "Paramètres",
+  "Layout.signedInAs": "Connecté avec",
   "Layout.signOut": "Se déconnecter",
   "Layout.notifications": "Notifications",
-  "Layout.toggleColorMode": "Changer le mode de couleur",
   "Dashboard.title": "Tableau de bord",
   "NotFound.title": "404 : Page non trouvée",
   "NotFound.description": "La page à laquelle vous voulez accéder n'a pas pu être trouvée ou vous n'avez pas les permissions pour la voir.",
-  "NotFound.goBackToDashboard": "Retourner au tableau de bord",
-  "Team.title": "Équipe"
+  "NotFound.goBackToDashboard": "Retourner au tableau de bord"
 }

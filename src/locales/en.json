@@ -7,19 +7,11 @@
   "Layout.openProfileMenu": "Open profile menu",
   "Layout.closeProfileMenu": "Close profile menu",
   "Layout.dashboard": "Dashboard",
-  "Layout.team": "Team",
-  "Layout.projects": "Projects",
-  "Layout.calendar": "Calendar",
-  "Layout.documents": "Documents",
-  "Layout.reports": "Reports",
-  "Layout.yourProfile": "Your profile",
-  "Layout.settings": "Settings",
+  "Layout.signedInAs": "Signed in as",
   "Layout.signOut": "Sign out",
   "Layout.notifications": "Notifications",
-  "Layout.toggleColorMode": "Toggle color mode",
   "Dashboard.title": "Dashboard",
   "NotFound.title": "404: Page not found",
   "NotFound.description": "The page you were trying to access cannot be found or you might not have permissions to see this page.",
-  "NotFound.goBackToDashboard": "Go back to dashboard",
-  "Team.title": "Team"
+  "NotFound.goBackToDashboard": "Go back to dashboard"
 }
