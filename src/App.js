@@ -4,7 +4,7 @@ import { I18nextProvider } from "react-i18next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import tw, { GlobalStyles } from "twin.macro";
 import i18n from "./i18n";
-import { Routes } from "./Routes";
+import { AppRoutes } from "./Routes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +22,7 @@ const App = () => {
       <I18nextProvider i18n={i18n}>
         <HelmetProvider>
           <Helmet titleTemplate="%s | React App" />
-          <Routes />
+          <AppRoutes />
         </HelmetProvider>
       </I18nextProvider>
     </QueryClientProvider>
