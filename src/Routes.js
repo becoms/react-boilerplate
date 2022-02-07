@@ -12,8 +12,8 @@ export const AppRoutes = () => {
       <Layout>
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
-            <Route path="/" component={DashboardScreen} exact />
-            <Route path="*" component={NotFoundScreen} exact />
+            <Route path="/" element={<DashboardScreen />} />
+            <Route path="*" element={<NotFoundScreen />} />
           </Routes>
         </Suspense>
       </Layout>
