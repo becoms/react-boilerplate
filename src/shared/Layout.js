@@ -2,7 +2,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
-import { SkipNavLink } from "@reach/skip-nav";
 import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -53,7 +52,7 @@ const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }) => {
 };
 
 const ProfileDropdown = () => {
-  const { user, isAuthenticated, isLoading, logout } = useAuth0();
+  const { user, isAuthenticated, logout } = useAuth0();
   const { t } = useTranslation();
   return (
     <div tw="relative">
@@ -99,7 +98,9 @@ const ProfileDropdown = () => {
                   <ProfileDropdownItem
                     as="button"
                     onClick={() => logout({ returnTo: window.location.origin })}
-                  />
+                  >
+                    toto
+                  </ProfileDropdownItem>
                 </section>
               </Menu.Items>
             </Transition>
@@ -142,7 +143,7 @@ export const Layout = ({ children }) => {
     <>
       <div tw="h-screen flex overflow-hidden bg-gray-100">
         <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
-          <SidebarNavLink to="/" exact>
+          <SidebarNavLink to="/" exact="true">
             <HomeOutlineIcon />
             {t("Layout.dashboard")}
           </SidebarNavLink>
