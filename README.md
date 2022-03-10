@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup .env
+
+Rename `.env.sample` to `.env` and configure **REACT_APP_AUTH0_** variables according to Auth0 configuration.
+
+Configure **REACT_APP_API_URL** to match your backend.
+
 ## Available Scripts
 
 In the project directory, you can run:

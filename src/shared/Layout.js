@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
 import { useId } from "@reach/auto-id";
 import { SkipNavLink } from "@reach/skip-nav";
@@ -52,6 +53,7 @@ const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }) => {
 };
 
 const ProfileDropdown = () => {
+  const { user, isAuthenticated, isLoading, logout } = useAuth0();
   const { t } = useTranslation();
   return (
     <div tw="relative">
@@ -65,8 +67,8 @@ const ProfileDropdown = () => {
               </span>
               <img
                 tw="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+                src={user?.picture}
+                alt={user?.name}
                 width={256}
                 height={256}
               />
@@ -86,13 +88,18 @@ const ProfileDropdown = () => {
                 static
                 tw="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:(outline-none)"
               >
-                <header tw="px-4 py-3">
-                  <p tw="text-sm">{t("Layout.signedInAs")}</p>
-                  <p tw="text-sm font-medium text-gray-900 truncate">tom@example.com</p>
-                </header>
+                {isAuthenticated && (
+                  <header tw="px-4 py-3">
+                    <p tw="text-sm">{t("Layout.signedInAs")}</p>
+                    <p tw="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
+                  </header>
+                )}
 
                 <section tw="py-1">
-                  <ProfileDropdownItem as="button">{t("Layout.signOut")}</ProfileDropdownItem>
+                  <ProfileDropdownItem
+                    as="button"
+                    onClick={() => logout({ returnTo: window.location.origin })}
+                  />
                 </section>
               </Menu.Items>
             </Transition>
@@ -133,8 +140,6 @@ export const Layout = ({ children }) => {
 
   return (
     <>
-      <SkipNavLink>{t("Layout.skipToContent")}</SkipNavLink>
-      {/* Sidebar, navbar and content */}
       <div tw="h-screen flex overflow-hidden bg-gray-100">
         <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
           <SidebarNavLink to="/" exact>
