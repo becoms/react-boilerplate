@@ -10,7 +10,7 @@ import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
 import { BellOutlineIcon, HomeOutlineIcon, SearchSolidIcon } from "./Icons";
 import { OpenSidebarButton, Sidebar, SidebarHeader, SidebarNavLink } from "./Sidebar";
-import { PlusIcon } from "@heroicons/react/solid";
+import { PlusIcon, MoonIcon } from "@heroicons/react/solid";
 
 const SearchBar = () => {
   const { t } = useTranslation();
@@ -151,6 +151,10 @@ export const Layout = ({ children }) => {
           <SidebarNavLink to="/create" exact="true">
             <PlusIcon />
             Create
+          </SidebarNavLink>
+          <SidebarNavLink to="/get" exact="true">
+            <MoonIcon />
+            Get
           </SidebarNavLink>
         </Sidebar>
 

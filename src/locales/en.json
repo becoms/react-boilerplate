@@ -13,5 +13,7 @@
   "Dashboard.title": "Dashboard",
   "NotFound.title": "404: Page not found",
   "NotFound.description": "The page you were trying to access cannot be found or you might not have permissions to see this page.",
-  "NotFound.goBackToDashboard": "Go back to dashboard"
+  "NotFound.goBackToDashboard": "Go back to dashboard",
+  "Shared.next": "Next",
+  "Shared.previous": "Previous"
 }
