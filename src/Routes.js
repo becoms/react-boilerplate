@@ -1,10 +1,10 @@
 import { withAuthenticationRequired } from "@auth0/auth0-react";
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Get from "./crud/Get";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 
+const Get = lazy(() => import("./crud/Get"));
 const Create = lazy(() => import("./crud/Create"));
 const GetById = lazy(() => import("./crud/GetById"));
 const DashboardScreen = lazy(() => import("./dashboard/DashboardScreen"));

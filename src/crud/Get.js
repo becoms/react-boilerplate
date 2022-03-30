@@ -62,7 +62,7 @@ const Get = () => {
           ) : (
             data?.list.map((data, index) => (
               <Link to={`/test/${data._id}`} key={index}>
-                <p tw="mt-6 text-2xl font-medium text-gray-700">{data.name}</p>
+                <p tw="mt-6 text-2xl font-medium text-gray-700">{data.folder}</p>
               </Link>
             ))
           )}

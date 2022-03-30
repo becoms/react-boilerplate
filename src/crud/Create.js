@@ -55,8 +55,8 @@ const Create = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      description: "",
+      folder: "",
+      assignedTaskType: "",
     },
   });
 
@@ -82,18 +82,18 @@ const Create = () => {
 
             <div tw="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
               <FormGroup>
-                <Label htmlFor="name" tw="text-gray-500">
+                <Label htmlFor="folder" tw="text-gray-500">
                   Folder <RequiredAsterisk tw="text-red-500" />
                 </Label>
                 <input
                   tw="flex-1 block w-full text-sm z-0 focus:z-10 border-gray-300 rounded-md focus:(ring-indigo-500 border-indigo-500) disabled:(bg-gray-50 text-gray-500)"
-                  {...register("name", {
+                  {...register("folder", {
                     required: "Champs obligatoire",
                   })}
                   type="text"
-                  id="name"
+                  id="folder"
                 />
-                <ErrorMessage>{errors.name?.message}</ErrorMessage>
+                <ErrorMessage>{errors.folder?.message}</ErrorMessage>
               </FormGroup>
 
               <FormGroup tw="w-full">
@@ -119,14 +119,14 @@ const Create = () => {
               </FormGroup>
 
               <FormGroup>
-                <Label htmlFor="description" tw="text-gray-500">
+                <Label htmlFor="assignedTaskType" tw="text-gray-500">
                   AssignedTaskType
                 </Label>
                 <textarea
                   tw="flex-1 block w-full text-sm z-0 h-32 focus:z-10 border-gray-300 rounded-md focus:(ring-indigo-500 border-indigo-500) disabled:(bg-gray-50 text-gray-500)"
-                  {...register("description")}
+                  {...register("assignedTaskType")}
                   type="text"
-                  id="description"
+                  id="assignedTaskType"
                 />
               </FormGroup>
             </div>
