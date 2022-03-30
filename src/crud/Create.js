@@ -62,7 +62,7 @@ const Create = () => {
 
   return (
     <>
-      <Helmet title="Crée ton wod" />
+      <Helmet title="Create" />
       <Page>
         <PageContent tw="h-screen">
           <Link
