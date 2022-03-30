@@ -4,6 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 
+const Get = lazy(() => import("./crud/Get"));
+const Create = lazy(() => import("./crud/Create"));
+const GetById = lazy(() => import("./crud/GetById"));
 const DashboardScreen = lazy(() => import("./dashboard/DashboardScreen"));
 const NotFoundScreen = lazy(() => import("./not-found/NotFoundScreen"));
 
@@ -13,6 +16,9 @@ export const AppRoutes = withAuthenticationRequired(() => {
       <Layout>
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
+            <Route path="/test/:thingId" element={<GetById />} />
+            <Route path="/create" element={<Create />} />
+            <Route path="/get" element={<Get />} />
             <Route path="/" element={<DashboardScreen />} />
             <Route path="*" element={<NotFoundScreen />} />
           </Routes>

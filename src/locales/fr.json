@@ -13,5 +13,7 @@
   "Dashboard.title": "Tableau de bord",
   "NotFound.title": "404 : Page non trouvée",
   "NotFound.description": "La page à laquelle vous voulez accéder n'a pas pu être trouvée ou vous n'avez pas les permissions pour la voir.",
-  "NotFound.goBackToDashboard": "Retourner au tableau de bord"
+  "NotFound.goBackToDashboard": "Retourner au tableau de bord",
+  "Shared.next": "Suivant",
+  "Shared.previous": "Précédent"
 }
