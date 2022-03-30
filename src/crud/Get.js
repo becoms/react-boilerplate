@@ -61,9 +61,9 @@ const Get = () => {
             </EmptyState>
           ) : (
             data?.list.map((data, index) => (
-              <p tw="mt-6 text-2xl font-medium text-gray-700" key={index}>
-                {data.name}
-              </p>
+              <Link to={`/test/${data._id}`} key={index}>
+                <p tw="mt-6 text-2xl font-medium text-gray-700">{data.name}</p>
+              </Link>
             ))
           )}
           <Pagination data={data} pageParams={pageParams} totalOfPages={totalOfPages} />

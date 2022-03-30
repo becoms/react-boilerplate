@@ -53,7 +53,7 @@ export const usePatchMutation = (uuid) => {
         .json();
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries(`v1/otherCollection/${uuid}`);
+      await queryClient.invalidateQueries(`v1/test`);
     },
   });
 };
@@ -68,5 +68,13 @@ export const useDelete = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("v1/test");
     },
+  });
+};
+
+export const useByIdQuery = (uuid) => {
+  const api = useApi();
+  return useQuery({
+    queryKey: `v1/test/${uuid}`,
+    queryFn: async () => api.get(`v1/test/${uuid}`).json(),
   });
 };
