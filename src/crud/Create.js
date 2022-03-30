@@ -32,7 +32,7 @@ const typeStatus = [
 const Create = () => {
   const [typeStatusSelected, setTypeStatusSelected] = useState();
 
-  const { mutate, isLoading: isSaving } = usePostMutation();
+  const { mutate } = usePostMutation();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -131,12 +131,10 @@ const Create = () => {
               </FormGroup>
             </div>
             <div tw="flex space-x-3 items-center justify-end mt-8">
-              <Button as={Link} to={`/`} disable={isSaving}>
+              <Button as={Link} to={`/`}>
                 Annuler
               </Button>
-              <PrimaryButton type="submit" disable={isSaving}>
-                Créer
-              </PrimaryButton>
+              <PrimaryButton type="submit">Créer</PrimaryButton>
             </div>
           </form>
         </PageContent>
