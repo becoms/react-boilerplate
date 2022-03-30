@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 
+const Create = lazy(() => import("./crud/Create"));
 const DashboardScreen = lazy(() => import("./dashboard/DashboardScreen"));
 const NotFoundScreen = lazy(() => import("./not-found/NotFoundScreen"));
 
@@ -13,6 +14,7 @@ export const AppRoutes = withAuthenticationRequired(() => {
       <Layout>
         <Suspense fallback={<PageSkeleton />}>
           <Routes>
+            <Route path="/create" element={<Create />} />
             <Route path="/" element={<DashboardScreen />} />
             <Route path="*" element={<NotFoundScreen />} />
           </Routes>

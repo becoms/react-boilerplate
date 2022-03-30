@@ -4,10 +4,8 @@ import { useTranslation } from "react-i18next";
 import "twin.macro";
 import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
 import { Card } from "../shared/Card";
-import { useWorkersQuery } from "../shared/useApi";
+
 const DashboardScreen = () => {
-  const { status, data } = useWorkersQuery();
-  console.log("status, data", status, data);
   const { t } = useTranslation();
   return (
     <>
