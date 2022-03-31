@@ -45,7 +45,7 @@ const GetById = () => {
       },
       {
         onSuccess: () => {
-          navigate(`/get`);
+          navigate("/get");
         },
       }
     );
@@ -66,7 +66,7 @@ const GetById = () => {
   const onRemove = (e) => {
     e.preventDefault();
     deleteThing(thingId);
-    navigate(`/get`);
+    navigate("/get");
   };
   return (
     <>
@@ -75,7 +75,7 @@ const GetById = () => {
         <PageContent tw="h-screen">
           <Link
             to={{
-              pathname: `/get`,
+              pathname: "/get",
             }}
             tw="inline-flex items-center space-x-3 text-sm font-medium text-gray-900"
           >
@@ -143,7 +143,7 @@ const GetById = () => {
                 </FormGroup>
               </div>
               <div tw="flex space-x-3 items-center justify-end mt-8">
-                <Button as={Link} to={`/get`}>
+                <Button as={Link} to={"/get"}>
                   Annuler
                 </Button>
                 <PrimaryButton type="submit">Créer</PrimaryButton>

@@ -43,7 +43,7 @@ const Create = () => {
       },
       {
         onSuccess: () => {
-          navigate(`/`);
+          navigate("/");
         },
       }
     );
@@ -67,7 +67,7 @@ const Create = () => {
         <PageContent tw="h-screen">
           <Link
             to={{
-              pathname: `/`,
+              pathname: "/",
             }}
             tw="inline-flex items-center space-x-3 text-sm font-medium text-gray-900"
           >
@@ -131,7 +131,7 @@ const Create = () => {
               </FormGroup>
             </div>
             <div tw="flex space-x-3 items-center justify-end mt-8">
-              <Button as={Link} to={`/`}>
+              <Button as={Link} to={"/"}>
                 Annuler
               </Button>
               <PrimaryButton type="submit">Créer</PrimaryButton>

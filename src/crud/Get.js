@@ -34,7 +34,7 @@ const Get = () => {
         <PageContent tw="h-screen">
           <Link
             to={{
-              pathname: `/`,
+              pathname: "/",
             }}
             tw="inline-flex items-center space-x-3 text-sm font-medium text-gray-900"
           >
@@ -44,28 +44,30 @@ const Get = () => {
 
           {status === "loading" && "Loading"}
           {status === "error" && "error"}
-          {status === "success" && data.totalCount === 0 ? (
+          {status === "success" && data.totalCount === 0
+            ? (
             <EmptyState>
               <EmptyStateIllustration as={NotFoundIllustration} />
               <>
-                <EmptyStateTitle as="h3">Il n'y a pas de chose créée</EmptyStateTitle>
+                <EmptyStateTitle as="h3">Il n&apos;y a pas de chose créée</EmptyStateTitle>
                 <>
                   <EmptyStateDescription>
                     Créer la première chose en cliquant sur le bouton ci-dessous.
                   </EmptyStateDescription>
-                  <PrimaryButton as={Link} to={`/create`} tw="mt-8">
+                  <PrimaryButton as={Link} to={"/create"} tw="mt-8">
                     Créer une chose
                   </PrimaryButton>
                 </>
               </>
             </EmptyState>
-          ) : (
-            data?.list.map((data, index) => (
+              )
+            : (
+                data?.list.map((data, index) => (
               <Link to={`/test/${data._id}`} key={index}>
                 <p tw="mt-6 text-2xl font-medium text-gray-700">{data.folder}</p>
               </Link>
-            ))
-          )}
+                ))
+              )}
           <Pagination data={data} pageParams={pageParams} totalOfPages={totalOfPages} />
         </PageContent>
       </Page>

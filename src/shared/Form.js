@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
-import "twin.macro";
 import tw from "twin.macro";
 
 export const RequiredAsterisk = (props) => {

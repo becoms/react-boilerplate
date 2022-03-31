@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-import "twin.macro";
 import tw from "twin.macro";
 import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon } from "@heroicons/react/solid";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -45,22 +44,25 @@ export const Pagination = ({ data, pageParams, totalOfPages }) => {
     <nav tw="border-t border-gray-200 px-4 flex items-center justify-between sm:px-0 mt-4">
       {/* PREVIOUS button */}
       <div tw="-mt-px w-0 flex-1 flex">
-        {Number(pageNumber) !== 0 ? (
-          // Active previous btn
-          <button
-            onClick={() => goToPrevious(pageNumber)}
-            tw="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
-          >
-            <ArrowNarrowLeftIcon tw="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
-            {t("Shared.previous")}
-          </button>
-        ) : (
+        {Number(pageNumber) !== 0
+          ? (
+            // Active previous btn
+            <button
+              onClick={() => goToPrevious(pageNumber)}
+              tw="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
+            >
+              <ArrowNarrowLeftIcon tw="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+              {t("Shared.previous")}
+            </button>
+            )
+          : (
           // Inactive previous btn
           <span tw="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 opacity-20 hover:text-gray-700 hover:border-gray-300">
             <ArrowNarrowLeftIcon tw="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
             {t("Shared.previous")}
           </span>
-        )}
+            )
+        }
       </div>
       {/* {pages <= 10 ? (
         // If to long array of pagination */}
@@ -94,7 +96,8 @@ export const Pagination = ({ data, pageParams, totalOfPages }) => {
       </div>
       )} */}
       <div tw="-mt-px w-0 flex-1 flex justify-end">
-        {Number(pageNumber) + 1 !== numberOfPages ? (
+        {Number(pageNumber) + 1 !== numberOfPages
+          ? (
           <button
             onClick={() => goToNext(pageNumber)}
             tw="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300"
@@ -102,12 +105,13 @@ export const Pagination = ({ data, pageParams, totalOfPages }) => {
             {t("Shared.next")}
             <ArrowNarrowRightIcon tw="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
           </button>
-        ) : (
+            )
+          : (
           <span tw="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 opacity-20 hover:text-gray-700 hover:border-gray-300">
             {t("Shared.next")}
             <ArrowNarrowRightIcon tw="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
           </span>
-        )}
+            )}
       </div>
     </nav>
   );

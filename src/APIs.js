@@ -4,10 +4,10 @@ import qs from "qs";
 
 export const useGetQuery = (searchParams = {}) => {
   const api = useApi();
-  return useQuery([`v1/test`, searchParams], async () => {
+  return useQuery(["v1/test", searchParams], async () => {
     const { limit = 10, skip = 0, sort = "-createdAt", ...query } = searchParams;
 
-    const response = await api.get(`v1/test`, {
+    const response = await api.get("v1/test", {
       searchParams: qs.stringify({
         limit,
         skip,
@@ -16,7 +16,7 @@ export const useGetQuery = (searchParams = {}) => {
       }),
     });
     const totalCount = Number(response.headers.get("X-Total-Count"));
-    let list = await response.json();
+    const list = await response.json();
     return {
       totalCount,
       list,
@@ -53,7 +53,7 @@ export const usePatchMutation = (uuid) => {
         .json();
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries(`v1/test`);
+      await queryClient.invalidateQueries("v1/test");
     },
   });
 };
