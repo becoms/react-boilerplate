@@ -8,12 +8,13 @@ module.exports = {
     "plugin:react/recommended",
     "standard"
   ],
+  parser: "@babel/eslint-parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: "latest",
-    sourceType: "module"
+    sourceType: "module",
   },
   plugins: [
     "react",

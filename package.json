@@ -1,5 +1,5 @@
 {
-  "name": "valvert-backoffice",
+  "name": "react-boilerplate",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -32,6 +32,8 @@
     "twin.macro": "^2.8.2"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.5.4",
+    "@babel/preset-react": "^7.16.7",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^16.0.3",
