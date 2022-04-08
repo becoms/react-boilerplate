@@ -12,7 +12,7 @@ export const RequiredAsterisk = (props) => {
 
 export const Label = ({ children, ...props }) => {
   return (
-    <label tw="block text-sm font-medium text-white whitespace-nowrap truncate" {...props}>
+    <label tw="block text-sm font-medium text-white truncate" {...props}>
       {children}
     </label>
   );
@@ -27,6 +27,22 @@ export const FormGroup = ({ children, ...props }) => {
     </div>
   );
 };
+
+export const Input = styled("input")(
+  tw`max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md`
+);
+
+export const CheckBox = styled("input")(
+  tw`focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded`
+);
+
+export const TextArea = styled("textarea")(
+  tw`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md`
+);
+
+export const Select = styled("select")(
+  tw`mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md`
+);
 
 /**
  * Legend component that can be used within a `fieldset`.

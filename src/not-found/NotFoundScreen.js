@@ -13,7 +13,7 @@ import {
 import { Page } from "../shared/Page";
 import { NotFoundIllustration } from "./NotFoundIllustration";
 
-const NotFoundScreen = () => {
+export const NotFoundScreen = () => {
   const { t } = useTranslation();
   return (
     <>
@@ -31,5 +31,3 @@ const NotFoundScreen = () => {
     </>
   );
 };
-
-export default NotFoundScreen;

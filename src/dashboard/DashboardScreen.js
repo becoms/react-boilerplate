@@ -5,7 +5,7 @@ import "twin.macro";
 import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
 import { Card } from "../shared/Card";
 
-const DashboardScreen = () => {
+export const DashboardScreen = () => {
   const { t } = useTranslation();
   return (
     <>
@@ -21,5 +21,3 @@ const DashboardScreen = () => {
     </>
   );
 };
-
-export default DashboardScreen;

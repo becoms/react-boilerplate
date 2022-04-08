@@ -16,6 +16,8 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "dotenv": "^16.0.0",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "i18next": "^21.6.0",
     "i18next-browser-languagedetector": "^6.1.2",
     "ky": "^0.28.7",
