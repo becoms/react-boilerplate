@@ -7,13 +7,13 @@ export const Page = (props) => {
   return <main tw="flex-1 relative overflow-y-auto focus:(outline-none)" tabIndex={0} {...props} />;
 };
 
-export const PageHeader = ({ title, actions }) => {
+export const PageHeader = ({ title, children }) => {
   return (
     <Container as="header" tw="mt-6">
-      <div tw="md:flex md:items-center md:justify-between">
+      <div tw="xl:flex xl:justify-between">
         <SkipNavContent />
-        <div tw="flex-1 min-w-0">{title}</div>
-        {actions && <div tw="mt-4 flex-shrink-0 flex md:mt-0 md:ml-4 space-x-3">{actions}</div>}
+        <div tw="flex-1">{title}</div>
+        {children && <div tw="flex flex-row flex-wrap md:mt-0 md:ml-4 space-x-3 space-y-1">{children}</div>}
       </div>
     </Container>
   );

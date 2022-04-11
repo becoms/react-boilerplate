@@ -6,8 +6,8 @@ import { CrudForm } from "./CrudForm";
 import { useFindByIdQuery } from "./CrudQueries";
 
 export const CrudDetails = () => {
-  const { itemId } = useParams();
-  const { status, data: item, error } = useFindByIdQuery(itemId);
+  const { crudId } = useParams();
+  const { status, data: item, error } = useFindByIdQuery(crudId);
 
   return (
     <>

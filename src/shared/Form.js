@@ -12,7 +12,7 @@ export const RequiredAsterisk = (props) => {
 
 export const Label = ({ children, ...props }) => {
   return (
-    <label tw="block text-sm font-medium text-white truncate" {...props}>
+    <label tw="block text-sm font-medium truncate" {...props}>
       {children}
     </label>
   );
@@ -53,7 +53,7 @@ export const Select = styled("select")(
  * </fieldset>
  */
 export const FieldsetLegend = (props) => {
-  return <legend tw="text-lg leading-6 font-medium text-white" {...props} />;
+  return <legend tw="text-lg leading-6 font-medium" {...props} />;
 };
 
 /**

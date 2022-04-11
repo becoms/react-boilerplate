@@ -22,7 +22,7 @@ export const Modal = ({ isOpen, onDismiss, children, ...props }) => {
 
           {/* Off-canvas menu, show/hide based on off-canvas menu state. */}
           <DialogContent
-            tw="inline-block align-bottom bg-white rounded-t-lg sm:rounded-lg px-4 pt-5 pb-4 text-left shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 m-0 w-full"
+            tw="inline-block align-bottom bg-white rounded-t-lg sm:rounded-lg px-4 pt-5 pb-4 text-left shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6 m-0 w-full relative"
             {...props}
           >
             {children}

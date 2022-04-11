@@ -7,7 +7,7 @@ export const Panel = styled("section")(tw`shadow bg-white sm:rounded-md -mx-4 sm
 export const PanelContent = styled("div")(tw`py-5 px-4 sm:p-6`);
 
 export const PanelFooter = styled("footer")(
-  tw`px-4 py-3 bg-gray-50 text-right sm:px-6 sm:rounded-b-md`
+  tw`px-4 py-3 bg-gray-50 text-right sm:px-6 sm:rounded-b-md space-x-2`
 );
 export const PanelHeader = styled("header")(
   tw`bg-white px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center flex-wrap sm:flex-nowrap sm:rounded-t-md`

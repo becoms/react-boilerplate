@@ -4,42 +4,35 @@ import { useId } from "@reach/auto-id";
 import { useMutation } from "react-query";
 import "twin.macro";
 import { LoadingIndicator } from "../shared/LoadingIndicator";
-import { MenuItem } from "../shared/Menu";
-import { useUpsertMutation } from "./CrudQueries";
+import { Button } from "../shared/Buttons";
 
-export const CrudImport = () => {
-  const { mutateAsync: upsertItem } = useUpsertMutation();
+/**
+ * Fields is the list of columns to import.
+ * FieldsProcessors is the list of function (matching fields index) to apply to each cell value
+ */
+export const CrudImport = ({ fields, fieldsProcessors, upsertItem }) => {
+  const defaultProcessor = (val) => val;
   const { mutateAsync: importFile, status } = useMutation(
     async (file) => {
       const { default: ExcelJS } = await import("exceljs");
       const workbook = new ExcelJS.Workbook();
       await workbook.xlsx.load(file);
       const worksheet = workbook.getWorksheet(1);
-      const rows = [];
+      const items = [];
       worksheet.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
-        const tirf = row.getCell(1).value;
-        const serialNumber = row.getCell(5).value;
-        const dto = row.getCell(5).value?.substr(0, 8);
-        const dimension = row.getCell(3).value;
-        if (rowNumber > 4 && tirf && serialNumber) {
-          rows.push({
-            tirf,
-            dto,
-            dimension,
-            serialNumber,
-          });
+        if (rowNumber !== 1) { // ignore header
+          const item = {};
+          for (let i = 0; i < fields.length; i++) {
+            const field = fields[i];
+            const fieldProcessors = fieldsProcessors[i] ?? defaultProcessor;
+            const value = fieldProcessors(row.getCell(i + 1).value);
+            item[field] = value;
+          }
+          items.push(item);
         }
       });
 
-      for (const row of rows) {
-        const { tirf, dto: dtoValue, serialNumber } = row;
-
-        const item = {
-          tirf,
-          dto: dtoValue,
-          serialNumber,
-        };
-
+      for (const item of items) {
         try {
           await upsertItem(item);
         } catch (error) {
@@ -75,10 +68,10 @@ export const CrudImport = () => {
         disabled={status === "loading"}
         onChange={handleImportFile}
       />
-      <MenuItem as="label" tw="cursor-pointer" disabled={status === "loading"} htmlFor={id}>
-        {status === "loading" ? <LoadingIndicator /> : <DocumentAddIcon />}
-        Import
-      </MenuItem>
+      <Button as="label" tw="cursor-pointer" disabled={status === "loading"} htmlFor={id}>
+        {status === "loading" ? <LoadingIndicator tw="h-5 w-5" /> : <DocumentAddIcon tw="h-5 w-5" />}
+        Importer
+      </Button>
     </>
   );
 };

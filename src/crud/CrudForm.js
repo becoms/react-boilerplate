@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { FormProvider, useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { Navigate, useNavigate } from "react-router-dom";
 import "twin.macro";
-import { PrimaryButton } from "../shared/Buttons";
+import { PrimaryButton, Button } from "../shared/Buttons";
 import {
   CheckBox,
   HelperText,
@@ -17,7 +17,7 @@ import { ROUTE_PATH } from "./constants";
 import { useUpsertMutation } from "./CrudQueries";
 
 const CrudFormFields = (props) => {
-  const { register, formState: { errors } } = useForm();
+  const { register, formState: { errors } } = useFormContext();
 
   return (
     <div tw="grid grid-cols-1 gap-6" {...props}>
@@ -25,7 +25,7 @@ const CrudFormFields = (props) => {
 
       <FormGroup>
         <Label>Nom</Label>
-        <Input {...register("name", { required: true })} />
+        <Input type="text" {...register("name", { required: true })} />
         <HelperText tw="text-red-800">{errors.name && "Le nom est obligatoire"}</HelperText>
       </FormGroup>
 
@@ -41,14 +41,20 @@ const CrudFormFields = (props) => {
         <HelperText tw="text-red-800">{errors.name && "Le statut est obligatoire"}</HelperText>
       </FormGroup>
 
-      <FormGroup tw="col-span-1 sm:col-span-full">
+      <FormGroup tw="col-span-1 sm:col-span-full flex flex-col space-y-2">
         <Label>Couleur</Label>
-        <CheckBox {...register("color", { required: true })} />
-        <Label>Bleu</Label>
-        <CheckBox {...register("color", { required: true })} />
-        <Label>Jaune</Label>
-        <CheckBox {...register("color", { required: true })} />
-        <Label>Rouge</Label>
+        <div tw="flex space-x-2 items-center">
+          <CheckBox type="checkbox" value="Bleu" {...register("color", { required: true })} />
+          <Label>Bleu</Label>
+        </div>
+        <div tw="flex space-x-2 items-center">
+          <CheckBox type="checkbox" value="Jaune" {...register("color", { required: true })} />
+          <Label>Jaune</Label>
+        </div>
+        <div tw="flex space-x-2 items-center">
+          <CheckBox type="checkbox" value="Rouge" {...register("color", { required: true })} />
+          <Label>Rouge</Label>
+        </div>
       </FormGroup>
     </div>
   );
@@ -62,11 +68,12 @@ export const CrudForm = ({ item = {} }) => {
   const formProps = useForm({
     defaultValues: item,
   });
-  const { mutateAsync: upsertTire, status, data } = useUpsertMutation();
-  const onSubmit = async (data) => {
-    await upsertTire(data);
+  const { mutateAsync: upsertItem, status, data } = useUpsertMutation();
+  const onSubmit = async (formValues) => {
+    await upsertItem(formValues);
   };
   const { handleSubmit } = formProps;
+  const navigate = useNavigate();
 
   return (
     <FormProvider {...formProps}>
@@ -77,8 +84,11 @@ export const CrudForm = ({ item = {} }) => {
             <CrudFormFields tw="sm:grid-cols-3" />
           </PanelContent>
           <PanelFooter>
+            <Button type="button" disabled={status === "loading"} onClick={() => navigate(ROUTE_PATH)}>
+              Annuler
+            </Button>
             <PrimaryButton type="submit" disabled={status === "loading"}>
-              Save
+              Enregistrer
             </PrimaryButton>
           </PanelFooter>
         </Panel>
@@ -87,7 +97,7 @@ export const CrudForm = ({ item = {} }) => {
   );
 };
 
-/** Form only displayed when Modal is open to allow form to be initialized with the tire defaultValues */
+/** Form only displayed when Modal is open to allow form to be initialized with the item defaultValues */
 const CrudCreationModalForm = ({ item, onDismiss, onCreated }) => {
   const formProps = useForm({
     mode: "onSubmit",
@@ -106,11 +116,11 @@ const CrudCreationModalForm = ({ item, onDismiss, onCreated }) => {
       <form onSubmit={handleSubmit(onCreate)}>
         <CrudFormFields tw="sm:grid-cols-2" />
         <ModalActions>
-          <ModalButton as={PrimaryButton} type="submit" disabled={status === "loading"}>
-            Save
-          </ModalButton>
           <ModalButton onClick={onDismiss} type="button">
-            Cancel
+            Annuler
+          </ModalButton>
+          <ModalButton as={PrimaryButton} type="submit" disabled={status === "loading"}>
+            Enregistrer
           </ModalButton>
         </ModalActions>
       </form>

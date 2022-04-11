@@ -69,7 +69,7 @@ export const CrudExport = ({ isOpen, onDismiss }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onDismiss={onDismiss} aria-label="Export tires modal">
+    <Modal isOpen={isOpen} onDismiss={onDismiss} aria-label="Exporter un fichier">
       <FormProvider {...formProps}>
         <form onSubmit={handleSubmit(onExport)} tw="space-y-6">
           <FormGroup>
