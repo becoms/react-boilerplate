@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import "twin.macro";
 import { exportToExcel } from "./export";
 import { CrudImport } from "./CrudImport";
-import { SearchBar } from "../search/SearchBar";
 import { useDebounce } from "../shared/useDebounce";
 import { Button, PrimaryButton } from "../shared/Buttons";
 import {
@@ -32,6 +31,7 @@ import { useItemSelection } from "../shared/useItemSelection";
 import { Filter } from "../shared/QueryHelpers";
 import { CheckBox } from "../shared/Form";
 import { SkeletonTable, Table, Td, Th } from "../shared/Table";
+import { SearchSolidIcon } from "./Icons";
 
 export const CrudList = ({
   pageTitle,
@@ -207,6 +207,24 @@ const HeaderBar = ({
     </PrimaryButton>
   </>
 );
+
+const SearchBar = ({ value, onChange, ...props }) => {
+  return (
+    <div tw="relative rounded-md shadow-sm" {...props}>
+      <div tw="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <SearchSolidIcon tw="h-5 w-5 text-gray-400" />
+      </div>
+      <input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        type="search"
+        tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full rounded-md pl-10 border-gray-300 text-sm"
+        placeholder="Search"
+        aria-label="Search"
+      />
+    </div>
+  );
+};
 
 const EmptyStatePage = ({ creationRoute, debouncedSearch }) => (
   <EmptyState>
