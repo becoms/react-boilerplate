@@ -36,7 +36,7 @@ export const MenuItems = ({ children, ...props }) => {
     >
       <HeadlessUIMenu.Items
         static
-        tw="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none divide-y z-50"
+        tw="origin-top-right absolute right-0 mt-2 w-64 rounded-md bg-white ring-1 ring-black ring-opacity-5 focus:outline-none divide-y z-50"
         {...props}
       >
         {children}

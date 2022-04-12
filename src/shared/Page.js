@@ -13,7 +13,7 @@ export const PageHeader = ({ title, children }) => {
       <div tw="xl:flex xl:justify-between">
         <SkipNavContent />
         <div tw="flex-1">{title}</div>
-        {children && <div tw="flex flex-row flex-wrap md:mt-0 md:ml-4 space-x-3 space-y-1">{children}</div>}
+        {children && <div tw="flex flex-row flex-wrap md:mt-0 md:ml-4 space-x-3 space-y-1 items-center">{children}</div>}
       </div>
     </Container>
   );

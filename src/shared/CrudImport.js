@@ -10,7 +10,7 @@ import { Button } from "../shared/Buttons";
  * Fields is the list of columns to import.
  * FieldsProcessors is the list of function (matching fields index) to apply to each cell value
  */
-export const CrudImport = ({ fields, fieldsProcessors, upsertItem }) => {
+export const CrudImport = ({ fieldNames, fieldsProcessors, upsertItem }) => {
   const defaultProcessor = (val) => val;
   const { mutateAsync: importFile, status } = useMutation(
     async (file) => {
@@ -22,8 +22,8 @@ export const CrudImport = ({ fields, fieldsProcessors, upsertItem }) => {
       worksheet.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
         if (rowNumber !== 1) { // ignore header
           const item = {};
-          for (let i = 0; i < fields.length; i++) {
-            const field = fields[i];
+          for (let i = 0; i < fieldNames.length; i++) {
+            const field = fieldNames[i];
             const fieldProcessors = fieldsProcessors[i] ?? defaultProcessor;
             const value = fieldProcessors(row.getCell(i + 1).value);
             item[field] = value;

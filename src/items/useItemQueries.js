@@ -2,7 +2,9 @@
 import qs from "qs";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useApi } from "../shared/useApi";
-import { API_PATH } from "./constants";
+
+// Configure the following variables
+export const API_PATH = "v1/item";
 
 /** @typedef {("used" | "unused" | "usedByForceAndMoment" | "destroyed")} ItemStatus */
 export const itemStatus = [
@@ -70,6 +72,26 @@ export const useUpsertMutation = () => {
         return api.patch(`${API_PATH}/${item._id}`, { json: item }).json();
       }
       return api.post(API_PATH, { json: item }).json();
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(API_PATH);
+      },
+    }
+  );
+};
+
+/** @type {() => import("react-query").UseMutationResult<Item, unknown, Item>} */
+export const useDeleteMutation = () => {
+  const queryClient = useQueryClient();
+  const api = useApi();
+  return useMutation(
+    async (item) => {
+      if (item._id) {
+        return api.delete(`${API_PATH}/${item._id}`);
+      } else if (Array.isArray(item)) {
+        return Promise.all(item.map((i) => api.delete(`${API_PATH}/${i._id}`)));
+      }
     },
     {
       onSuccess: () => {

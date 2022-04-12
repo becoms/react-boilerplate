@@ -148,9 +148,9 @@ export const Layout = ({ children }) => {
             <HomeOutlineIcon />
             {t("Layout.dashboard")}
           </SidebarNavLink>
-          <SidebarNavLink to="/crud" exact="true">
+          <SidebarNavLink to="/item" exact="true">
             <ViewListIcon />
-            CRUD
+            CRUD Showcase
           </SidebarNavLink>
         </Sidebar>
 

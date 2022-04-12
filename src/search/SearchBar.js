@@ -13,7 +13,7 @@ export const SearchBar = ({ value, onChange, ...props }) => {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         type="search"
-        tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-md pl-10 border-gray-300 text-sm"
+        tw="focus:ring-indigo-500 focus:border-indigo-500 block w-full h-full rounded-md pl-10 border-gray-300 text-sm"
         placeholder="Search"
         aria-label="Search"
       />
