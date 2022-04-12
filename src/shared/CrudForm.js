@@ -7,18 +7,17 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Page, PageContent, PageHeader, PageSkeleton, PageTitle } from "./Page";
 import { PrimaryButton, Button } from "../shared/Buttons";
 import { Panel, PanelContent, PanelFooter } from "../shared/Panel";
-import { useUpsertMutation } from "../items/useItemQueries";
 
-export const CrudCreation = ({ renderFormFields, listRoute }) => (
+export const CrudCreation = ({ renderFormFields, listRoute, useUpsertMutation }) => (
   <Page>
     <PageHeader title={<PageTitle>Création</PageTitle>} />
     <PageContent>
-      <CrudForm renderFormFields={renderFormFields} listRoute={listRoute} />
+      <CrudForm renderFormFields={renderFormFields} listRoute={listRoute} useUpsertMutation={useUpsertMutation} />
     </PageContent>
   </Page>
 );
 
-export const CrudDetails = ({ useFindByIdQuery, renderFormFields, listRoute, idPathParam }) => {
+export const CrudDetails = ({ useFindByIdQuery, renderFormFields, listRoute, idPathParam, useUpsertMutation }) => {
   const params = useParams();
   const { status, data: item, error } = useFindByIdQuery(params[idPathParam]);
 
@@ -30,7 +29,7 @@ export const CrudDetails = ({ useFindByIdQuery, renderFormFields, listRoute, idP
         <Page>
           <PageHeader title={<PageTitle>Détails</PageTitle>} />
           <PageContent>
-            <CrudForm item={item} renderFormFields={renderFormFields} listRoute={listRoute} />
+            <CrudForm item={item} renderFormFields={renderFormFields} listRoute={listRoute} useUpsertMutation={useUpsertMutation} />
           </PageContent>
         </Page>
       )}
@@ -42,7 +41,7 @@ export const CrudDetails = ({ useFindByIdQuery, renderFormFields, listRoute, idP
  * Item creation or update form wrapped within a Panel.
  * @type {React.FC<{ item?: import("../items/useItemQueries").Item }>}
  */
-export const CrudForm = ({ item = {}, renderFormFields, listRoute }) => {
+export const CrudForm = ({ item = {}, renderFormFields, listRoute, useUpsertMutation }) => {
   const formFields = useMemo(() => renderFormFields(), [renderFormFields]);
   const formProps = useForm({
     defaultValues: item,

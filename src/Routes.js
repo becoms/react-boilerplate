@@ -8,12 +8,16 @@ import { NotFoundScreen } from "./not-found/NotFoundScreen";
 import { ItemCrud, ITEM_ROOT_ROUTE, ITEM_CREATION_ROUTE, ITEM_DETAILS_ROUTE, ITEM_DETAILS_PATH_PARAM } from "./items/ItemCrud";
 import { ItemForm } from "./items/ItemForm";
 import { CrudCreation, CrudDetails } from "./shared/CrudForm";
-import { useFindByIdQuery } from "./items/useItemQueries";
+import { useFindByIdQuery, useUpsertMutation } from "./items/useItemQueries";
 
 export const AppRoutes = withAuthenticationRequired(() => {
   const renderFormFields = useCallback(() => <ItemForm />, []);
   const creationElement = useMemo(() => (
-    <CrudCreation renderFormFields={renderFormFields} listRoute="/item" />
+    <CrudCreation
+      renderFormFields={renderFormFields}
+      listRoute="/item"
+      useUpsertMutation={useUpsertMutation}
+    />
   ), []);
   const detailsElement = useMemo(() => (
     <CrudDetails
@@ -21,6 +25,7 @@ export const AppRoutes = withAuthenticationRequired(() => {
       useFindByIdQuery={useFindByIdQuery}
       listRoute={ITEM_ROOT_ROUTE}
       idPathParam={ITEM_DETAILS_PATH_PARAM}
+      useUpsertMutation={useUpsertMutation}
     />
   ), []);
   return (
