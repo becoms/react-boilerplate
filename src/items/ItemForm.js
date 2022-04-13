@@ -15,7 +15,7 @@ export const ItemForm = (props) => {
 
   return (
     <div tw="grid grid-cols-1 gap-6" {...props}>
-      <input type="hidden" name="_id" ref={register()} />
+      <input type="hidden" name="_id" {...register("_id")} />
 
       <FormGroup>
         <Label>Nom</Label>

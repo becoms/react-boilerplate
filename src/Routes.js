@@ -15,7 +15,7 @@ export const AppRoutes = withAuthenticationRequired(() => {
   const creationElement = useMemo(() => (
     <CrudCreation
       renderFormFields={renderFormFields}
-      listRoute="/item"
+      listRoute={ITEM_ROOT_ROUTE}
       useUpsertMutation={useUpsertMutation}
     />
   ), []);
