@@ -16,7 +16,7 @@ export const ITEM_CREATION_ROUTE = `${ITEM_ROOT_ROUTE}/new`;
 export const ITEM_DETAILS_PATH_PARAM = "itemId";
 export const ITEM_DETAILS_ROUTE = `${ITEM_ROOT_ROUTE}/:${ITEM_DETAILS_PATH_PARAM}`;
 const detailsRoute = (item) => {
-  const result = ITEM_DETAILS_ROUTE.replace(":itemId", item._id);
+  const result = ITEM_DETAILS_ROUTE.replace(`:${ITEM_DETAILS_PATH_PARAM}`, item._id);
   return result;
 };
 
