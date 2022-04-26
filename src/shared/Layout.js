@@ -1,39 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
-import { useId } from "@reach/auto-id";
 import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
-import { BellOutlineIcon, HomeOutlineIcon, SearchSolidIcon } from "./Icons";
-import { OpenSidebarButton, Sidebar, SidebarHeader, SidebarNavLink } from "./Sidebar";
-import { ViewListIcon } from "@heroicons/react/solid";
-
-const SearchBar = () => {
-  const { t } = useTranslation();
-  const id = useId();
-  return (
-    <form tw="w-full flex md:ml-0" action="#" method="GET">
-      <label htmlFor={id} tw="sr-only">
-        {t("Layout.search")}
-      </label>
-      <div tw="relative w-full text-gray-400 focus-within:text-gray-600">
-        <div tw="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-          <SearchSolidIcon tw="h-5 w-5" />
-        </div>
-        <input
-          id={id}
-          tw="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:(outline-none placeholder-gray-400 ring-0 border-transparent) sm:(text-sm)"
-          placeholder={t("Layout.search")}
-          type="search"
-        />
-      </div>
-    </form>
-  );
-};
+import { BellOutlineIcon, HomeOutlineIcon } from "./Icons";
+import {
+  OpenSidebarButton,
+  Sidebar,
+  SidebarHeader,
+  SidebarNavLink,
+} from "./Sidebar";
 
 const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }) => {
   return (
@@ -56,14 +36,16 @@ const ProfileDropdown = () => {
   const { user, isAuthenticated, logout } = useAuth0();
   const { t } = useTranslation();
   return (
-    <div tw="relative">
+    <div tw="hidden relative">
       <Menu>
         {({ open }) => (
           <>
             {/* Profile button */}
             <Menu.Button tw="max-w-xs bg-white flex items-center text-sm rounded-full focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
               <span tw="sr-only">
-                {open ? t("Layout.closeProfileMenu") : t("Layout.openProfileMenu")}
+                {open
+                  ? t("Layout.closeProfileMenu")
+                  : t("Layout.openProfileMenu")}
               </span>
               <img
                 tw="h-8 w-8 rounded-full"
@@ -91,7 +73,9 @@ const ProfileDropdown = () => {
                 {isAuthenticated && (
                   <header tw="px-4 py-3">
                     <p tw="text-sm">{t("Layout.signedInAs")}</p>
-                    <p tw="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
+                    <p tw="text-sm font-medium text-gray-900 truncate">
+                      {user?.name}
+                    </p>
                   </header>
                 )}
 
@@ -115,7 +99,7 @@ const ProfileDropdown = () => {
 const NotificationButton = () => {
   const { t } = useTranslation();
   return (
-    <button tw="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
+    <button tw="hidden bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
       <span tw="sr-only">{t("Layout.notifications")}</span>
       <BellOutlineIcon tw="h-6 w-6" />
     </button>
@@ -143,22 +127,25 @@ export const Layout = ({ children }) => {
   return (
     <>
       <div tw="h-screen flex overflow-hidden bg-gray-100">
-        <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
-          <SidebarNavLink to="/" exact="true">
-            <HomeOutlineIcon />
-            {t("Layout.dashboard")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/item" exact="true">
-            <ViewListIcon />
-            CRUD Showcase
-          </SidebarNavLink>
-        </Sidebar>
+        <div tw="hidden">
+          {" "}
+          <Sidebar
+            isOpen={isSidebarOpen}
+            onDismiss={closeSidebar}
+            header={<SidebarHeader />}
+          >
+            <SidebarNavLink to="/" exact="true">
+              <HomeOutlineIcon />
+              {t("Layout.dashboard")}
+            </SidebarNavLink>
+          </Sidebar>
+        </div>
 
         {/* Navbar & content */}
         <div tw="flex flex-col w-0 flex-1 overflow-hidden">
           <Navbar
             start={<OpenSidebarButton onClick={openSidebar} />}
-            center={<SearchBar />}
+            center={<img src="/img/Logo.png" alt="image" />}
             end={
               <>
                 <NotificationButton />
