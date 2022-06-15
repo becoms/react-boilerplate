@@ -8,7 +8,6 @@ import {
   useDeleteMutation,
   useSearchQuery,
   useUpsertManyMutation,
-  useUpsertMutation,
 } from "./useItemQueries";
 
 export const ITEM_ROOT_ROUTE = "/item";
@@ -28,7 +27,7 @@ export const ItemCrud = () => {
       fieldNames={["name", "color", "status"]}
       mongooseSearchFilter={debouncedSearch => ({ name: Filter.regex(debouncedSearch) }) }
       useSearchQuery={useSearchQuery}
-      useUpsertMutation={useUpsertMutation}
+      useUpsertManyMutation={useUpsertManyMutation}
       creationRoute={ITEM_CREATION_ROUTE}
       detailsRoute={detailsRoute}
       massActions={(selectedItems) => <MassActions selectedItems={selectedItems} />}

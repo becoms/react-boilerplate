@@ -43,7 +43,7 @@ export const CrudList = ({
   creationRoute,
   detailsRoute,
   useSearchQuery,
-  useUpsertMutation,
+  useUpsertManyMutation,
   importEnabled,
   exportEnabled,
 }) => {
@@ -58,7 +58,6 @@ export const CrudList = ({
     skip: (Number(page) - 1) * pageSize,
     limit: pageSize,
   });
-  const { mutateAsync: upsertItem } = useUpsertMutation();
 
   const {
     selectedItems,
@@ -126,8 +125,8 @@ export const CrudList = ({
                 {importEnabled && (
                   <CrudImport
                     fieldNames={fieldNames}
-                    fieldsProcessors={[null, (arr) => arr.split("-")]}
-                    upsertItem={upsertItem}
+                    fieldsProcessors={[null, (arr) => JSON.parse(arr)]}
+                    useUpsertManyMutation={useUpsertManyMutation}
                   />
                 )}
                 {exportEnabled && (

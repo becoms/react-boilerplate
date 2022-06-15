@@ -48,7 +48,11 @@ export const CrudForm = ({ item = {}, renderFormFields, listRoute, useUpsertMuta
   });
   const { mutateAsync: upsertItem, status, data } = useUpsertMutation();
   const onSubmit = async (formValues) => {
-    await upsertItem(formValues);
+    const item = {
+      ...formValues,
+      _id: formValues._id === "" ? undefined : formValues._id,
+    };
+    await upsertItem(item);
   };
   const { handleSubmit } = formProps;
   const navigate = useNavigate();

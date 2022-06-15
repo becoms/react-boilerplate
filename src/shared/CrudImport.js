@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useMemo, useState } from "react";
+import * as ExcelJS from "exceljs";
 import { useId } from "@reach/auto-id";
 import "twin.macro";
-import { readExcelFile } from "../functions/Import";
-import { Alert } from "./Modal";
-import { ImportButton } from "./Buttons";
-import { handleError } from "../functions/ErrorHandling";
+import { Modal } from "./Modal";
+import { PrimaryButton } from "./Buttons";
 
 /**
  * Fields is the list of columns to import.
@@ -31,7 +30,6 @@ export const CrudImport = ({ fieldNames, fieldsProcessors, useUpsertManyMutation
 
   const globalStatus = useMemo(() => readStatus === "success" ? upsertStatus : readStatus, [upsertStatus, readStatus]);
   useEffect(() => {
-    handleError(upsertError).then((errMsg) => setMessage(errMsg));
     console.log(upsertError);
   }, [upsertError]);
 
@@ -44,10 +42,32 @@ export const CrudImport = ({ fieldNames, fieldsProcessors, useUpsertManyMutation
         disabled={globalStatus === "loading"}
         onChange={handleImportFile}
       />
-      <ImportButton as="label" status={globalStatus} htmlFor={id}>
+      <PrimaryButton as="label" status={globalStatus} htmlFor={id}>
         Importer
-      </ImportButton>
-      <Alert message={message} setMessage={setMessage} />
+      </PrimaryButton>
+      <Modal message={message} setMessage={setMessage} />
     </>
   );
+};
+
+export const readExcelFile = async (file, fieldNames, fieldsProcessors) => {
+  const workbook = new ExcelJS.Workbook();
+  await workbook.xlsx.load(file);
+  const worksheet = workbook.getWorksheet(1);
+  const items = [];
+  worksheet.eachRow({ includeEmpty: true }, async (row, rowNumber) => {
+    if (rowNumber !== 1) {
+      // ignore header
+      const item = {};
+      for (let i = 0; i < fieldNames.length; i++) {
+        const field = fieldNames[i];
+        const fieldProcessors = fieldsProcessors[i] ?? ((val) => val);
+        const value = row.getCell(i + 1).value;
+        const processedValue = fieldProcessors(value);
+        item[field] = processedValue;
+      }
+      items.push(item);
+    }
+  });
+  return items;
 };
