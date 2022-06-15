@@ -100,7 +100,7 @@ const ProfileDropdown = () => {
                     as="button"
                     onClick={() => logout({ returnTo: window.location.origin })}
                   >
-                    toto
+                    Logout
                   </ProfileDropdownItem>
                 </section>
               </Menu.Items>

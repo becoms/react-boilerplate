@@ -6,7 +6,6 @@ module.exports = {
   },
   extends: [
     "plugin:react/recommended",
-    "standard"
   ],
   parser: "@babel/eslint-parser",
   parserOptions: {
@@ -30,8 +29,8 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/display-name": "off",
-    quotes: ["error", "double"],
-    semi: ["error", "always"],
-    "comma-dangle": ["error", "only-multiline"]
+    quotes: ["warn", "double"],
+    semi: ["warn", "always"],
+    "comma-dangle": ["warn", "only-multiline"]
   }
 };
