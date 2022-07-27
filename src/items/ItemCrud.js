@@ -1,6 +1,6 @@
 // import { useCallback } from "react/cjs/react.production.min";
 import { TrashIcon } from "@heroicons/react/solid";
-import { CrudList } from "../shared/CrudList";
+import { CrudList } from "../shared/crud/CrudList";
 import { MenuItemButton } from "../shared/Menu";
 import { Filter } from "../shared/QueryHelpers";
 import { Td } from "../shared/Table";
@@ -24,7 +24,6 @@ export const ItemCrud = () => {
     <CrudList
       pageTitle="CRUD Showcase"
       fieldLabels={["Nom", "Couleur", "Statut"]}
-      fieldNames={["name", "color", "status"]}
       mongooseSearchFilter={debouncedSearch => ({ name: Filter.regex(debouncedSearch) }) }
       useSearchQuery={useSearchQuery}
       useUpsertManyMutation={useUpsertManyMutation}
@@ -32,6 +31,7 @@ export const ItemCrud = () => {
       detailsRoute={detailsRoute}
       massActions={(selectedItems) => <MassActions selectedItems={selectedItems} />}
       crudListCells={(item) => <CrudListCells item={item} />}
+      importExportFields={["name", "color", "status"]}
       importEnabled={true}
       exportEnabled={true}
     />

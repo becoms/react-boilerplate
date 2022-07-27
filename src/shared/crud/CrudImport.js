@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import * as ExcelJS from "exceljs";
 import { useId } from "@reach/auto-id";
 import "twin.macro";
-import { Modal } from "./Modal";
-import { PrimaryButton } from "./Buttons";
+import { Modal } from "../Modal";
+import { PrimaryButton } from "../Buttons";
 
 /**
  * Fields is the list of columns to import.

@@ -4,9 +4,9 @@ import tw from "twin.macro";
 import { useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { Page, PageContent, PageHeader, PageSkeleton, PageTitle } from "./Page";
-import { PrimaryButton, Button } from "../shared/Buttons";
-import { Panel, PanelContent, PanelFooter } from "../shared/Panel";
+import { Page, PageContent, PageHeader, PageSkeleton, PageTitle } from "../Page";
+import { PrimaryButton, Button } from "../Buttons";
+import { Panel, PanelContent, PanelFooter } from "../Panel";
 
 export const CrudCreation = ({ renderFormFields, listRoute, useUpsertMutation }) => (
   <Page>
@@ -39,7 +39,7 @@ export const CrudDetails = ({ useFindByIdQuery, renderFormFields, listRoute, idP
 
 /**
  * Item creation or update form wrapped within a Panel.
- * @type {React.FC<{ item?: import("../items/useItemQueries").Item }>}
+ * @type {React.FC<{ item?: import("../../items/useItemQueries").Item }>}
  */
 export const CrudForm = ({ item = {}, renderFormFields, listRoute, useUpsertMutation }) => {
   const formFields = useMemo(() => renderFormFields(), [renderFormFields]);

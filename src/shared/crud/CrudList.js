@@ -9,41 +9,41 @@ import {
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import "twin.macro";
-import { exportToExcel } from "./export";
+import { exportToExcel } from "../export";
 import { CrudImport } from "./CrudImport";
-import { useDebounce } from "../shared/useDebounce";
-import { Button, PrimaryButton } from "../shared/Buttons";
+import { useDebounce } from "../useDebounce";
+import { Button, PrimaryButton } from "../Buttons";
 import {
   EmptyState,
   EmptyStateDescription,
   EmptyStateIllustration,
   EmptyStateTitle,
-} from "../shared/EmptyState";
-import { ListPagination } from "../shared/List";
+} from "../EmptyState";
+import { ListPagination } from "../List";
 import {
   Menu,
   MenuButton,
   MenuItemButton,
   MenuItems,
-} from "../shared/Menu";
-import { Page, PageContent, PageHeader, PageTitle } from "../shared/Page";
-import { useItemSelection } from "../shared/useItemSelection";
-import { Filter } from "../shared/QueryHelpers";
-import { CheckBox } from "../shared/Form";
-import { SkeletonTable, Table, Td, Th } from "../shared/Table";
-import { SearchSolidIcon } from "./Icons";
+} from "../Menu";
+import { Page, PageContent, PageHeader, PageTitle } from "../Page";
+import { useItemSelection } from "../useItemSelection";
+import { Filter } from "../QueryHelpers";
+import { CheckBox } from "../Form";
+import { SkeletonTable, Table, Td, Th } from "../Table";
+import { SearchSolidIcon } from "../Icons";
 
 export const CrudList = ({
   pageTitle,
   massActions,
   fieldLabels,
-  fieldNames,
   mongooseSearchFilter,
   crudListCells,
   creationRoute,
   detailsRoute,
   useSearchQuery,
   useUpsertManyMutation,
+  importExportFields,
   importEnabled,
   exportEnabled,
 }) => {
@@ -124,13 +124,13 @@ export const CrudList = ({
               >
                 {importEnabled && (
                   <CrudImport
-                    fieldNames={fieldNames}
+                    fieldNames={importExportFields}
                     fieldsProcessors={[null, (arr) => JSON.parse(arr)]}
                     useUpsertManyMutation={useUpsertManyMutation}
                   />
                 )}
                 {exportEnabled && (
-                  <Button onClick={() => exportToExcel(data.list, fieldLabels, fieldNames)}>
+                  <Button onClick={() => exportToExcel(data.list, fieldLabels, importExportFields)}>
                     <DocumentDownloadIcon tw="h-5 w-5" />
                     Exporter
                   </Button>

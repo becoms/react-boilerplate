@@ -7,7 +7,7 @@ import { DashboardScreen } from "./dashboard/DashboardScreen";
 import { NotFoundScreen } from "./not-found/NotFoundScreen";
 import { ItemCrud, ITEM_ROOT_ROUTE, ITEM_CREATION_ROUTE, ITEM_DETAILS_ROUTE, ITEM_DETAILS_PATH_PARAM } from "./items/ItemCrud";
 import { ItemForm } from "./items/ItemForm";
-import { CrudCreation, CrudDetails } from "./shared/CrudForm";
+import { CrudCreation, CrudDetails } from "./shared/crud/CrudForm";
 import { useFindByIdQuery, useUpsertMutation } from "./items/useItemQueries";
 
 export const AppRoutes = withAuthenticationRequired(() => {
