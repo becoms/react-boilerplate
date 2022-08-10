@@ -26,6 +26,8 @@ module.exports = {
     },
   },
   rules: {
+    "no-unused-vars": "warn",
+    "no-undef": "warn",
     "multiline-ternary": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",

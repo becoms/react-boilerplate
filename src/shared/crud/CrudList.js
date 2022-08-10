@@ -5,6 +5,7 @@ import {
   DotsVerticalIcon,
   PencilIcon,
   PlusIcon,
+  SearchIcon,
   XIcon,
 } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
@@ -31,7 +32,6 @@ import { useItemSelection } from "../useItemSelection";
 import { Filter } from "../QueryHelpers";
 import { CheckBox } from "../Form";
 import { SkeletonTable, Table, Td, Th } from "../Table";
-import { SearchSolidIcon } from "../Icons";
 
 export const CrudList = ({
   pageTitle,
@@ -211,7 +211,7 @@ const SearchBar = ({ value, onChange, ...props }) => {
   return (
     <div tw="relative rounded-md shadow-sm" {...props}>
       <div tw="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-        <SearchSolidIcon tw="h-5 w-5 text-gray-400" />
+        <SearchIcon tw="h-5 w-5 text-gray-400" />
       </div>
       <input
         value={value}

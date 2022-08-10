@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
+import { BellIcon, SearchIcon } from "@heroicons/react/solid";
 import { useId } from "@reach/auto-id";
 import "@reach/skip-nav/styles.css";
 import { useCallback, useState } from "react";
@@ -8,9 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import tw from "twin.macro";
 import { Transition } from "../shared/Transition";
-import { BellOutlineIcon, HomeOutlineIcon, SearchSolidIcon } from "./Icons";
-import { OpenSidebarButton, Sidebar, SidebarHeader, SidebarNavLink } from "./Sidebar";
-import { ViewListIcon } from "@heroicons/react/solid";
+import { OpenSidebarButton, Sidebar, SidebarHeader } from "./Sidebar";
 
 const SearchBar = () => {
   const { t } = useTranslation();
@@ -22,7 +21,7 @@ const SearchBar = () => {
       </label>
       <div tw="relative w-full text-gray-400 focus-within:text-gray-600">
         <div tw="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-          <SearchSolidIcon tw="h-5 w-5" />
+          <SearchIcon tw="h-5 w-5" />
         </div>
         <input
           id={id}
@@ -117,7 +116,7 @@ const NotificationButton = () => {
   return (
     <button tw="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
       <span tw="sr-only">{t("Layout.notifications")}</span>
-      <BellOutlineIcon tw="h-6 w-6" />
+      <BellIcon tw="h-6 w-6" />
     </button>
   );
 };
@@ -135,7 +134,6 @@ const Navbar = ({ start, center, end }) => {
 };
 
 export const Layout = ({ children }) => {
-  const { t } = useTranslation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const openSidebar = useCallback(() => setIsSidebarOpen(true), []);
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
@@ -143,16 +141,7 @@ export const Layout = ({ children }) => {
   return (
     <>
       <div tw="h-screen flex overflow-hidden bg-gray-100">
-        <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />}>
-          <SidebarNavLink to="/" exact="true">
-            <HomeOutlineIcon />
-            {t("Layout.dashboard")}
-          </SidebarNavLink>
-          <SidebarNavLink to="/item" exact="true">
-            <ViewListIcon />
-            CRUD Showcase
-          </SidebarNavLink>
-        </Sidebar>
+        <Sidebar isOpen={isSidebarOpen} onDismiss={closeSidebar} header={<SidebarHeader />} />
 
         {/* Navbar & content */}
         <div tw="flex flex-col w-0 flex-1 overflow-hidden">
