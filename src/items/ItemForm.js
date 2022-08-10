@@ -8,6 +8,7 @@ import {
   Input,
   Label,
   Select,
+  ErrorMessage,
 } from "../shared/Form";
 
 export const ItemForm = (props) => {
@@ -20,7 +21,7 @@ export const ItemForm = (props) => {
       <FormGroup>
         <Label>Nom</Label>
         <Input type="text" {...register("name", { required: true })} />
-        <HelperText tw="text-red-800">{errors.name && "Le nom est obligatoire"}</HelperText>
+        <ErrorMessage>{errors.name && "Le nom est obligatoire"}</ErrorMessage>
       </FormGroup>
 
       <FormGroup>
@@ -32,7 +33,7 @@ export const ItemForm = (props) => {
             </option>
           ))}
         </Select>
-        <HelperText tw="text-red-800">{errors.name && "Le statut est obligatoire"}</HelperText>
+        <ErrorMessage>{errors.name && "Le statut est obligatoire"}</ErrorMessage>
       </FormGroup>
 
       <FormGroup tw="col-span-1 sm:col-span-full flex flex-col space-y-2">
