@@ -35,5 +35,9 @@ module.exports = {
     quotes: ["warn", "double"],
     semi: ["warn", "always"],
     "comma-dangle": ["warn", "only-multiline"]
-  }
+  },
+  globals: {
+    process: true,
+    module: true,
+  },
 };
