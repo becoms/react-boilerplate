@@ -4,10 +4,7 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: [
-    "plugin:react/recommended",
-    "eslint:recommended",
-  ],
+  extends: ["plugin:react/recommended", "standard"],
   parser: "@babel/eslint-parser",
   parserOptions: {
     ecmaFeatures: {
@@ -23,18 +20,12 @@ module.exports = {
     },
   },
   rules: {
-    "no-unused-vars": "warn",
-    "no-undef": "warn",
     "multiline-ternary": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/display-name": "off",
-    quotes: ["warn", "double"],
-    semi: ["warn", "always"],
-    "comma-dangle": ["warn", "only-multiline"]
-  },
-  globals: {
-    process: true,
-    module: true,
+    quotes: ["error", "double"],
+    semi: ["error", "always"],
+    "comma-dangle": ["error", "only-multiline"],
   },
 };

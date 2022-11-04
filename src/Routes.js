@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Layout } from "./layout/Layout";
+import { Layout } from "./shared/Layout";
 import { PageSkeleton } from "./shared/Page";
 import { DashboardScreen } from "./dashboard/DashboardScreen";
 import { NotFoundScreen } from "./not-found/NotFoundScreen";

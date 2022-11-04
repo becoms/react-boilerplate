@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { HomeIcon, MenuAlt2Icon, ViewListIcon, XIcon } from "@heroicons/react/solid";
 import { DialogContent, DialogOverlay } from "@reach/dialog";
 import "@reach/dialog/styles.css";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import tw from "twin.macro";
-import { Transition } from "../shared/Transition";
+import { MenuAlt2OutlineIcon, XOutlineIcon } from "./Icons";
+import { Transition } from "./Transition";
 
 export const CloseSidebarButton = (props) => {
   const { t } = useTranslation();
@@ -15,7 +15,7 @@ export const CloseSidebarButton = (props) => {
       {...props}
     >
       <span tw="sr-only">{t("Layout.closeSidebar")}</span>
-      <XIcon tw="h-6 w-6 text-white" />
+      <XOutlineIcon tw="h-6 w-6 text-white" />
     </button>
   );
 };
@@ -28,7 +28,7 @@ export const OpenSidebarButton = (props) => {
       {...props}
     >
       <span tw="sr-only">{t("Layout.openSidebar")}</span>
-      <MenuAlt2Icon tw="h-6 w-6" />
+      <MenuAlt2OutlineIcon tw="h-6 w-6" />
     </button>
   );
 };
@@ -128,26 +128,12 @@ export const OffCanvasSidebar = ({ isOpen, onDismiss, header, children, ...props
   );
 };
 
-export const Sidebar = ({ isOpen, onDismiss, header }) => {
-  const { t } = useTranslation();
-  const links = (
-    <>
-    <SidebarNavLink to="/" exact="true">
-    <HomeIcon />
-    {t("Layout.dashboard")}
-  </SidebarNavLink>
-  <SidebarNavLink to="/item" exact="true">
-    <ViewListIcon />
-    CRUD Showcase
-  </SidebarNavLink>
-  </>
-  );
-
+export const Sidebar = ({ isOpen, onDismiss, header, children }) => {
   return (
     <>
       {/* Off-canvas menu for mobile, show/hide based on off-canvas menu state. */}
       <OffCanvasSidebar isOpen={isOpen} onDismiss={onDismiss} header={header} tw="md:hidden">
-        {links}
+        {children}
       </OffCanvasSidebar>
 
       {/* Static sidebar for desktop */}
@@ -157,7 +143,7 @@ export const Sidebar = ({ isOpen, onDismiss, header }) => {
           <div tw="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
             {header}
             <div tw="mt-5 flex-grow flex flex-col">
-              <nav tw="flex-1 px-2 bg-white space-y-1">{links}</nav>
+              <nav tw="flex-1 px-2 bg-white space-y-1">{children}</nav>
             </div>
           </div>
         </div>

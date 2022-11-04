@@ -45,15 +45,26 @@ export const Select = styled("select")(
 );
 
 /**
- * Helper text that can be used with a `FormGroup`.
+ * Legend component that can be used within a `fieldset`.
+ * @type {React.FC<React.HTMLAttributes<HTMLLegendElement>>}
+ * @example
+ * <fieldset>
+ *   <FieldsetLegend>The fieldset legend</FieldsetLegend>
+ * </fieldset>
+ */
+export const FieldsetLegend = (props) => {
+  return <legend tw="text-lg leading-6 font-medium" {...props} />;
+};
+
+/**
+ * Helper text that can be used with a `FieldsetLegend`.
  * @type {React.FC<React.HTMLAttributes<HTMLParagraphElement>>}
  * @example
- * <FormGroup>
- *   <Label>The label</Label>
- *   <Input ... />
+ * <fieldset>
+ *   <FieldsetLegend>The fieldset legend</FieldsetLegend>
  *   <HelperText>Some more description</HelperText>
- * </FormGroup>
+ * </fieldset>
  */
-export const HelperText = ({children, ...props}) => {
-  return <p tw="mt-1 max-w-2xl text-sm text-gray-500" {...props}>{children}</p>;
+export const HelperText = (props) => {
+  return <p tw="mt-1 max-w-2xl text-sm text-gray-50" {...props} />;
 };

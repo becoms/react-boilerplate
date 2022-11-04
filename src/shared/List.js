@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import styled from "@emotion/styled";
-import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import tw from "twin.macro";
+import { ArrowNarrowLeftIcon, ArrowNarrowRightIcon } from "../shared/Icons";
 import { Button } from "./Buttons";
 
 export const List = styled("ul")(tw`divide-y divide-gray-200`);
