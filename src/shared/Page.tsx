@@ -1,21 +1,19 @@
 /** @jsxImportSource @emotion/react */
-import { SkipNavContent } from "@reach/skip-nav";
+import { ReactNode } from "react";
 import "twin.macro";
-import { Container } from "./Container";
 
 export const Page = (props) => {
   return <main tw="flex-1 relative overflow-y-auto focus:(outline-none)" tabIndex={0} {...props} />;
 };
 
-export const PageHeader = ({ title, children }) => {
+export const PageHeader = ({ title, children }: { title?: ReactNode; children?: ReactNode}) => {
   return (
-    <Container as="header" tw="mt-6">
+    <header tw="max-w-5xl mx-auto px-4 sm:px-6 mt-6">
       <div tw="xl:flex xl:justify-between">
-        <SkipNavContent />
         <div tw="flex-1">{title}</div>
         {children && <div tw="flex flex-row flex-wrap md:mt-0 md:ml-4 space-x-3 space-y-1 items-center">{children}</div>}
       </div>
-    </Container>
+    </header>
   );
 };
 
@@ -24,7 +22,7 @@ export const PageTitle = ({ as: Component = "h1", ...props }) => {
 };
 
 export const PageContent = (props) => {
-  return <Container tw="mt-5" {...props} />;
+  return <div tw="max-w-5xl mx-auto px-4 sm:px-6 mt-5" {...props} />;
 };
 
 export const PageSkeleton = () => {
@@ -32,7 +30,7 @@ export const PageSkeleton = () => {
     <Page>
       <PageHeader
         title={<PageTitle as="div" tw="h-8 my-1 bg-gray-200 w-1/3 rounded-md animate-pulse" />}
-      />
+      ></PageHeader>
     </Page>
   );
 };
