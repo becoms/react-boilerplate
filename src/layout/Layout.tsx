@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import { Transition } from "../shared/Transition";
 
 type ProfileDropdownItemProps = { disabled?: boolean; as: any; [s: string]: unknown; };
 const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }: ProfileDropdownItemProps) => {
@@ -48,26 +49,37 @@ const ProfileDropdown = () => {
               />
             </Menu.Button>
             { /* @ts-ignore */}
-            <Menu.Items
-              static
-              tw="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:(outline-none)"
+            <Transition
+              show={open}
+              enter="transition duration-100 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
             >
-              {isAuthenticated && (
-                <header tw="px-4 py-3">
-                  <p tw="text-sm">Signed in as</p>
-                  <p tw="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
-                </header>
-              )}
+              { /* @ts-ignore */}
+              <Menu.Items
+                static
+                tw="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:(outline-none)"
+              >
+                {isAuthenticated && (
+                  <header tw="px-4 py-3">
+                    <p tw="text-sm">Signed in as</p>
+                    <p tw="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
+                  </header>
+                )}
 
-              <section tw="py-1">
-                <ProfileDropdownItem
-                  as="button"
-                  onClick={() => logout({ returnTo: window.location.origin })}
-                >
-                  Logout
-                </ProfileDropdownItem>
-              </section>
-            </Menu.Items>
+                <section tw="py-1">
+                  <ProfileDropdownItem
+                    as="button"
+                    onClick={() => logout({ returnTo: window.location.origin })}
+                  >
+                    Logout
+                  </ProfileDropdownItem>
+                </section>
+              </Menu.Items>
+            </Transition>
           </>
         )}
       </Menu>
