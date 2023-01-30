@@ -15,10 +15,11 @@ function App() {
 
   return (
     <Auth0Provider
-    domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
-    clientId={process.env.REACT_APP_AUTH0_CLIENTID as string}
-    redirectUri={window.location.origin}
-    audience={process.env.REACT_APP_AUTH0_AUDIENCE}>
+      domain={process.env.REACT_APP_AUTH0_DOMAIN as string}
+      clientId={process.env.REACT_APP_AUTH0_CLIENTID as string}
+      redirectUri={window.location.origin}
+      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
+    >
       <div className="App">
         <QueryClientProvider client={queryClient}>
           <GlobalStyles />

@@ -2,12 +2,20 @@
 import { ClassNames } from "@emotion/react";
 import { Transition as HeadlessTransition } from "@headlessui/react";
 
-export const Transition = ({ enter, enterFrom, enterTo, leave, leaveFrom, leaveTo, ...props }) => {
+export const Transition = ({
+  enter,
+  enterFrom,
+  enterTo,
+  leave,
+  leaveFrom,
+  leaveTo,
+  ...props
+}) => {
   return (
     <ClassNames>
       {({ css }) => (
         <>
-          { /* @ts-ignore */ }
+          {/* @ts-ignore */}
           <HeadlessTransition
             enter={enter && css(enter)}
             enterFrom={enterFrom && css(enterFrom)}
@@ -23,12 +31,20 @@ export const Transition = ({ enter, enterFrom, enterTo, leave, leaveFrom, leaveT
   );
 };
 
-Transition.Child = ({ enter, enterFrom, enterTo, leave, leaveFrom, leaveTo, ...props }) => {
+Transition.Child = ({
+  enter,
+  enterFrom,
+  enterTo,
+  leave,
+  leaveFrom,
+  leaveTo,
+  ...props
+}) => {
   return (
     <ClassNames>
       {({ css }) => (
         <>
-          { /* @ts-ignore */ }
+          {/* @ts-ignore */}
           <HeadlessTransition.Child
             enter={enter && css(enter)}
             enterFrom={enterFrom && css(enterFrom)}

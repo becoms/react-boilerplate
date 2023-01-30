@@ -4,7 +4,9 @@ import qs from "qs";
 
 const BASE_URL = "v1/item";
 
-export const useGetQuery = (searchParams = {limit: 10, skip: 0, sort: "-createdAt"}) => {
+export const useGetQuery = (
+  searchParams = { limit: 10, skip: 0, sort: "-createdAt" }
+) => {
   const api = useApi();
   return useQuery([BASE_URL, searchParams], async () => {
     const { limit, skip, sort, ...query } = searchParams;

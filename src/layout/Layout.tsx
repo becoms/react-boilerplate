@@ -3,16 +3,25 @@ import tw from "twin.macro";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Menu } from "@headlessui/react";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Transition } from "../shared/Transition";
+import styled from "@emotion/styled";
 
-type ProfileDropdownItemProps = { disabled?: boolean; as: any; [s: string]: unknown; };
-const ProfileDropdownItem = ({ disabled, as: Component = Link, ...props }: ProfileDropdownItemProps) => {
+type ProfileDropdownItemProps = {
+  disabled?: boolean;
+  as: any;
+  [s: string]: unknown;
+};
+const ProfileDropdownItem = ({
+  disabled,
+  as: Component = Link,
+  ...props
+}: ProfileDropdownItemProps) => {
   return (
     <>
-      { /* @ts-ignore */}
+      {/* @ts-ignore */}
       <Menu.Item disabled={disabled}>
-        {({ active }: {active: boolean}) => (
+        {({ active }: { active: boolean }) => (
           <Component
             tw="flex justify-between w-full px-4 py-2 text-sm text-left"
             css={[
@@ -35,7 +44,7 @@ const ProfileDropdown = () => {
         {({ open }: { open: boolean }) => (
           <>
             {/* Profile button */
-             /* @ts-ignore */ }
+            /* @ts-ignore */}
             <Menu.Button tw="max-w-xs bg-white flex items-center text-sm rounded-full focus:(outline-none ring-2 ring-offset-2 ring-indigo-500)">
               <span tw="sr-only">
                 {open ? "Close profile menu" : "Open profile menu"}
@@ -48,7 +57,7 @@ const ProfileDropdown = () => {
                 height={256}
               />
             </Menu.Button>
-            { /* @ts-ignore */}
+            {/* @ts-ignore */}
             <Transition
               show={open}
               enter="transition duration-100 ease-out"
@@ -58,7 +67,7 @@ const ProfileDropdown = () => {
               leaveFrom="transform scale-100 opacity-100"
               leaveTo="transform scale-95 opacity-0"
             >
-              { /* @ts-ignore */}
+              {/* @ts-ignore */}
               <Menu.Items
                 static
                 tw="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:(outline-none)"
@@ -66,7 +75,9 @@ const ProfileDropdown = () => {
                 {isAuthenticated && (
                   <header tw="px-4 py-3">
                     <p tw="text-sm">Signed in as</p>
-                    <p tw="text-sm font-medium text-gray-900 truncate">{user?.name}</p>
+                    <p tw="text-sm font-medium text-gray-900 truncate">
+                      {user?.name}
+                    </p>
                   </header>
                 )}
 
@@ -87,7 +98,15 @@ const ProfileDropdown = () => {
   );
 };
 
-const Navbar = ({ start, center, end }: { start?: ReactNode; center?: ReactNode; end?: ReactNode; }) => {
+const Navbar = ({
+  start,
+  center,
+  end,
+}: {
+  start?: ReactNode;
+  center?: ReactNode;
+  end?: ReactNode;
+}) => {
   return (
     <header tw="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
       {start}
@@ -99,15 +118,34 @@ const Navbar = ({ start, center, end }: { start?: ReactNode; center?: ReactNode;
   );
 };
 
-export const Layout = ({ children }: { children?: ReactNode; }) => {
+const CustomNavLink = styled(NavLink)`
+  &[aria-current="page"] {
+    ${tw`bg-gray-100 text-gray-900`}
+  }
+  &:not([aria-current="page"]) {
+    ${tw`text-gray-900 hover:bg-gray-50 hover:text-gray-900`}
+  }
+  ${tw`rounded-md py-2 px-3 inline-flex items-center text-sm font-medium`}
+`;
+
+const NavLinks = () => {
+  return (
+    <div tw="flex h-full space-x-8 py-4 my-auto">
+      <CustomNavLink to="/" end>
+        Home
+      </CustomNavLink>
+      <CustomNavLink to="/users">Users</CustomNavLink>
+    </div>
+  );
+};
+
+export const Layout = ({ children }: { children?: ReactNode }) => {
   return (
     <>
       <div tw="h-screen flex overflow-hidden bg-gray-100">
         {/* Navbar & content */}
         <div tw="flex flex-col w-0 flex-1 overflow-hidden">
-          <Navbar
-            end={<ProfileDropdown />}
-          />
+          <Navbar center={<NavLinks />} end={<ProfileDropdown />} />
           {children}
         </div>
       </div>
