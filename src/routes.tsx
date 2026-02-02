@@ -10,6 +10,7 @@ import PermissionProtectedRoute from "./auth/permission-protected-routes";
 import SignIn from "./routes/sign-in.page";
 import CustomAuthProvider from "./auth/custom-auth.provider";
 import { HomePage } from "./routes/home/home.page";
+import { DetailsPage } from "./routes/home/details.page";
 
 
 const AuthenticationGuard = () => {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
               {
                 path: "",
                 element: <HomePage />,
+              },
+              {
+                path: ":id",
+                element: <DetailsPage />,
               },
             ],
           },
