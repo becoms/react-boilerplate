@@ -1,9 +1,11 @@
-# Update 2026
+# Import CSV and JSON
 
-- React 19
-- React Router DOM
-- React Hook Form
-- Tanstack Query
-- Tailwind 4
-- Shadcn ui
-- Lucide Icons
+Import data and send progress status with SSE.
+
+Install dep:
+
+`yarn add parse-sse`
+
+Copy code from `import*.ts`
+
+

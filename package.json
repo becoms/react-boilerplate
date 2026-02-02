@@ -49,6 +49,7 @@
     "ky": "^1.7.3",
     "lucide-react": "^0.562.0",
     "oidc-client-ts": "^3.3.0",
+    "parse-sse": "^0.1.0",
     "qs": "^6.13.1",
     "react": "^19.2.3",
     "react-day-picker": "^9.13.0",

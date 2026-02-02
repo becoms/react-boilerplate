@@ -15,6 +15,7 @@ import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CreateTireDialog } from "./dialogs/create-tire.dialog";
 import { formatDate } from "@/utils/date.utils";
+import { ImportDialog } from "./dialogs/import-dialog";
 
 export const HomePage = () => {
   return (
@@ -25,7 +26,10 @@ export const HomePage = () => {
             Gestions des pneus à l'individu
           </p>
         </div>
-        <CreateTireDialog />
+        <div className="flex items-center gap-2">
+          <ImportDialog />
+          <CreateTireDialog />
+        </div>
       </PageHeader>
       <TiresList />
     </Page>

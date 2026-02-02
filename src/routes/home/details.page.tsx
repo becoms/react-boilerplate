@@ -36,11 +36,11 @@ export const DetailsPage = () => {
                   {" "}
                   {tire.data.createdBy ?? "Système"}{" "}
                 </span>
-                {tire.data.createdAt && (
+                {tire.data.createdDate && (
                   <>
                     <span className="text-foreground/60"> le </span>
                     <span className="font-semibold text-foreground/80">
-                      {new Date(tire.data.createdAt).toLocaleString("fr-FR", {
+                      {new Date(tire.data.createdDate).toLocaleString("fr-FR", {
                         day: "2-digit",
                         month: "2-digit",
                         year: "numeric",
@@ -48,7 +48,7 @@ export const DetailsPage = () => {
                     </span>
                     <span className="text-foreground/60"> à </span>
                     <span className="font-semibold text-foreground/80">
-                      {new Date(tire.data.createdAt).toLocaleString("fr-FR", {
+                      {new Date(tire.data.createdDate).toLocaleString("fr-FR", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
