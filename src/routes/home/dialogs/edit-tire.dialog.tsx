@@ -1,4 +1,5 @@
-import { useUpdateSelection } from "@/api/selections/update-selection.mutation";
+import { Tire } from "@/api/tires/type";
+import { useUpdateTire } from "@/api/tires/mutations";
 import { Button } from "@/components/button";
 import {
   DialogDescription,
@@ -6,27 +7,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/dialog";
+import { Sheet, SheetContent } from "@/components/sheet";
 import { PenBoxIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { TourSelection } from "@/api/selections/find-all-selections.options";
-import { SelectionForm } from "../form/selection.form";
-import { Sheet, SheetContent } from "@/components/sheet";
+import { TireForm } from "../form/tire.form";
 
-export function EditSelectionDialog({
-  selection,
-}: {
-  selection: TourSelection;
-}) {
+export function EditTireDialog({ tire }: { tire: Tire }) {
   const [dialogOpen, setDialogOpen] = useState(false);
-  const updateSelection = useUpdateSelection();
+  const updateTire = useUpdateTire(tire._id);
 
-  const onSubmit = async (values: Partial<TourSelection>) => {
-    await updateSelection.mutateAsync(
-      {
-        selectionData: values,
-        id: selection._id,
-      },
+  const onSubmit = async (values: Partial<Tire>) => {
+    await updateTire.mutateAsync(
+      { tireData: values },
       {
         onSuccess: () => {
           setDialogOpen(false);
@@ -45,22 +38,21 @@ export function EditSelectionDialog({
 
   return (
     <>
-      <Button variant="ghost" onClick={() => setDialogOpen(true)}>
-        <PenBoxIcon />
+      <Button onClick={() => setDialogOpen(true)}>
+        <PenBoxIcon /> Modifier
       </Button>
       <Sheet open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger asChild></DialogTrigger>
 
         <SheetContent>
           <DialogHeader>
-            <DialogTitle>Modifiez la sélection {selection.name}</DialogTitle>
+            <DialogTitle>Modifier le pneu {tire.cai}</DialogTitle>
             <DialogDescription>
-              N'oubliez pas de cliquer sur "Sauvegarder" pour modifier la
-              sélection.
+              N'oubliez pas de cliquer sur "Sauvegarder" pour modifier le pneu.
             </DialogDescription>
           </DialogHeader>
-          <SelectionForm
-            defaultValues={selection}
+          <TireForm
+            defaultValues={tire}
             onSubmit={onSubmit}
             onCancel={onFormCancel}
           />

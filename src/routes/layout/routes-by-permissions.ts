@@ -1,5 +1,4 @@
 import {
-  SquareStackIcon,
   LucideProps,
   Home,
 } from "lucide-react";
@@ -19,14 +18,5 @@ export const userRoutes: NavigationRoute[] = [
   },
 ];
 
-export const controlerRoutes: NavigationRoute[] = [
-  ...userRoutes,
-  {
-    label: "Selections",
-    to: "/controler/selections",
-    icon: SquareStackIcon,
-  },
-];
-
-export const adminRoutes: NavigationRoute[] = [...controlerRoutes];
+export const adminRoutes: NavigationRoute[] = [...userRoutes];
 

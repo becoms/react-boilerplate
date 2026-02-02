@@ -9,8 +9,7 @@ import PermissionsProvider from "./auth/permissions.context";
 import PermissionProtectedRoute from "./auth/permission-protected-routes";
 import SignIn from "./routes/sign-in.page";
 import CustomAuthProvider from "./auth/custom-auth.provider";
-import HomePage from "./routes/home/home.page";
-import { SelectionPage } from "./routes/selections/selection.page";
+import { HomePage } from "./routes/home/home.page";
 
 
 const AuthenticationGuard = () => {
@@ -46,12 +45,7 @@ const router = createBrowserRouter([
               {
                 path: "controler",
                 element: <PermissionProtectedRoute permissions={["controler", "admin"]} />,
-                children: [
-                  {
-                    path: "selections",
-                    element: <SelectionPage />,
-                  },
-                ],
+                children: []
               },
               {
                 path: "",

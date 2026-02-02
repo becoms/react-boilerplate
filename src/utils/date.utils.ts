@@ -4,11 +4,6 @@ export const formatDate = (start: Date | string) => {
     .slice(5, 7)}/${start?.toString().slice(0, 4)}`;
 };
 
-export const formatDateToDDMMYYYY = (dateString: string) => {
-  const [year, month, day] = dateString.split("-");
-  return `${day}/${month}/${year}`;
-};
-
 export const daysBetweenTodayAnd = (dateString: string): number | null => {
   const target = new Date(dateString);
   if (isNaN(target.getTime())) return null;

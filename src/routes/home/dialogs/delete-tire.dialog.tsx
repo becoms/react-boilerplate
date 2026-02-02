@@ -1,5 +1,5 @@
-import { useDeleteSelection } from "@/api/selections/delete-selection.mutation";
-import { TourSelection } from "@/api/selections/find-all-selections.options";
+import { Tire } from "@/api/tires/type";
+import { useDeleteTire } from "@/api/tires/mutations";
 import { Button } from "@/components/button";
 import {
   Dialog,
@@ -15,53 +15,42 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-export function DeleteSelectionDialog({
-  selection,
-}: {
-  selection: TourSelection;
-}) {
+export function DeleteTireDialog({ tire }: { tire: Tire }) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const navigate = useNavigate();
 
   const onDissmiss = () => {
     setDialogOpen(false);
   };
-  const deleteSelection = useDeleteSelection();
+
+  const deleteTire = useDeleteTire();
+
   const onDeleteConfirm = async () => {
-    await deleteSelection.mutateAsync(
-      {
-        id: selection._id,
-      },
-      {
-        onSuccess: () => {
-          setDialogOpen(false);
-          toast.success(`La sélection ${selection.name} a été supprimée`);
-          navigate("/controler/selections",);
-        },
-        onError: (e: Error) => {
-          toast.error(
-            `Nous n'avons pas pu supprimer la sélection : ${e.message}`
-          );
-        },
-      }
-    );
+    try {
+      await deleteTire.mutateAsync({ id: tire._id });
+      setDialogOpen(false);
+            toast.success(`Le pneu ${tire.cai} a été supprimé`);
+            navigate("../");
+    } catch (e) {
+      toast.error(`Nous n'avons pas pu supprimer le pneu : ${(e as Error).message}`);
+    }
   };
+
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" onClick={() => setDialogOpen(true)}>
-          <Trash2Icon className="text-destructive" />
+        <Button variant={"destructive"} onClick={() => setDialogOpen(true)}>
+          <Trash2Icon /> Supprimer
         </Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Êtes-vous sûr de vouloir supprimer la sélection "{selection.name}" ?
+            Êtes-vous sûr de vouloir supprimer le pneu "{tire.cai}" ?
           </DialogTitle>
           <DialogDescription>
-            Cette action est définitive et la sélection ne pourra plus être
-            récupérée.
+            Cette action est définitive et le pneu ne pourra plus être récupéré.
           </DialogDescription>
         </DialogHeader>
 
@@ -69,16 +58,16 @@ export function DeleteSelectionDialog({
           <Button
             variant={"outline"}
             onClick={onDissmiss}
-            disabled={deleteSelection.isPending}
+            disabled={deleteTire.isPending}
           >
             Annuler
           </Button>
           <Button
             variant={"destructive"}
             onClick={onDeleteConfirm}
-            disabled={deleteSelection.isPending}
+            disabled={deleteTire.isPending}
           >
-            Supprimer la sélection
+            Supprimer le pneu
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,34 +1,13 @@
-import { useAuth } from "react-oidc-context";
 import {
   ChevronsUpDown,
   LogOut,
   ShieldCheckIcon,
   UserIcon,
 } from "lucide-react";
+import { useAuth } from "react-oidc-context";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
-import {
-  SidebarProvider,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuItem,
-  SidebarContent,
-  SidebarGroup,
-  SidebarMenuButton,
-  SidebarFooter,
-  SidebarRail,
-  Sidebar,
-  SidebarInset,
-  useSidebar,
-} from "@/components/sidebar";
-import NavigationLink from "./navigation-link";
-import {
-  adminRoutes,
-  controlerRoutes,
-  userRoutes,
-} from "./routes-by-permissions";
 import { usePermissions } from "@/auth/permissions.context";
-import { Outlet } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,15 +16,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/dropdown-menu";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  useSidebar,
+} from "@/components/sidebar";
+import { Outlet } from "react-router-dom";
+import NavigationLink from "./navigation-link";
+import {
+  adminRoutes,
+  userRoutes,
+} from "./routes-by-permissions";
 
 const Layout = () => {
   const { isAuthenticated, signoutRedirect, user } = useAuth();
   const { hasPermission, permissions } = usePermissions();
-  const routes = !isAuthenticated ? [] : hasPermission("admin")
-    ? adminRoutes
-    : hasPermission("controler")
-    ? controlerRoutes
-    : userRoutes;
+  const routes = !isAuthenticated
+    ? []
+    : hasPermission("admin")
+      ? adminRoutes
+      : userRoutes;
 
   return (
     <SidebarProvider>
@@ -66,45 +64,18 @@ const Layout = () => {
             </SidebarMenu>
           </SidebarGroup>
         </SidebarContent>
+
         <SidebarFooter>
           <SidebarMenu>
-            {isAuthenticated && 
-            (
+            {isAuthenticated && (
               <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                  >
-                    <Avatar className="size-8 rounded-lg">
-                      <AvatarImage
-                        src={user?.profile.picture}
-                        alt={user?.profile.name}
-                      />
-                      <AvatarFallback className="rounded-lg">
-                        <UserIcon />
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium">
-                        {user?.profile.name}
-                      </span>
-                      <span className="truncate text-xs">
-                        {user?.profile.email}
-                      </span>
-                    </div>
-                    <ChevronsUpDown className="ml-auto size-4" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-                  align="end"
-                  sideOffset={4}
-                >
-                  <DropdownMenuLabel className="p-0 font-normal">
-                    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                      <Avatar className="h-8 w-8 rounded-lg">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <SidebarMenuButton
+                      size="lg"
+                      className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-foreground hover:text-foreground hover:bg-foreground/10"
+                    >
+                      <Avatar className="size-8 rounded-lg">
                         <AvatarImage
                           src={user?.profile.picture}
                           alt={user?.profile.name}
@@ -121,34 +92,64 @@ const Layout = () => {
                           {user?.profile.email}
                         </span>
                       </div>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuLabel>
-                    {permissions.map((permission) => (
-                      <div
-                        key={permission}
-                        className="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
-                      >
-                        <ShieldCheckIcon className="size-4" />
-                        <span className="truncate font-medium">
-                          {permission}
-                        </span>
+                      <ChevronsUpDown className="ml-auto size-4" />
+                    </SidebarMenuButton>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                    align="end"
+                    sideOffset={4}
+                  >
+                    <DropdownMenuLabel className="p-0 font-normal">
+                      <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                        <Avatar className="h-8 w-8 rounded-lg">
+                          <AvatarImage
+                            src={user?.profile.picture}
+                            alt={user?.profile.name}
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            <UserIcon />
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="grid flex-1 text-left text-sm leading-tight">
+                          <span className="truncate font-medium">
+                            {user?.profile.name}
+                          </span>
+                          <span className="truncate text-xs">
+                            {user?.profile.email}
+                          </span>
+                        </div>
                       </div>
-                    ))}
-                  </DropdownMenuLabel>
+                    </DropdownMenuLabel>
+                    <DropdownMenuLabel>
+                      {permissions.map((permission) => (
+                        <div
+                          key={permission}
+                          className="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
+                        >
+                          <ShieldCheckIcon className="size-4" />
+                          <span className="truncate font-medium">
+                            {permission}
+                          </span>
+                        </div>
+                      ))}
+                    </DropdownMenuLabel>
 
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => void signoutRedirect()}>
-                    <LogOut />
-                    Se déconnecter
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => void signoutRedirect()}
+                      // className="hover:bg-red-300/20"
+                    >
+                      <LogOut />
+                      Se déconnecter
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </SidebarMenuItem>
             )}
           </SidebarMenu>
         </SidebarFooter>
-        <SidebarRail />
+        {/* <SidebarRail /> */}
       </Sidebar>
       <SidebarInset>
         <div className="px-5 pt-3 @container">
@@ -165,7 +166,7 @@ const CustomSidebarHeader = () => {
     <SidebarHeader>
       <img
         src={!open || isMobile ? "/logo-vertical.png" : "/logo.png"}
-        className="w-10 group-data-[state=expanded]:w-36 group-data-[state=expanded]:py-3 pb-1"
+        className="w-10 group-data-[state=expanded]:w-42 group-data-[state=expanded]:py-3 pb-1"
       />
     </SidebarHeader>
   );
