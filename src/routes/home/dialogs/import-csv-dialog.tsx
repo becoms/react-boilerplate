@@ -40,7 +40,7 @@ export const ImportCsvDialog = () => {
       const reader = new FileReader();
       reader.onload = () => resolve(reader.result as string);
       reader.onerror = () => reject(new Error("Failed to read file"));
-      reader.readAsText(file, "Windows-1252");
+      reader.readAsText(file, "UTF-8"); // you can change to "Windows-1252" which is the default encoding for the french excel
     });
   };
 
@@ -159,7 +159,7 @@ const FileInputCsv = ({ ref, handleFileSelect, selectedFile }: PropsWithChildren
         </div>
         {!selectedFile && (
           <a
-            href="/samples/client-import-example.csv"
+            href="/import-example.csv"
             className="flex gap-1 items-center"
           >
             <FileText className="h-4 w-4 text-muted-foreground" />
