@@ -13,7 +13,8 @@ export interface ImportResponse {
 }
 
 export interface ImportOptions {
-  csvContent: string;
+  csvContent?: string | undefined;
+  jsonContent?: Record<string, string>[] | undefined;
   onProgress?: (progress: ImportResponse) => void;
 }
 
@@ -25,10 +26,10 @@ export const useImport = () => {
     mutationFn: async (
       options: ImportOptions
     ): Promise<void> => {
-      const { csvContent, onProgress } = options;
+      const { csvContent, jsonContent, onProgress } = options;
 
       const response = await api.post(`${import.meta.env.VITE_API_URL}/tires/import`, {
-        json: { content: csvContent },
+        json: { content: csvContent ?? jsonContent },
       });
 
       if (!response.ok) {

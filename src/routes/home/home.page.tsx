@@ -15,7 +15,8 @@ import { ChevronRightIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CreateTireDialog } from "./dialogs/create-tire.dialog";
 import { formatDate } from "@/utils/date.utils";
-import { ImportDialog } from "./dialogs/import-dialog";
+import { ImportCsvDialog } from "./dialogs/import-csv-dialog";
+import { ImportXlsxDialog } from "./dialogs/import-xls-dialog";
 
 export const HomePage = () => {
   return (
@@ -27,7 +28,8 @@ export const HomePage = () => {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <ImportDialog />
+          <ImportCsvDialog />
+          <ImportXlsxDialog />
           <CreateTireDialog />
         </div>
       </PageHeader>
@@ -46,7 +48,7 @@ function TiresList() {
       <Empty>
         <EmptyTitle>Pas de pneus</EmptyTitle>
         <EmptyDescription>
-          Importez-les depuis un fichier Excel.
+          Importez-les depuis un fichier.
         </EmptyDescription>
       </Empty>
     );
