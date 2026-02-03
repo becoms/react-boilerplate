@@ -283,7 +283,7 @@ const FileInputXlsx = ({
   return (
     <div className="flex flex-col gap-y-4">
       <div className="text-sm text-muted-foreground">
-        Sélectionnez un fichier contenant les donnée à importer.
+        Sélectionnez un fichier contenant les données à importer.
       </div>
       <div className="flex gap-4 items-center">
         <div className="flex items-center gap-4">
