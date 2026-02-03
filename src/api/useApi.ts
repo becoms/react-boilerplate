@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { useAuth } from "react-oidc-context";
 
 export const useApi = () => {
-  const { user, signinRedirect } = useAuth();
-  const accessToken = user?.access_token;
+  const { isAuthenticated } = useAutoSignin();
+  const { signinRedirect, user } = useAuth();
 
   return useMemo(() => {
     return ky.extend({
@@ -13,11 +13,12 @@ export const useApi = () => {
 
       hooks: {
         beforeRequest: [
-          (request) => {
-            const offset = new Date().getTimezoneOffset();
-            request.headers.set("X-Timezone-Offset", offset.toString());
-            if (accessToken) {
-              request.headers.set("Authorization", `Bearer ${accessToken}`);
+          async (request) => {
+            if (isAuthenticated) {
+              request.headers.set(
+                "Authorization",
+                `Bearer ${user?.access_token}`,
+              );
             } else {
               // When token is expired and user keeps his browser tab open, we need to log him again and return to the current page
               signinRedirect({ redirect_uri: window.location.href });
