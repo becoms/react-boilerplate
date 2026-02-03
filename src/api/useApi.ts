@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 export const useApi = () => {
   const { isAuthenticated } = useAutoSignin();
-  const { signinRedirect, signinSilent } = useAuth();
+  const { signinRedirect, user } = useAuth();
 
   return useMemo(() => {
     return ky.extend({
@@ -14,7 +14,6 @@ export const useApi = () => {
         beforeRequest: [
           async (request) => {
             if (isAuthenticated) {
-              const user = await signinSilent();
               request.headers.set(
                 "Authorization",
                 `Bearer ${user?.access_token}`,
