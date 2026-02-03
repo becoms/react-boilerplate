@@ -11,12 +11,21 @@ import {
   TableRow,
 } from "@/components/table";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronRightIcon } from "lucide-react";
+import { ALargeSmallIcon, BarcodeIcon, Calendar1Icon, ChevronRightIcon, TextInitialIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CreateTireDialog } from "./dialogs/create-tire.dialog";
 import { formatDate } from "@/utils/date.utils";
 import { ImportCsvDialog } from "./dialogs/import-csv-dialog";
 import { ImportXlsxDialog } from "./dialogs/import-xls-dialog";
+
+// Must match import.service.ts columnsHeaders
+const columns = [
+  { icon: ALargeSmallIcon, model: "cai", label: "CAI", format: "^[a-zA-Z0-9]{6}$", defaultValue: "A" },
+  { icon: TextInitialIcon, model: "cbl", label: "CBL", format: "^[a-zA-Z0-9]{256}$", defaultValue: "B" },
+  { icon: BarcodeIcon, model: "cab_routage", label: "DATE_FIA", format: "^[a-zA-Z0-9]{8}$", defaultValue: "C" },
+  { icon: BarcodeIcon, model: "cab_fia", label: "CAB FIA", format: "^[a-zA-Z0-9]{8}$", defaultValue: "D" },
+  { icon: Calendar1Icon, model: "date_fia", label: "Date FIA", format: "^[a-zA-Z0-9]{19}$", formatLabel: "ex: 01/01/2026", defaultValue: "E" },
+];
 
 export const HomePage = () => {
   return (
@@ -29,7 +38,7 @@ export const HomePage = () => {
         </div>
         <div className="flex items-center gap-2">
           <ImportCsvDialog />
-          <ImportXlsxDialog />
+          <ImportXlsxDialog columns={columns} />
           <CreateTireDialog />
         </div>
       </PageHeader>

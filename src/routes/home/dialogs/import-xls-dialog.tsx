@@ -3,11 +3,7 @@ import {
   Upload,
   UploadIcon,
   ArrowRight,
-  BarcodeIcon,
-  Calendar1Icon,
   LucideProps,
-  TextInitialIcon,
-  ALargeSmallIcon,
   TableIcon,
 } from "lucide-react";
 import {
@@ -24,7 +20,7 @@ import { toast } from "sonner";
 import ExcelJS from "exceljs";
 import { ImportButtons, ImportReport } from "./import-common";
 
-type ImportModalGroupType = {
+type ImportXlsxDialogProps = {
   columns: {
     icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
     model: string;
@@ -35,22 +31,7 @@ type ImportModalGroupType = {
   }[];
 };
 
-// Must match import.service.ts columnsHeaders
-const importModalGroup: ImportModalGroupType = {
-  columns: [
-    { icon: ALargeSmallIcon, model: "cai", label: "CAI", format: "^[a-zA-Z0-9]{6}$", defaultValue: "A" },
-    { icon: TextInitialIcon, model: "cbl", label: "CBL", format: "^[a-zA-Z0-9]{256}$", defaultValue: "B" },
-    { icon: BarcodeIcon, model: "cab_routage", label: "DATE_FIA", format: "^[a-zA-Z0-9]{8}$", defaultValue: "C" },
-    { icon: BarcodeIcon, model: "cab_fia", label: "CAB FIA", format: "^[a-zA-Z0-9]{8}$", defaultValue: "D" },
-    { icon: Calendar1Icon, model: "date_fia", label: "Date FIA", format: "^[a-zA-Z0-9]{19}$", formatLabel: "ex: 01/01/2026", defaultValue: "E" },
-  ],
-};
-
-type InitialStateType = {
-  [Key in (typeof importModalGroup)["columns"][number]["model"]]: string;
-};
-
-export const ImportXlsxDialog = () => {
+export const ImportXlsxDialog = (props: ImportXlsxDialogProps) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>();
   const [importResult, setImportResult] = useState<
     ImportResponse | undefined
@@ -98,11 +79,11 @@ export const ImportXlsxDialog = () => {
     }
   };
 
-  const initializeColumns = (): InitialStateType => {
-    const initialState = {} as InitialStateType;
-    importModalGroup.columns.forEach((column) => {
+  const initializeColumns = (): Record<string, string> => {
+    const initialState = {} as Record<string, string>;
+    props.columns.forEach((column) => {
       const key = column.model
-        .replace(/\s+/g, "") as keyof InitialStateType;
+        .replace(/\s+/g, "");
       initialState[key] = column.defaultValue;
     });
     return initialState;
@@ -168,7 +149,7 @@ export const ImportXlsxDialog = () => {
 };
 
 type ColumnsGeneratorProps = {
-  columns: ImportModalGroupType["columns"];
+  columns: ImportXlsxDialogProps["columns"];
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
