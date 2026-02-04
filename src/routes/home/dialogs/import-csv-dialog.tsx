@@ -48,14 +48,17 @@ export const ImportCsvDialog = () => {
     if (!selectedFile) return;
 
     try {
+      const fileContent = await readFile(selectedFile);
+
+      // Init import result to trigger the spinner while uploading the file
       setImportResult({
         created: 0,
         ignored: 0,
         errors: 0,
         errorDetails: [],
-        total: 0,
+        total: Array.from(fileContent.matchAll(/\n/g)).length - 1, // number of lines
       });
-      const fileContent = await readFile(selectedFile);
+
       await importMutation.mutateAsync({
         csvContent: fileContent,
         onProgress: (progress) => {

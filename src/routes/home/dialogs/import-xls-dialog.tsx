@@ -46,12 +46,13 @@ export const ImportXlsxDialog = (props: ImportXlsxDialogProps) => {
     const fileData = await readDataFromXslx(columns, selectedFile as unknown as ExcelJS.Buffer);
 
     try {
+        // Init import result to trigger the spinner while uploading the file
       setImportResult({
         created: 0,
         ignored: 0,
         errors: 0,
         errorDetails: [],
-        total: 0,
+        total: fileData.length,
       });
       await importMutation.mutateAsync({
         jsonContent: fileData,
