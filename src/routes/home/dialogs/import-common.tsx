@@ -12,7 +12,6 @@ import {
   TooltipTrigger,
 } from "@/components/tooltip";
 import { Progress } from "@/components/progress";
-import { ImportResponse } from "@/api/tires/import.mutation";
 import { Button } from "@/components/button";
 import { Spinner } from "@/components/spinner";
 import { 
@@ -116,7 +115,7 @@ export const ImportButtons = ({ importResult, selectedFile, handleImport, handle
   const numberOfProcessedRows = (importResult?.errors ?? 0) + (importResult?.ignored ?? 0) + (importResult?.created ?? 0);
   const totalRows = importResult?.total ?? 0;
 
-  if (selectedFile && totalRows > 0 && numberOfProcessedRows === totalRows) {
+  if (selectedFile && ((totalRows > 0 && numberOfProcessedRows === totalRows) || (totalRows === 0 && (importResult?.errors ?? 0) > 0))) {
     return (
       <Button
         type="button"

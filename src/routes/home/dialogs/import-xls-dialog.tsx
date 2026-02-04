@@ -99,21 +99,27 @@ export const ImportXlsxDialog = (props: ImportXlsxDialogProps) => {
     }));
   };
 
-
-  const handleReset = () => {
-    if ((importResult?.current ?? 0) === 0 || (importResult?.errors ?? 0) + (importResult?.ignored ?? 0) + (importResult?.created ?? 0) === (importResult?.total ?? 0)) {
-      setSelectedFile(undefined);
-      setImportResult(undefined);
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+  const reset = () => {
+    setSelectedFile(undefined);
+    setImportResult(undefined);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
   const [open, setOpen] = useState(false);
 
+  // Retry button
+  const handleRetry = () => {
+    reset();
+  };
+
+  // Close button
   const handleClose = () => {
-    handleReset();
+    // Reset only if the import is not in progress
+    if ((importResult?.current ?? 0) === 0 || (importResult?.errors ?? 0) + (importResult?.ignored ?? 0) + (importResult?.created ?? 0) === (importResult?.total ?? 0)) {
+      reset();
+    }
     setOpen(false);
   };
 
@@ -140,7 +146,7 @@ export const ImportXlsxDialog = (props: ImportXlsxDialogProps) => {
             {importResult && <ImportReport importResult={importResult} />}
           </div>
           <DialogFooter>
-            <ImportButtons importResult={importResult} selectedFile={selectedFile} handleImport={handleImport} handleClose={handleReset} handleRetry={handleReset} />
+            <ImportButtons importResult={importResult} selectedFile={selectedFile} handleImport={handleImport} handleClose={handleClose} handleRetry={handleRetry} />
           </DialogFooter>
         </DialogContent>
       </Dialog>
